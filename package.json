@@ -4,13 +4,13 @@
   "description": "WhatTheFridge",
   "main": "index.js",
   "scripts": {
-    "start": "node Back-End/app.js",
-    "client": "npm start --prefix front-end",
-    "server": "nodemon Back-End/index.js",
-    "build": "npm run build --prefix front-end",
-    "full-install": "npm install --prefix front-end && npm install",
+    "start": "node server/index.js",
+    "client": "npm start --prefix client",
+    "server": "nodemon server/index.js",
+    "build": "npm run build --prefix client",
+    "full-install": "npm install --prefix client && npm install",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "npm install --prefix front-end && npm run build --prefix front-end"
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
