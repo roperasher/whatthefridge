@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node Back-End/app.js",
     "client": "npm start --prefix front-end",
-    "server": "nodemon Back-End/app.js",
+    "server": "nodemon Back-End/index.js",
     "build": "npm run build --prefix front-end",
     "full-install": "npm install --prefix front-end && npm install",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
