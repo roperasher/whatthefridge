@@ -15,13 +15,13 @@ const ingredientsString =
 requestString = requestString + ingredientsString;
 
 //API call to the endpoint searchRecipeByIngredient
-function searchRecipeByIngredient(request, response) {
+function getRecipeNutritionWidgetByID(request, response) {
   unirest.get(requestString).end(function (result) {
     if (result.status === 200) {
-      let REQ_TYPE = result.body[0].id + "/information";
+      let REQ_TYPE = result.body[0].id + "/nutritionWidget.json";
       let requestString =
         "https://api.spoonacular.com/recipes/" + REQ_TYPE + API_KEY;
-      unirest.get(requestString + "&includeNutrition=true").end(function (result) {
+      unirest.get(requestString).end(function (result) {
           //console.log(result.body); //uncomment to see the API calls output JSON in the console
           response.send(result.body);
         });
@@ -29,4 +29,4 @@ function searchRecipeByIngredient(request, response) {
   });
 }
 
-module.exports = {searchRecipeByIngredient};
+module.exports = {getRecipeNutritionWidgetByID};
