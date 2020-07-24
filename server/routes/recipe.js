@@ -1,6 +1,6 @@
 const express = require("express");
 const unirest = require("unirest");
-//const router = express.Router();
+const router = express.Router();
 
 //multiple API keys just incase we run out of daily calls. Switch when testing if you need.
 const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69";
@@ -30,3 +30,5 @@ function searchRecipeByIngredient(request, response) {
 }
 
 module.exports = {searchRecipeByIngredient};
+
+module.exports = router;

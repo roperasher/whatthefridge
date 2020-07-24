@@ -1,4 +1,5 @@
 const unirest = require('unirest');
+const cors = require('cors')
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -12,6 +13,8 @@ const PORT = 5000;
 //multiple API keys just incase we run out of daily calls. Switch when testing if you need.
 //const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69"; //Alex's API key
 const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
+
+//app.use(cors());
 
 //root endpoint of WhatTheFridge server
 //access with the URL: http://localhost:5000/
