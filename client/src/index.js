@@ -1,15 +1,13 @@
-import React from 'react';
-import { render } from 'react-dom';
-import './index.css';
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import { render } from 'react-dom'
+import './index.css'
+import App from './components/App'
+import * as serviceWorker from './serviceWorker'
 
 window.React = React
 
 render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 

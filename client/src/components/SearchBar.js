@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../App.css'
+import '../SearchBar.css'
 
 const SearchBar = ({onNewIngr=f=>f}) => {
 
@@ -17,7 +17,7 @@ const SearchBar = ({onNewIngr=f=>f}) => {
         <form className="new-ingr" onSubmit={submit}>
             <input ref={input => ingr_name = input}
             type="text"
-            placeholder="Enter Ingredients" require/>
+            placeholder="Enter Ingredients" require />
             <button>ADD INGREDIENT</button>
         </form>
     )
