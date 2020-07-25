@@ -13,9 +13,9 @@ const DataComponent = (SomeComponent, url) =>
             }
         }
 
-        componentWillMount() {
+        componentDidMount() {
             this.setState({ loading: true })
-            fetch(url + API_KEY)
+            fetch(url)
                 .then(res => res.json())
                 .then(data => this.setState({
                     data,
@@ -28,9 +28,10 @@ const DataComponent = (SomeComponent, url) =>
         render() {
             return (
                 <div className="data-component">
-                    {(!this.state.loading) ?
-                        "" :
-                        <SomeComponent { ...this.state } />}
+                    {(this.state.loaded) ?
+                        <SomeComponent { ...this.state } /> : 
+                        "" 
+                        }
                 </div>
             )
         }

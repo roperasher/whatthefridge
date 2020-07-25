@@ -1,11 +1,13 @@
 import React from 'react';
 import { v4 } from 'uuid'
-import '../App.css';
+import '../stylesheets/App.css';
 import SearchBar from './SearchBar'
 import IngrList from './IngrList'
 
-export default class App extends React.Component {
+const API_KEY = process.env.REACT_APP_API_KEY
 
+export default class App extends React.Component {
+  
   constructor(props) {
     super(props)
     this.state = {

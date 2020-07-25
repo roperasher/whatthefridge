@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../SearchBar.css'
+import '../stylesheets/SearchBar.css'
 
 const SearchBar = ({onNewIngr=f=>f}) => {
 

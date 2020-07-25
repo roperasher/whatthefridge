@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../Ingr.css'
+import '../stylesheets/Ingr.css'
 
 const Ingr = ({ name, onRemove=f=>f }) =>
     <section className="ingr">
