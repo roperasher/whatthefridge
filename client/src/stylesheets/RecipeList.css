@@ -1,0 +1,15 @@
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.recipe {
+    padding: 10px;
+    background-color: rgb(207, 190, 190);
+    color: rgb(4, 80, 80);
+    border: 5px dashed black;
+    border-radius: 3px;
+    text-align: center;
+}

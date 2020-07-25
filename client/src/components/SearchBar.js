@@ -18,7 +18,7 @@ const SearchBar = ({onNewIngr=f=>f}) => {
             <input ref={input => ingr_name = input}
             type="text"
             placeholder="Enter Ingredients" require />
-            <button>ADD INGREDIENT</button>
+            <button>Add Ingredient</button>
         </form>
     )
 }

@@ -1,0 +1,21 @@
+.ingr-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+.ingr-list > button {
+    border: 1px solid lightgrey;
+    font-weight: bold;
+    padding: 10px 15px;
+    width: 25%;
+    margin: 1px;
+    background-color: #0173a0;
+    color: white;
+}
+
+.ingr-list > button:hover {
+    background-color: white;
+    color: #0173a0;
+}
