@@ -23,7 +23,8 @@ const getRecipeInfo = id => {
     const RecipeWindow = 
         DataComponent(
             Recipe,
-            requestString
+            requestString,
+            true
         )
     render (
         <>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-const DataComponent = (SomeComponent, url) =>
+const DataComponent = (SomeComponent, url, isJson) =>
     class DataComponent extends React.Component {
         constructor(props) {
             super(props)
@@ -16,7 +16,7 @@ const DataComponent = (SomeComponent, url) =>
         componentDidMount() {
             this.setState({ loading: true })
             fetch(url)
-                .then(res => res.json())
+                .then(res => (isJson) ? res.json() : res.text())
                 .then(data => this.setState({
                     data,
                     loaded: true,

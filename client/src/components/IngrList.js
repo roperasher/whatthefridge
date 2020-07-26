@@ -35,7 +35,8 @@ const recipeSearch = (...ingrs) => {
     const RecipeDash = 
         DataComponent(
             RecipeList,
-            requestString
+            requestString,
+            true
         )
     render (
         <>
