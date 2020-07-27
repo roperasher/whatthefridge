@@ -52,7 +52,7 @@ export default class App extends React.Component {
         )
     render (
         <>
-            <IngrList />
+            <App />
             <RecipeDash />
         </>,
         document.getElementById('root')
