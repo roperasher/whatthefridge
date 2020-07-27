@@ -30,12 +30,22 @@ const Recipe = ({ data, onExit=f=>f, selected="" }) => (
     </div>
 )
 
+const RecipeStub = ({ data }) => (
+    console.log(data),
+    <div className="recipe-stub">
+        <h4>{data.title}</h4>
+        <p>{data.readyInMinutes} minutes</p><br></br>
+        <p>Health Score: {data.healthScore}</p><br></br>
+        <p>Cost per serving: {data.pricePerServing}</p><br></br>
+    </div>
+)
+
 const handleChange = (selected, id) => {
     switch(selected) {
 
         case "Nutrition":
             let REQ_TYPE = "/nutritionWidget"
-            const requestString = "https://api.spoonacular.com/recipes/" + id + REQ_TYPE + API_KEY
+            const requestString = "https://api.spoonacular.com/recipes/" + id + REQ_TYPE + API_KEY + "&defaultCss=true"
             const NutritionDash = 
                 DataComponent(
                     NutritionInfo,
@@ -63,4 +73,7 @@ const handleChange = (selected, id) => {
     }
 }
 
-export default Recipe
+export {
+    Recipe,
+    RecipeStub
+}

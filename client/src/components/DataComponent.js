@@ -14,6 +14,7 @@ const DataComponent = (SomeComponent, url, isJson) =>
         }
 
         componentDidMount() {
+            console.log(url)
             this.setState({ loading: true })
             fetch(url)
                 .then(res => (isJson) ? res.json() : res.text())

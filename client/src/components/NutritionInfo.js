@@ -5,6 +5,7 @@ import ReactHtmlParser from 'react-html-parser'
 import '../stylesheets/NutritionInfo.css'
 
 const NutritionInfo = ({data}) => (
+    data = data.replace(/onmouseover/g, "onMouseOver").replace(/onmouseout/g, "onMouseOut"),
     console.log(data),
     <div className="nutrition-widget">
         {ReactHtmlParser(data)}
