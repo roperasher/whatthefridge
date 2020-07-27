@@ -20,7 +20,6 @@ const IngrList = ({ ingredients=[], onRemove=f=>f }) => (
                         onRemove={() => onRemove(ingr.id)} />
             )
         }
-        <button onClick={() => recipeSearch(...ingredients)}>Search Recipes</button> 
     </div>
 )
 
@@ -35,11 +34,12 @@ const recipeSearch = (...ingrs) => {
     const RecipeDash = 
         DataComponent(
             RecipeList,
-            requestString
+            requestString,
+            true
         )
     render (
         <>
-            <App />
+            <IngrList />
             <RecipeDash />
         </>,
         document.getElementById('root')

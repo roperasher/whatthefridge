@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheets/SearchBar.css'
 
-const SearchBar = ({onNewIngr=f=>f}) => {
-
+const SearchBar = ({ onNewIngr=f=>f, onSearch=f=>f }) => {
     let ingr_name
     
     const submit = e => {
@@ -19,12 +18,14 @@ const SearchBar = ({onNewIngr=f=>f}) => {
             type="text"
             placeholder="Enter Ingredients" require />
             <button>Add Ingredient</button>
+            <button onClick={onSearch}>Search Recipes</button> 
         </form>
     )
 }
 
 SearchBar.propTypes = {
-    onNewIngr: PropTypes.func
+    onNewIngr: PropTypes.func,
+    onSearch: PropTypes.func
 }
 
 export default SearchBar
