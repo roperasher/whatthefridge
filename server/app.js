@@ -6,6 +6,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const ingredient = require('./routes/ingredient.js');
 const recipe = require('./routes/recipe.js');
+const nutrition = require('./routes/nutrition.js');
 
 const PORT = 5000;
 
@@ -20,6 +21,9 @@ app.get("/data/ingredient/searchGroceryProducts", ingredient.requestProductData)
 app.get("/data/ingredient/getProductInformation", ingredient.requestProductIngredients);
 app.get("/data/recipe/searchRecipe", recipe.getRecipeData);
 app.get("/data/recipe/searchRecipesByIngredients", recipe.getRecipeDataByIngredients);
+app.get("/data/recipe/visualizeRecipeByIngredientsID", recipe.getRecipeIngredientCSS);
+app.get("/data/recipe/visualizeRecipePriceBreakdownByID", recipe.getRecipePrice);
+app.get("/data/nutrition/visualizeRecipeNutritionByID", nutrition.getRecipeNutrition);
 
 //starts up server and keeps it running
 app.listen(PORT, () => console.log(`WhatTheFridge server listening at http://localhost:${PORT}`));

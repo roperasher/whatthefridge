@@ -66,6 +66,34 @@ class SpoonacularEndpoints {
 
   /**
    * Required:
+   *  @param {number} id The recipe id.
+   * Optional:
+   *  @param {boolean} defaultCSS shows recipe ingredient images. Hard coded to true in our case
+   */
+  //example request to endpoint: https://api.spoonacular.com/data/recipe/visualizeRecipeByIngredientsID?query=shakshuka
+  visualizeRecipeIngredientsByID(parameters) {
+    let id = parameters.id;
+    let defaultCss = parameters.defaultCss; //hard coded to true
+    let endpointURL = RECIPES_URL + "/" + id + "/ingredientWidget" + this.apiKey + "&" + defaultCss; 
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   * Optional:
+   *  @param {boolean} defaultCSS shows recipe ingredient images. Hard coded to true in our case
+   */
+  //example request to endpoint: https://api.spoonacular.com/data/recipe/visualizeRecipePriceBreakdownByID?query=shakshuka
+    visualizeRecipePriceBreakdownByID(parameters) {
+    let id = parameters.id;
+    let defaultCss = parameters.defaultCss; //hard coded to true
+    let endpointURL = RECIPES_URL + "/" + id + "/priceBreakdownWidget" + this.apiKey + "&" + defaultCss; 
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
    *  @param {string} query name of grocery product 
    * Optional:
    *  go to: https://spoonacular.com/food-api/docs#Search-Grocery-Products
@@ -88,6 +116,20 @@ class SpoonacularEndpoints {
     let id = parameters;
     let endpointURL = PRODUCTS_URL + "/" + id + this.apiKey;
     console.log("endpointURL: ", endpointURL);
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   * Optional:
+   *  @param {boolean} defaultCSS shows recipe ingredient images. Hard coded to true in our case
+   */
+  //example request to endpoint: https://api.spoonacular.com/data/recipe/visualizeRecipeNutritionByID?query=shakshuka
+  visualizeRecipeNutritionByID(parameters) {
+    let id = parameters.id;
+    let defaultCss = parameters.defaultCss; //hard coded to true
+    let endpointURL = RECIPES_URL + "/" + id + "/nutritionWidget" + this.apiKey + "&" + defaultCss; 
     return makeRequest(endpointURL);
   }
 }

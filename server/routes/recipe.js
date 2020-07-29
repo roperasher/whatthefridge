@@ -61,4 +61,63 @@ function getRecipeDataByIngredients(request, response) {
     })
 }
 
-module.exports = {getRecipeData, getRecipeDataByIngredients};
+function getRecipeIngredientCSS(request, response) {
+  let recipe = request.query.query;
+  let queryParameters = {query: recipe};
+  SpoonacularEndpoints.searchRecipe(queryParameters)
+    .then((result) => {
+      //console.log(result); //uncomment to see JSON returned from endpoint
+      let id = result.results[0].id;
+      let defaultCss = true; //CSS endpoints always hard coded to true
+      let queryParameters = {id: id, defaultCss: defaultCss};
+      SpoonacularEndpoints.visualizeRecipeIngredientsByID(queryParameters)
+        .then((result) => {
+          response.contentType("text/html");
+          response.send(result);
+        })
+        .catch((error) => {
+          console.log("In catch block of getRecipeIngredientCSS...\n" +
+            "API call to visualizeRecipeIngredientsByID failed!\n" + 
+            "You tried to request data for: " + id + " which DNE\n");
+          console.log("Error message: " + error);
+        })
+    })
+    .catch((error) => {
+      console.log("In catch block of getRecipeIngredientCSS...\n" +
+        "API call to searchRecipe failed!\n" + 
+        "You tried to request data for: " + recipe + " which DNE\n");
+      console.log("Error message: " + error);
+    }) 
+}
+
+//TODO: CSS isn't displaying
+function getRecipePrice(request, response) {
+  let recipe = request.query.query;
+  let queryParameters = {query: recipe};
+  SpoonacularEndpoints.searchRecipe(queryParameters)
+    .then((result) => {
+      //console.log(result); //uncomment to see JSON returned from endpoint
+      let id = result.results[0].id;
+      let defaultCss = true; //CSS endpoints always hard coded to true
+      let queryParameters = {id: id, defaultCss: defaultCss};
+      SpoonacularEndpoints.visualizeRecipePriceBreakdownByID(queryParameters)
+        .then((result) => {
+          response.contentType("text/html");
+          response.send(result);
+        })
+        .catch((error) => {
+          console.log("In catch block of getRecipePrice...\n" +
+            "API call to visualizeRecipePriceBreakdownByID failed!\n" + 
+            "You tried to request data for: " + id + " which DNE\n");
+          console.log("Error message: " + error);
+        })
+    })
+    .catch((error) => {
+      console.log("In catch block of getRecipePrice...\n" +
+        "API call to searchRecipe failed!\n" + 
+        "You tried to request data for: " + recipe + " which DNE\n");
+      console.log("Error message: " + error);
+    })  
+}
+
+module.exports = {getRecipeData, getRecipeDataByIngredients, getRecipeIngredientCSS, getRecipePrice};
