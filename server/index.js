@@ -28,14 +28,14 @@ if (!isDev && cluster.isMaster) {
   const app = express();
 
   // Priority serve any static files.
-  app.use(express.static(path.resolve(__dirname, '../front-end/build')));
+  app.use(express.static(path.resolve(__dirname, '../client/build')));
 
   // Answer API requests.
   app.use("/recipes", require("./routes/recipe"));
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
-    response.sendFile(path.resolve(__dirname, '../front-end/build', 'index.html'));
+    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   });
 
   app.listen(PORT, function () {

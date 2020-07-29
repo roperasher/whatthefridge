@@ -24,7 +24,9 @@
   "homepage": "https://github.com/roperasher/whatthefridge#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "fetch": "^1.1.0",
     "heroku": "^7.42.3",
+    "node-fetch": "^2.6.0",
     "unirest": "^0.6.0"
   },
   "devDependencies": {
