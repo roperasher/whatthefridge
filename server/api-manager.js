@@ -10,14 +10,18 @@ const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
 
 //URLs, paths, and query parameters
 const BASE = "https://api.spoonacular.com/";
+const RECIPES_URL = BASE  + "recipes";
 const PRODUCTS_URL = BASE + "food/products";
 
+//makes API call to the url
 function makeRequest(url) {
   return new Promise((resolve, reject) => {
     unirest.get(url).end((result) => {
       if (result.status === 200) {
-        //console.log(result.body); //uncomment to see the output JSON in the console
+        //console.log("results.body", result.body); //uncomment to see the output JSON in the console
         resolve(result.body);
+      } else {
+        reject("ERROR! Call to endpoint failed!");
       }
     });
   })
@@ -28,22 +32,63 @@ class SpoonacularEndpoints {
     this.apiKey = API_KEY;
   }
 
+  /**
+   * Required:
+   *  @param {string} query The (natural language) recipe search query.
+   * Optional:
+   *  go to: https://spoonacular.com/food-api/docs#Search-Recipes-Complex 
+   *  for list of optional parameters
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/complexSearch?query=pasta
+  searchRecipe(parameters) {
+    let query = queryString.stringify(parameters);
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = RECIPES_URL + "/complexSearch" + this.apiKey + "&" + query;
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {string} ingredients comma separated list of ingredients
+   * Optional:
+   *  @param {number} number The maximum number of recipes to return (between 1 and 100). Defaults to 10.
+   *  @param {boolean} limitLicense Whether the recipes should have an open license that allows display with proper attribution.
+   *  @param {number} ranking Whether to maximize used ingredients (1) or minimize missing ingredients (2) first.
+   *  @param {boolean} ignorePantryWhether to ignore typical pantry items, such as water, salt, flour, etc.
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,flour,sugar
+  getRecipesByIngredients(parameters) {
+    let query = queryString.stringify(parameters);
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = RECIPES_URL + "/findByIngredients" + this.apiKey + "&" + query;
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {string} query name of grocery product 
+   * Optional:
+   *  go to: https://spoonacular.com/food-api/docs#Search-Grocery-Products
+   *  for list of optional parameters
+   */
+  //example request to endpoint: https://api.spoonacular.com/food/products/search?query=tomato
   searchGroceryProducts(parameters) {
     let query = queryString.stringify(parameters);
-    console.log("query: ", query);
-    let endpointURL = PRODUCTS_URL + "/search?" + this.apiKey + "&" + query;
-    let endpointJSON = makeRequest(endpointURL);
-    //Promise.resolve(endpointJSON);
-    //console.log(endpointJSON);
-    //return endpointJSON;
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = PRODUCTS_URL + "/search" + this.apiKey + "&" + query;
+    return makeRequest(endpointURL);
+  }
 
-    /*
-    This is where my problem is. If you comment out lines 36, 37, and 38 and comment out line 46,
-    you'll see that there's a promise pending. My promise is never getting resolved and the
-    .then block at line 15 in ingredientTest.js is never executing. My code hangs here forever
-    and never errors.
-    */
-    return Promise.resolve(endpointJSON);
+  /**
+   * Required:
+   *  @param {number} id The id of the packaged food. 
+   */
+  //example request to endpoint: https://api.spoonacular.com/food/products/22347
+  getProductInformation(parameters) {
+    let id = parameters;
+    let endpointURL = PRODUCTS_URL + "/" + id + this.apiKey;
+    console.log("endpointURL: ", endpointURL);
+    return makeRequest(endpointURL);
   }
 }
 
