@@ -9,12 +9,11 @@ const DataComponent = (SomeComponent, url, isJson) =>
                 data: [],
                 loading: false,
                 loaded: false,
-                visible: false
+                visible: false,
             }
         }
 
         componentDidMount() {
-            console.log(url)
             this.setState({ loading: true })
             fetch(url)
                 .then(res => (isJson) ? res.json() : res.text())

@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: false }));
 
 function getRecipeNutrition(request, response) {
   let recipe = request.query.query;
-  let queryParameters = {query: recipe};
+  let queryParameters = {query: request.query.id};
   SpoonacularEndpoints.searchRecipe(queryParameters)
     .then((result) => {
       //console.log(result); //uncomment to see JSON returned from endpoint
@@ -36,4 +36,21 @@ function getRecipeNutrition(request, response) {
     }) 
 }
 
-module.exports = {getRecipeNutrition};
+function getRecipeNutritionID(request, response) {
+      let id = request.query.id;
+      let defaultCss = request.query.defaultCss; //CSS endpoints always hard coded to true
+      let queryParameters = {id: id, defaultCss: defaultCss};
+      SpoonacularEndpoints.visualizeRecipePriceBreakdownByID(queryParameters)
+        .then((result) => {
+          response.contentType("text/html");
+          response.send(result);
+        })
+        .catch((error) => {
+          console.log("In catch block of getRecipeNutrition...\n" +
+            "API call to visualizeRecipePriceBreakdownByID failed!\n" + 
+            "You tried to request data for: " + id + " which DNE\n");
+          console.log("Error message: " + error);
+        })
+}
+
+module.exports = {getRecipeNutrition, getRecipeNutritionID};

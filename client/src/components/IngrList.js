@@ -7,9 +7,6 @@ import Ingr from './Ingr.js'
 import RecipeList from './RecipeList.js'
 import DataComponent from './DataComponent.js'
 
-const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69";
-//const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
-
 const IngrList = ({ ingredients=[], onRemove=f=>f }) => (
     <div className="ingr-list">
         {(ingredients.length === 0) ? 
@@ -29,8 +26,7 @@ IngrList.propTypes = {
 }
 
 const recipeSearch = (...ingrs) => {
-    let REQ_TYPE = "findByIngredients"
-    const requestString = "https://api.spoonacular.com/recipes/" + REQ_TYPE + API_KEY + "&number=5&ranking=1&ingredients=" + ingrs.map(ingr => ingr.name).join('%2C')
+    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name).join('%2C') + "&number=5&ranking=1" 
     const RecipeDash = 
         DataComponent(
             RecipeList,

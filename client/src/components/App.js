@@ -7,10 +7,6 @@ import RecipeList from './RecipeList'
 import IngrList from './IngrList'
 import DataComponent from './DataComponent'
 
-
-const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69";
-//const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
-
 export default class App extends React.Component {
   
   constructor(props) {
@@ -41,9 +37,8 @@ export default class App extends React.Component {
     }))
   }
 
-  recipeSearch(...ingredients) {
-    let REQ_TYPE = "findByIngredients"
-    const requestString = "https://api.spoonacular.com/recipes/" + REQ_TYPE + API_KEY + "&number=5&ranking=1&ingredients=" + ingredients.map(ingr => ingr.name).join('%2C')
+  recipeSearch(...ingrs) {
+    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name).join('%2C') + "&number=5&ranking=1" 
     const RecipeDash = 
         DataComponent(
             RecipeList,
@@ -52,7 +47,7 @@ export default class App extends React.Component {
         )
     render (
         <>
-            <App />
+            <IngrList />
             <RecipeDash />
         </>,
         document.getElementById('root')

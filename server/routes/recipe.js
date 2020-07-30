@@ -33,6 +33,34 @@ function getRecipeData(request, response) {
     })
 }
 
+function getRecipeDataID(request, response) {
+  let data = {};
+  let id = request.query.id
+  let queryParameters = {id: id};
+  SpoonacularEndpoints.searchRecipeByID(queryParameters)
+    .then((result) => {
+      //console.log(result); //uncomment to see JSON returned from endpoint
+      data.title = result.title;
+      data.summary = result.summary;
+      data.image = result.image;
+      data.id = result.id;
+      data.calories = result.calories;
+      data.carbs = result.carbs;
+      data.fat = result.fat;
+      data.protein = result.protein;
+      data.readyInMinutes = result.readyInMinutes;
+      data.healthScore = result.healthScore;
+      data.pricePerServing = result.pricePerServing;
+      response.send(data);
+    })
+    .catch((error) => {
+      console.log("In catch block of getRecipeDataID...\n" +
+        "API call to searchRecipeID failed!\n" + 
+        "You tried to request data for: " + request.query.id + " which DNE\n");
+      console.log("Error message: " + error);
+    })
+}
+
 //TODO: figure out how to get usedIngredients and unusedIngredients
 function getRecipeDataByIngredients(request, response) {
   let data = {};
@@ -44,14 +72,8 @@ function getRecipeDataByIngredients(request, response) {
   let queryParameters = {query: ingredients, number: number, limitLicense: limitLicense, ranking: ranking, ignorePantry: ignorePantry};
   SpoonacularEndpoints.searchRecipe(queryParameters)
     .then((result) => {
-      console.log("result: ", result); //uncomment to see JSON returned from endpoint
-      data.recipe = result.results[0].title;
-      data.imageURL = result.results[0].image;
-      data.id = result.results[0].id;
-      data.usedIngredients = result.results[0].usedIngredients;
-      data.unusedIngredients = result.results[0].unusedIngredients;
       response.contentType("application/json");
-      response.send(data);
+      response.send(result);
     })
     .catch((error) => {
       console.log("In catch block of getRecipeDataByIngredients...\n" +
@@ -61,7 +83,7 @@ function getRecipeDataByIngredients(request, response) {
     })
 }
 
-/*function getRecipeIngredientCSS(request, response) {
+function getRecipeIngredientCSS(request, response) {
   let recipe = request.query.query;
   let queryParameters = {query: recipe};
   console.log('params: '+ queryParameters)
@@ -89,13 +111,12 @@ function getRecipeDataByIngredients(request, response) {
         "You tried to request data for: " + recipe + " which DNE\n");
       console.log("Error message: " + error);
     }) 
-}*/
+}
 
-function getRecipeIngredientCSS(request, response) {
+function getRecipeIngredientCssID(request, response) {
   let id = request.query.id;
   let defaultCss = true; //CSS endpoints always hard coded to true
   let queryParameters = {id: id, defaultCss: defaultCss};
-  console.log('params: '+ queryParameters.id)
   SpoonacularEndpoints.visualizeRecipeIngredientsByID(queryParameters)
     .then((result) => {
       response.contentType("text/html");
@@ -140,4 +161,4 @@ function getRecipePrice(request, response) {
     })  
 }
 
-module.exports = {getRecipeData, getRecipeDataByIngredients, getRecipeIngredientCSS, getRecipePrice};
+module.exports = {getRecipeData, getRecipeDataID, getRecipeDataByIngredients, getRecipeIngredientCSS, getRecipeIngredientCssID, getRecipePrice};

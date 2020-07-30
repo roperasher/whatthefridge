@@ -8,9 +8,6 @@ import App from './App.js'
 import DataComponent from './DataComponent.js'
 import NutritionInfo from './NutritionInfo.js'
 
-const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69";
-//const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
-
 const Recipe = ({ data, onExit=f=>f, selected="" }) => (
     <div className="recipe">
         <button onClick={() => onExit(data.id)}>X</button>
@@ -45,11 +42,11 @@ const handleChange = (selected, id) => {
 
         case "Nutrition":
             let REQ_TYPE = "/nutritionWidget"
-            const requestString = "https://api.spoonacular.com/recipes/" + id + REQ_TYPE + API_KEY + "&defaultCss=true"
+            const requestString = id => "http://localhost:5000/data/nutrition/visualizeRecipeNutritionByID/?id=" + id + "&defaultCss=" + true
             const NutritionDash = 
                 DataComponent(
                     NutritionInfo,
-                    requestString,
+                    requestString(id),
                     false
                 )
             render (

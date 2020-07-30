@@ -5,12 +5,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69"; //Alex's API key
-const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
+const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69"; //Alex's API key
+//const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
 
 //URLs, paths, and query parameters
 const BASE = "https://api.spoonacular.com/";
-const RECIPES_URL = BASE  + "recipes";
+const RECIPES_URL = BASE  + "recipes/";
 const PRODUCTS_URL = BASE + "food/products";
 
 //makes API call to the url
@@ -55,9 +55,9 @@ class SpoonacularEndpoints {
    *  for list of optional parameters
    */
   //example request to endpoint: https://api.spoonacular.com/recipes/complexSearch?query=pasta
-  searchRecipeByID(id) {
+  searchRecipeByID(params) {
     //console.log("query: ", query); //uncomment to see query parameters as a string
-    let endpointURL = RECIPES_URL + id + '/information' + this.apiKey
+    let endpointURL = RECIPES_URL + params.id + '/information' + this.apiKey
     return makeRequest(endpointURL);
   }
 
