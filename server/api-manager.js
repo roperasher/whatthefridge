@@ -49,6 +49,20 @@ class SpoonacularEndpoints {
 
   /**
    * Required:
+   *  @param {number} id The recipe id
+   * Optional:
+   *  go to: https://spoonacular.com/food-api/docs#Search-Recipes-Complex 
+   *  for list of optional parameters
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/complexSearch?query=pasta
+  searchRecipeByID(id) {
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = RECIPES_URL + id + '/information' + this.apiKey
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
    *  @param {string} ingredients comma separated list of ingredients
    * Optional:
    *  @param {number} number The maximum number of recipes to return (between 1 and 100). Defaults to 10.

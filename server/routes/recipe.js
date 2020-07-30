@@ -61,12 +61,13 @@ function getRecipeDataByIngredients(request, response) {
     })
 }
 
-function getRecipeIngredientCSS(request, response) {
+/*function getRecipeIngredientCSS(request, response) {
   let recipe = request.query.query;
   let queryParameters = {query: recipe};
+  console.log('params: '+ queryParameters)
   SpoonacularEndpoints.searchRecipe(queryParameters)
     .then((result) => {
-      //console.log(result); //uncomment to see JSON returned from endpoint
+      console.log(result); //uncomment to see JSON returned from endpoint
       let id = result.results[0].id;
       let defaultCss = true; //CSS endpoints always hard coded to true
       let queryParameters = {id: id, defaultCss: defaultCss};
@@ -88,7 +89,26 @@ function getRecipeIngredientCSS(request, response) {
         "You tried to request data for: " + recipe + " which DNE\n");
       console.log("Error message: " + error);
     }) 
+}*/
+
+function getRecipeIngredientCSS(request, response) {
+  let id = request.query.id;
+  let defaultCss = true; //CSS endpoints always hard coded to true
+  let queryParameters = {id: id, defaultCss: defaultCss};
+  console.log('params: '+ queryParameters.id)
+  SpoonacularEndpoints.visualizeRecipeIngredientsByID(queryParameters)
+    .then((result) => {
+      response.contentType("text/html");
+      response.send(result);
+    })
+    .catch((error) => {
+      console.log("In catch block of getRecipeIngredientCSS...\n" +
+        "API call to visualizeRecipeIngredientsByID failed!\n" + 
+        "You tried to request data for: " + id + " which DNE\n");
+      console.log("Error message: " + error);
+    })
 }
+
 
 //TODO: CSS isn't displaying
 function getRecipePrice(request, response) {
