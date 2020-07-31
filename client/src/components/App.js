@@ -12,11 +12,14 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ingredients: []
+      ingredients: [],
+      recipes: []
     }
     this.addIngr = this.addIngr.bind(this)
     this.removeIngr = this.removeIngr.bind(this)
     this.recipeSearch = this.recipeSearch.bind(this)
+    this.addRecipe = this.addRecipe.bind(this)
+    this.removeRecipe = this.removeRecipe.bind(this)
   }
 
   addIngr(name) {
@@ -27,13 +30,15 @@ export default class App extends React.Component {
           id: v4(),
           name
         }
-      ]
+      ],
+      recipes: prevState.recipes
     }))
   }
 
   removeIngr(id) {
     this.setState(prevState => ({
-      ingredients: prevState.ingredients.filter(ingr => ingr.id !== id)
+      ingredients: prevState.ingredients.filter(ingr => ingr.id !== id),
+      recipes: prevState.recipes
     }))
   }
 
@@ -43,7 +48,8 @@ export default class App extends React.Component {
         DataComponent(
             RecipeList,
             requestString,
-            true
+            true,
+            null
         )
     render (
         <>
@@ -55,8 +61,8 @@ export default class App extends React.Component {
 }
 
   render() {
-    const { addIngr, removeIngr, recipeSearch } = this
-    const { ingredients } = this.state
+    const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this
+    const { ingredients, recipes } = this.state
     return (
       <div className="app">
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />

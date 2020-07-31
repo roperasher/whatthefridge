@@ -17,7 +17,8 @@ const RecipeList = ({ data }) => {
                     DataComponent(
                         RecipeStub,
                         requestString(recipe.id),
-                        true
+                        true,
+                        recipe.id
                     )
                 return (
                     <div className="recipe" key={i} onClick={() => getRecipeWindow(recipe.id)}>
@@ -34,7 +35,8 @@ const getRecipeWindow = id => {
         DataComponent(
             Recipe,
             requestString(id),
-            true
+            true,
+            id
         )
     render (
         <>

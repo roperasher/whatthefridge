@@ -31,10 +31,12 @@ const recipeSearch = (...ingrs) => {
         DataComponent(
             RecipeList,
             requestString,
-            true
+            true,
+            null
         )
     render (
         <>
+            <App />
             <IngrList />
             <RecipeDash />
         </>,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-const DataComponent = (SomeComponent, url, isJson) =>
+const DataComponent = (SomeComponent, url, isJson, recipeID) =>
     class DataComponent extends React.Component {
         constructor(props) {
             super(props)
@@ -10,6 +10,7 @@ const DataComponent = (SomeComponent, url, isJson) =>
                 loading: false,
                 loaded: false,
                 visible: false,
+                id: null
             }
         }
 
@@ -21,7 +22,8 @@ const DataComponent = (SomeComponent, url, isJson) =>
                     data,
                     loaded: true,
                     loading: false,
-                    visible: true
+                    visible: true,
+                    id: recipeID
                 }))
         }
 

@@ -7,6 +7,7 @@ import '../stylesheets/Recipe.css'
 import App from './App.js'
 import DataComponent from './DataComponent.js'
 import NutritionInfo from './NutritionInfo.js'
+import IngredientInfo from './IngredientInfo.js'
 
 const Recipe = ({ data, onExit=f=>f, selected="" }) => (
     <div className="recipe">
@@ -41,13 +42,13 @@ const handleChange = (selected, id) => {
     switch(selected) {
 
         case "Nutrition":
-            let REQ_TYPE = "/nutritionWidget"
             const requestString = id => "http://localhost:5000/data/nutrition/visualizeRecipeNutritionByID/?id=" + id + "&defaultCss=" + true
             const NutritionDash = 
                 DataComponent(
                     NutritionInfo,
                     requestString(id),
-                    false
+                    false,
+                    id
                 )
             render (
                 <>
@@ -60,6 +61,21 @@ const handleChange = (selected, id) => {
         case "Instructions":
             return true
         case "Ingredients":
+            const requestString = id => "http://localhost:5000/data/recipe/visualizeRecipeByIngredientsID/?id=" + id + "&defaultCss=" + true
+            const IngredientsDash = 
+                DataComponent(
+                    IngredientInfo,
+                    requestString(id),
+                    false,
+                    id
+                )
+            render (
+                <>
+                    <App />
+                    <IngredientsDash />
+                </>,
+                document.getElementById('root')
+            )
             return true
         default:
             render (
