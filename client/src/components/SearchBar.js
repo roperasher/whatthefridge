@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../stylesheets/SearchBar.css'
+import "../stylesheets/SearchBar.css"
+import Button from 'react-bootstrap/Button'
 
 const SearchBar = ({ onNewIngr=f=>f, onSearch=f=>f }) => {
     let ingr_name
@@ -17,8 +18,8 @@ const SearchBar = ({ onNewIngr=f=>f, onSearch=f=>f }) => {
             <input ref={input => ingr_name = input}
             type="text"
             placeholder="Enter Ingredients" require />
-            <button>Add Ingredient</button>
-            <button onClick={onSearch}>Search Recipes</button> 
+            <Button>Add Ingredient</Button>
+            <Button onClick={onSearch}>Search Recipes</Button>
         </form>
     )
 }

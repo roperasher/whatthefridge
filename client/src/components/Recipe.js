@@ -42,7 +42,7 @@ const handleChange = (selected, id) => {
     switch(selected) {
 
         case "Nutrition":
-            const requestString = id => "http://localhost:5000/data/nutrition/visualizeRecipeNutritionByID/?id=" + id + "&defaultCss=" + true
+            var requestString = id => "http://localhost:5000/data/nutrition/visualizeRecipeNutritionByID/?id=" + id + "&defaultCss=" + true
             const NutritionDash = 
                 DataComponent(
                     NutritionInfo,
@@ -61,8 +61,8 @@ const handleChange = (selected, id) => {
         case "Instructions":
             return true
         case "Ingredients":
-            const requestString = id => "http://localhost:5000/data/recipe/visualizeRecipeByIngredientsID/?id=" + id + "&defaultCss=" + true
-            const IngredientsDash = 
+            var requestString = id => "http://localhost:5000/data/recipe/visualizeRecipeByIngredientsID/?id=" + id + "&defaultCss=" + true
+            /*const IngredientsDash = 
                 DataComponent(
                     IngredientInfo,
                     requestString(id),
@@ -75,7 +75,7 @@ const handleChange = (selected, id) => {
                     <IngredientsDash />
                 </>,
                 document.getElementById('root')
-            )
+            )*/
             return true
         default:
             render (
