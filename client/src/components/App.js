@@ -1,11 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { v4 } from 'uuid'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '../stylesheets/App.css'
 import SearchBar from './SearchBar'
 import RecipeList from './RecipeList'
 import IngrList from './IngrList'
 import DataComponent from './DataComponent'
+import { Card, Accordion, Button } from 'react-bootstrap'
 
 export default class App extends React.Component {
   
@@ -58,7 +60,11 @@ export default class App extends React.Component {
         </>,
         document.getElementById('root')
     )
-}
+  }
+
+  addRecipe = () => {}
+
+  removeRecipe = () => {}
 
   render() {
     const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this
@@ -66,8 +72,18 @@ export default class App extends React.Component {
     return (
       <div className="app">
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
-        <IngrList ingredients={ingredients}
-                  onRemove={removeIngr} />
+        <Accordion defaultActiveKey="0">
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            All Ingredients
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="0">
+                        <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion> 
       </div>
     )
   }

@@ -5,13 +5,12 @@ import ReactHtmlParser from 'react-html-parser'
 import DataComponent from './DataComponent.js'
 import App from './App.js'
 import Card from './Card.js'
-import '../stylesheets/IngredientInfo.css'
 
-const IngredientViz = ({ data }) => {
+/*const IngredientViz = ({ data }) => (
     <div className="ingredient-widget">
         {ReactHtmlParser(data)}
     </div>
-}
+)
 
 const IngredientsNeeded = () => {
 
@@ -26,4 +25,4 @@ const IngredientInfo = (id) =>
         [IngredientViz, IngredientsNeeded, ProductInfo],
         id
     )
-export default IngredientInfo
+export default IngredientInfo*/
