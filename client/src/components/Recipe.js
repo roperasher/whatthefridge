@@ -8,7 +8,7 @@ import App from './App.js'
 import DataComponent from './DataComponent.js'
 import NutritionCard from './NutritionInfo.js'
 import IngredientCard from './IngredientInfo.js'
-import Carousel from 'react-bootstrap/Carousel'
+import { Carousel, Figure } from 'react-bootstrap'
 
 const Recipe = ({ id, onExit=f=>f }) => {
     class Recipe extends React.Component {
@@ -38,21 +38,24 @@ const InfoCarousel = ({ data }) => {
     }
 
     return(
-        <Carousel activeIndex={index} onSelect={handleSelect}>
-            <Carousel.Item>
+        <Carousel className="infoCarousel" activeIndex={index} onSelect={handleSelect} autoplay={false} >
+            <Carousel.Item style={{'height': "400px"; 'width': "80%"; }}>
                 <h2>{data.title}</h2>
-                <figure>
+                <Figure>
                     <img id={`recipe ${data.id}`} src={`${data.image}`} alt={`${data.title}`}></img>
-                </figure>
+                </Figure>
                 <p>{ReactHtmlParser(data.summary)}</p>
                 <Carousel.Caption>
                     <h4>Slide for more information</h4>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item style={{'height': "400px", 'width': "80%"; }}>
                 <NutritionCard id={`${data.id}`} />
+                <Carousel.Caption>
+                    <h3>Nutrition facts for {data.title}</h3>
+                </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+<           Carousel.Item style={{'height': "400px"; 'width': "80%"; }}>
                 <IngredientCard id={`${data.id}`} />
             </Carousel.Item>
         </Carousel>

@@ -69,8 +69,8 @@ function getRecipeDataByIngredients(request, response) {
   let limitLicense = request.query.limitLicense;
   let ranking = request.query.ranking;
   let ignorePantry = request.query.ignorePantry;
-  let queryParameters = {query: ingredients, number: number, limitLicense: limitLicense, ranking: ranking, ignorePantry: ignorePantry};
-  SpoonacularEndpoints.searchRecipe(queryParameters)
+  let queryParameters = {ingredients: ingredients, number: number, limitLicense: limitLicense, ranking: ranking, ignorePantry: ignorePantry};
+  SpoonacularEndpoints.getRecipesByIngredients(queryParameters)
     .then((result) => {
       response.contentType("application/json");
       response.send(result);

@@ -15,6 +15,7 @@ const PRODUCTS_URL = BASE + "food/products";
 
 //makes API call to the url
 function makeRequest(url) {
+  console.log(url)
   return new Promise((resolve, reject) => {
     unirest.get(url).end((result) => {
       if (result.status === 200) {
@@ -136,14 +137,11 @@ class SpoonacularEndpoints {
   /**
    * Required:
    *  @param {number} id The recipe id.
-   * Optional:
-   *  @param {boolean} defaultCSS shows recipe ingredient images. Hard coded to true in our case
    */
-  //example request to endpoint: https://api.spoonacular.com/data/recipe/visualizeRecipeNutritionByID?query=shakshuka
-  visualizeRecipeNutritionByID(parameters) {
+  //example request to endpoint: https://api.spoonacular.com/data/recipes/{id}/nutritionWidget.json
+  getRecipeNutritionByID(parameters) {
     let id = parameters.id;
-    let defaultCss = parameters.defaultCss; //hard coded to true
-    let endpointURL = RECIPES_URL + "/" + id + "/nutritionWidget" + this.apiKey + "&" + defaultCss; 
+    let endpointURL = RECIPES_URL + "/" + id + "/nutritionWidget.json" + this.apiKey 
     return makeRequest(endpointURL);
   }
 }

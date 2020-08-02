@@ -38,16 +38,14 @@ function getRecipeNutrition(request, response) {
 
 function getRecipeNutritionID(request, response) {
       let id = request.query.id;
-      let defaultCss = request.query.defaultCss; //CSS endpoints always hard coded to true
-      let queryParameters = {id: id, defaultCss: defaultCss};
-      SpoonacularEndpoints.visualizeRecipePriceBreakdownByID(queryParameters)
+      let queryParameters = {id: id};
+      SpoonacularEndpoints.getNutritionInfoByID(queryParameters)
         .then((result) => {
-          response.contentType("text/html");
           response.send(result);
         })
         .catch((error) => {
           console.log("In catch block of getRecipeNutrition...\n" +
-            "API call to visualizeRecipePriceBreakdownByID failed!\n" + 
+            "API call to getNutritionInfoByID failed!\n" + 
             "You tried to request data for: " + id + " which DNE\n");
           console.log("Error message: " + error);
         })
