@@ -37,7 +37,7 @@ const recipeSearch = (...ingrs) => {
     render (
         <>
             <App />
-            <IngrList />
+            <IngrList ingredients={ingrs} />
             <RecipeDash />
         </>,
         document.getElementById('root')

@@ -5,23 +5,24 @@ import ReactHtmlParser from 'react-html-parser'
 import DataComponent from './DataComponent.js'
 import App from './App.js'
 
-/*const IngredientViz = ({ data }) => (
+const IngredientInfo = ({ data }) => (
+    data = data.replace(/onmouseover/g, "onMouseOver").replace(/onmouseout/g, "onMouseOut")
+            .replace(/onclick/g, "onClick").replace(/onchange/g, "onChange"),
     <div className="ingredient-widget">
         {ReactHtmlParser(data)}
     </div>
 )
 
-const IngredientsNeeded = () => {
-
+const IngredientCard = ({ id }) => {
+    var requestString = "http://localhost:5000/data/recipe/visualizeRecipeByIngredientsID/?id=" + id + "&defaultCss=" + true
+    const IngredientDash = 
+        DataComponent(
+            IngredientInfo,
+            requestString,
+            false,
+            id
+        )
+    return <IngredientDash />
 }
 
-const ProductInfo = () => {
-
-}
-
-const IngredientInfo = (id) =>  
-    Card(
-        [IngredientViz, IngredientsNeeded, ProductInfo],
-        id
-    )
-export default IngredientInfo*/
+export default IngredientCard

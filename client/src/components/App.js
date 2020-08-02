@@ -45,7 +45,8 @@ export default class App extends React.Component {
   }
 
   recipeSearch(...ingrs) {
-    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name).join('%2C') + "&number=5&ranking=1" 
+    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=5&ranking=1" 
+    console.log(requestString)
     const RecipeDash = 
         DataComponent(
             RecipeList,
@@ -55,7 +56,7 @@ export default class App extends React.Component {
         )
     render (
         <>
-            <IngrList />
+            <App />
             <RecipeDash />
         </>,
         document.getElementById('root')
