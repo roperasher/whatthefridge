@@ -139,7 +139,7 @@ class SpoonacularEndpoints {
    *  @param {number} id The recipe id.
    */
   //example request to endpoint: https://api.spoonacular.com/data/recipes/{id}/nutritionWidget.json
-  getRecipeNutritionByID(parameters) {
+  getNutritionInfoID(parameters) {
     let id = parameters.id;
     let endpointURL = RECIPES_URL + "/" + id + "/nutritionWidget.json" + this.apiKey 
     return makeRequest(endpointURL);

@@ -39,7 +39,7 @@ const InfoCarousel = ({ data }) => {
 
     return(
         <Carousel className="infoCarousel" activeIndex={index} onSelect={handleSelect} autoplay={false} >
-            <Carousel.Item style={{'height': "400px"; 'width': "80%"; }}>
+            <Carousel.Item style={{'height': "400px", 'width': "80%" }}>
                 <h2>{data.title}</h2>
                 <Figure>
                     <img id={`recipe ${data.id}`} src={`${data.image}`} alt={`${data.title}`}></img>
@@ -49,13 +49,13 @@ const InfoCarousel = ({ data }) => {
                     <h4>Slide for more information</h4>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item style={{'height': "400px", 'width': "80%"; }}>
+            <Carousel.Item style={{'height': "400px", 'width': "80%" }}>
                 <NutritionCard id={`${data.id}`} />
                 <Carousel.Caption>
                     <h3>Nutrition facts for {data.title}</h3>
                 </Carousel.Caption>
             </Carousel.Item>
-<           Carousel.Item style={{'height': "400px"; 'width': "80%"; }}>
+<           Carousel.Item style={{'height': "400px", 'width': "80%" }}>
                 <IngredientCard id={`${data.id}`} />
             </Carousel.Item>
         </Carousel>

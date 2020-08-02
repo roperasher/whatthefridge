@@ -39,7 +39,7 @@ function getRecipeNutrition(request, response) {
 function getRecipeNutritionID(request, response) {
       let id = request.query.id;
       let queryParameters = {id: id};
-      SpoonacularEndpoints.getNutritionInfoByID(queryParameters)
+      SpoonacularEndpoints.getNutritionInfoID(queryParameters)
         .then((result) => {
           response.send(result);
         })

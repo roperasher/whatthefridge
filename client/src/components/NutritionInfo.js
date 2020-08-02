@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import PropTypes from 'prop-types'
 import ReactHtmlParser from 'react-html-parser'
 import DataComponent from './DataComponent.js'
-import { Card, Nav } from 'react-bootstrap'
+import { Tab, Nav, Row, Col } from 'react-bootstrap'
 import '../stylesheets/NutritionInfo.css'
 
 const NutritionInfo = ({ data }) => {
@@ -12,17 +12,40 @@ const NutritionInfo = ({ data }) => {
     const [key, setKey] = useState('overview')
     
     return(
-        <>
-            <Card className="nutrition-card">
-                <Tabs
-                    id="nutrition-tabs" defaultActiveKey="overview" onSelect={(key) => setKey(key)}
-                >
-                    <Tab eventKey="overview" title="Stats">Stats</Tab>
-                    <Tab eventKey="The Good">The Good</Tab>
-                    <Tab eventKey="The Bad">The Bad</Tab>
-                </Tabs>
-            </Card>
-        </>
+        <Tab.Container defaultActiveKey="overview">
+            <Row>
+                <Nav variant="tabs" className="flex-row">
+                    <Col sm={4}>  
+                        <Nav.Item>
+                            <Nav.Link eventKey="overview" title="Stats">Stats</Nav.Link>
+                        </Nav.Item>
+                    </Col>
+                    <Col sm={4}>  
+                        <Nav.Item>
+                            <Nav.Link eventKey="good" title="Good">The Good</Nav.Link>
+                        </Nav.Item>
+                    </Col>
+                    <Col sm={4}>  
+                        <Nav.Item>
+                            <Nav.Link eventKey="bad" title="Bad">The Bad</Nav.Link>
+                        </Nav.Item>
+                    </Col>  
+                </Nav>
+            </Row>
+            <Row>
+                <Tab.Content>
+                    <Tab.Pane eventKey="overview">
+                        Overview
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="good">
+                        The Good
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="bad">
+                        The Bad
+                    </Tab.Pane>
+                </Tab.Content>
+            </Row>
+        </Tab.Container>
     )
 }
 
