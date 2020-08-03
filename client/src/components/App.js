@@ -45,7 +45,8 @@ export default class App extends React.Component {
   }
 
   recipeSearch(...ingrs) {
-    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name).join('%2C') + "&number=5&ranking=1" 
+    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=5&ranking=1" 
+    console.log(requestString)
     const RecipeDash = 
         DataComponent(
             RecipeList,
@@ -55,7 +56,7 @@ export default class App extends React.Component {
         )
     render (
         <>
-            <IngrList />
+            <App />
             <RecipeDash />
         </>,
         document.getElementById('root')
@@ -73,17 +74,17 @@ export default class App extends React.Component {
       <div className="app">
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
         <Accordion defaultActiveKey="0">
-                <Card>
-                    <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            All Ingredients
-                        </Accordion.Toggle>
-                    </Card.Header>
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            </Accordion> 
+          <Card>
+              <Card.Header>
+                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                      All Ingredients
+                  </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                  <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
+              </Accordion.Collapse>
+          </Card>
+        </Accordion> 
       </div>
     )
   }

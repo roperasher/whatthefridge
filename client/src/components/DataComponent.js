@@ -16,6 +16,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID) =>
 
         componentDidMount() {
             this.setState({ loading: true })
+            //console.log(url) //uncomment to see API endpoint called to fetch data
             fetch(url)
                 .then(res => (isJson) ? res.json() : res.text())
                 .then(data => this.setState({
