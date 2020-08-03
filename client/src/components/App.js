@@ -74,17 +74,17 @@ export default class App extends React.Component {
       <div className="app">
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
         <Accordion defaultActiveKey="0">
-                <Card>
-                    <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            All Ingredients
-                        </Accordion.Toggle>
-                    </Card.Header>
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            </Accordion> 
+          <Card>
+              <Card.Header>
+                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                      All Ingredients
+                  </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                  <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
+              </Accordion.Collapse>
+          </Card>
+        </Accordion> 
       </div>
     )
   }

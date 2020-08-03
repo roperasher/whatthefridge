@@ -30,36 +30,54 @@ const Recipe = ({ id, onExit=f=>f }) => {
     }
 }
 
-const InfoCarousel = ({ data }) => {
-    const [index, setIndex] = useState(0)
+class InfoCarousel extends React.Component {
 
-    const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex)
+    constructor(props) {
+        super(props)
+        this.state = {
+            index: 0
+        }
+        this.handleSelect = this.handleSelect.bind(this)
     }
 
-    return(
-        <Carousel className="infoCarousel" activeIndex={index} onSelect={handleSelect} autoplay={false} >
-            <Carousel.Item style={{'height': "400px", 'width': "80%" }}>
-                <h2>{data.title}</h2>
-                <Figure>
-                    <img id={`recipe ${data.id}`} src={`${data.image}`} alt={`${data.title}`}></img>
-                </Figure>
-                <p>{ReactHtmlParser(data.summary)}</p>
-                <Carousel.Caption>
-                    <h4>Slide for more information</h4>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item style={{'height': "400px", 'width': "80%" }}>
-                <NutritionCard id={`${data.id}`} />
-                <Carousel.Caption>
-                    <h3>Nutrition facts for {data.title}</h3>
-                </Carousel.Caption>
-            </Carousel.Item>
-<           Carousel.Item style={{'height': "400px", 'width': "80%" }}>
-                <IngredientCard id={`${data.id}`} />
-            </Carousel.Item>
-        </Carousel>
-    )
+    handleSelect = (selectedIndex, e) => {
+        this.setState(prevState => ({
+            index: (prevState.index+1)%3
+        }))
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return false
+    }
+
+    render() {
+        const { handleSelect } = this
+        const { index } = this.state.index
+        const data = this.props.data
+        return(
+            <Carousel className="infoCarousel" activeIndex={index} onSelect={handleSelect} autoplay="false" >
+                <Carousel.Item >
+                    <h2>{`${data.title}`}</h2>
+                    <Figure>
+                        <img className="d-block w-100" id={`recipe ${data.id}`} src={`${data.image}`} alt={`${data.title}`}></img>
+                        <p>{ReactHtmlParser(data.summary)}</p>
+                    </Figure>
+                    <Carousel.Caption>
+                        <h4>Slide for more information</h4>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <NutritionCard className="d-block w-100" id={`${data.id}`} />
+                    <Carousel.Caption>
+                        <h3>Nutrition facts for {`${data.title}`}</h3>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <IngredientCard className="d-block w-100" id={`${data.id}`} />
+                </Carousel.Item>
+            </Carousel>
+        )
+    }
 }
 
 const RecipeStub = ({ data }) => (
