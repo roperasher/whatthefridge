@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ReactHtmlParser from 'react-html-parser'
 import DataComponent from './DataComponent.js'
 import App from './App.js'
-import Card from './Card.js'
+// import Card from './Card.js'
 
 /*const IngredientViz = ({ data }) => (
     <div className="ingredient-widget">
