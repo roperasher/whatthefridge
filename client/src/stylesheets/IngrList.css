@@ -1,0 +1,19 @@
+.ingr-list {
+    display: flex;
+    width: fit-content;
+}
+
+.ingr-list > button {
+    border: 1px solid lightgrey;
+    font-weight: bold;
+    padding: 10px 15px;
+    width: 25%;
+    margin: 1px;
+    background-color: #0173a0;
+    color: white;
+}
+
+.ingr-list > button:hover {
+    background-color: white;
+    color: #0173a0;
+}
