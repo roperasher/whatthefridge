@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Toast, Button, Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import '../stylesheets/Ingr.css'
 
 export default class Ingr extends React.Component {

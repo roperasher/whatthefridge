@@ -1,14 +1,8 @@
-import React, { useState } from 'react'
-import { render } from 'react-dom'
-import PropTypes from 'prop-types'
-import ReactHtmlParser from 'react-html-parser'
+import React from 'react'
 import DataComponent from './DataComponent.js'
-import App from './App.js'
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 
-const IngredientInfo = ({ data }) => {
-    const [key, setKey] = useState('list')
-    
+const IngredientInfo = ({ data }) => {    
     return(
         <Tab.Container defaultActiveKey="list">
             <Row className="justify-content-md-center">

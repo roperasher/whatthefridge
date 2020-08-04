@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
 import { v4 } from 'uuid'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../stylesheets/App.css'
 import SearchBar from './SearchBar'
 import RecipeList from './RecipeList'
-import { IngrList, NewIngrNotification } from './IngrList'
+import IngrList from './IngrList'
 import DataComponent from './DataComponent'
 import { Card, Accordion, Button } from 'react-bootstrap'
+import Notifications, {notify} from 'react-notify-toast'
 
 export default class App extends React.Component {
   
@@ -22,6 +23,7 @@ export default class App extends React.Component {
     this.recipeSearch = this.recipeSearch.bind(this)
     this.addRecipe = this.addRecipe.bind(this)
     this.removeRecipe = this.removeRecipe.bind(this)
+    this.show = notify.createShowQueue()
   }
 
   addIngr(ingr) {
@@ -37,20 +39,7 @@ export default class App extends React.Component {
       ],
       recipes: prevState.recipes
     }))
-    render(
-      <>
-        <App />
-        <div 
-          aria-live="polite"
-          aria-atomic="true"
-          style={{ position: 'relative', minHeight: '200px',}}>
-          <div style={{ position: 'absolute', top: 0, right: 0, }}>
-            <NewIngrNotification name={name} />
-          </div>
-        </div>
-      </>,
-      document.getElementById('root')
-    )
+    this.show(`${name} added to fridge`, "success", 1500)
   }
 
   removeIngr(id) {
@@ -89,6 +78,7 @@ export default class App extends React.Component {
     return (
       <div className="app">
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
+        <Notifications options={{zIndex: 500, top: 50}} />
         <Accordion defaultActiveKey="0">
           <Card>
               <Card.Header>

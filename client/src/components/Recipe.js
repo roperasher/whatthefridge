@@ -1,36 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
-import PropTypes from 'prop-types'
 import ReactHtmlParser from 'react-html-parser'
-import { v4 } from 'uuid'
 import '../stylesheets/Recipe.css'
 import App from './App.js'
-import DataComponent from './DataComponent.js'
 import NutritionCard from './NutritionInfo.js'
 import IngredientCard from './IngredientInfo.js'
 import { Carousel, Figure, Image, Card, Button } from 'react-bootstrap'
-
-const requestString = id => "http://localhost:5000/data/recipe/searchRecipeID/?id=" + id 
-
-const Recipe = ({ id, onExit=f=>f }) => {
-    class Recipe extends React.Component {
-        constructor(props) {
-            super(props)
-            this.state = {
-                loading: false,
-                loaded: false
-            }
-        }
-
-        render() {
-            return(
-                <div className="recipe">
-                    <button onClick={() => onExit(id)}>X</button>
-                </div>
-            )
-        }
-    }
-}
 
 class InfoCarousel extends React.Component {
 
@@ -105,6 +80,5 @@ const getRecipeWindow = (data) => {
 
 export {
     InfoCarousel,
-    Recipe,
     RecipeStub
 }

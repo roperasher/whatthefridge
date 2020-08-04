@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
-import { render } from 'react-dom'
-import PropTypes from 'prop-types'
+import React from 'react'
 import DataComponent from './DataComponent.js'
-import App from './App.js'
-import { InfoCarousel, Recipe, RecipeStub } from './Recipe.js'
+import { RecipeStub } from './Recipe.js'
 import { Card, CardDeck } from 'react-bootstrap'
 import '../stylesheets/RecipeList.css'
 

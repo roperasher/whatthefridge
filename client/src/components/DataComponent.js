@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from 'react-dom'
 
 const DataComponent = (SomeComponent, url, isJson, recipeID) =>
     class DataComponent extends React.Component {
