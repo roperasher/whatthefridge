@@ -1,34 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
-import PropTypes from 'prop-types'
 import ReactHtmlParser from 'react-html-parser'
-import { v4 } from 'uuid'
 import '../stylesheets/Recipe.css'
 import App from './App.js'
-import DataComponent from './DataComponent.js'
 import NutritionCard from './NutritionInfo.js'
 import IngredientCard from './IngredientInfo.js'
-import { Carousel, Figure } from 'react-bootstrap'
-
-const Recipe = ({ id, onExit=f=>f }) => {
-    class Recipe extends React.Component {
-        constructor(props) {
-            super(props)
-            this.state = {
-                loading: false,
-                loaded: false
-            }
-        }
-
-        render() {
-            return(
-                <div className="recipe">
-                    <button onClick={() => onExit(id)}>X</button>
-                </div>
-            )
-        }
-    }
-}
+import { Carousel, Figure, Image, Card, Button } from 'react-bootstrap'
 
 class InfoCarousel extends React.Component {
 
@@ -53,27 +30,27 @@ class InfoCarousel extends React.Component {
     render() {
         const { handleSelect } = this
         const { index } = this.state.index
-        const data = this.props.data
+        const data = this.props
         return(
-            <Carousel className="infoCarousel" activeIndex={index} onSelect={handleSelect} autoplay="false" >
-                <Carousel.Item >
-                    <h2>{`${data.title}`}</h2>
+            <Carousel id="infoCarousel" activeIndex={index} onSelect={handleSelect} autoplay={false}>
+                <Carousel.Item className="justify-content-md-center">
+                    <h3>{data.title}</h3>
                     <Figure>
-                        <img className="d-block w-100" id={`recipe ${data.id}`} src={`${data.image}`} alt={`${data.title}`}></img>
-                        <p>{ReactHtmlParser(data.summary)}</p>
+                        <Image id={"recipe" + data.id} src={data.image} alt={data.title} fluid={"true"} ></Image>
+                        <Figure.Caption>{ReactHtmlParser(data.summary)}</Figure.Caption>
                     </Figure>
                     <Carousel.Caption>
                         <h4>Slide for more information</h4>
                     </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item>
-                    <NutritionCard className="d-block w-100" id={`${data.id}`} />
+                <Carousel.Item className="justify-content-md-center">
+                    <NutritionCard className="d-block w-75" id={data.id} />
                     <Carousel.Caption>
-                        <h3>Nutrition facts for {`${data.title}`}</h3>
+                        <h3>Nutrition facts for {data.title}</h3>
                     </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item>
-                    <IngredientCard className="d-block w-100" id={`${data.id}`} />
+                <Carousel.Item className="justify-content-md-center">
+                    <IngredientCard className="d-block w-75" id={data.id} />
                 </Carousel.Item>
             </Carousel>
         )
@@ -81,16 +58,27 @@ class InfoCarousel extends React.Component {
 }
 
 const RecipeStub = ({ data }) => (
-    <div className="recipe-stub">
-        <h4>{data.title}</h4>
-        <p>{data.readyInMinutes} minutes</p><br></br>
-        <p>Health Score: {data.healthScore}</p><br></br>
-        <p>Cost per serving: {data.pricePerServing}</p><br></br>
-    </div>
+    <>
+        <p>{data.readyInMinutes} minutes</p>
+        <p>Health Score: {data.healthScore}</p>
+        <p>Cost per serving: {data.pricePerServing}</p>
+        <Card.Footer>
+            <Button variant="primary" onClick={() => getRecipeWindow(data)}>See Recipe Details</Button>
+        </Card.Footer>
+    </>
 )
+
+const getRecipeWindow = (data) => {
+    render (
+        <>
+            <App />
+            <InfoCarousel {...data} />
+        </>,
+        document.getElementById('root')
+    )
+}
 
 export {
     InfoCarousel,
-    Recipe,
     RecipeStub
 }

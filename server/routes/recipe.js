@@ -130,6 +130,20 @@ function getRecipeIngredientCssID(request, response) {
     })
 }
 
+function requestRecipeIngredients(request, response) {
+  let id = request.query.id;
+  let queryParameters = {id: id};
+  SpoonacularEndpoints.getRecipeIngredientsByID(queryParameters)
+    .then((result) => {
+      response.send(result);
+    })
+    .catch((error) => {
+      console.log("In catch block of requestRecipeIngredients...\n" +
+        "API call to getRecipeIngredientsByID failed!\n" + 
+        "You tried to request data for: " + id + " which DNE\n");
+      console.log("Error message: " + error);
+    })
+}
 
 //TODO: CSS isn't displaying
 function getRecipePrice(request, response) {
@@ -161,4 +175,12 @@ function getRecipePrice(request, response) {
     })  
 }
 
-module.exports = {getRecipeData, getRecipeDataID, getRecipeDataByIngredients, getRecipeIngredientCSS, getRecipeIngredientCssID, getRecipePrice};
+module.exports = {
+  getRecipeData, 
+  getRecipeDataID, 
+  getRecipeDataByIngredients, 
+  getRecipeIngredientCSS, 
+  getRecipeIngredientCssID, 
+  requestRecipeIngredients, 
+  getRecipePrice
+}

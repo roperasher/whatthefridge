@@ -8,6 +8,7 @@ import RecipeList from './RecipeList'
 import IngrList from './IngrList'
 import DataComponent from './DataComponent'
 import { Card, Accordion, Button } from 'react-bootstrap'
+import Notifications, {notify} from 'react-notify-toast'
 
 export default class App extends React.Component {
   
@@ -22,19 +23,23 @@ export default class App extends React.Component {
     this.recipeSearch = this.recipeSearch.bind(this)
     this.addRecipe = this.addRecipe.bind(this)
     this.removeRecipe = this.removeRecipe.bind(this)
+    this.show = notify.createShowQueue()
   }
 
-  addIngr(name) {
+  addIngr(ingr) {
+    const [name, ID] = ingr.split(' ')
     this.setState(prevState => ({
       ingredients: [
         ...prevState.ingredients,
         {
           id: v4(),
-          name
+          name,
+          ID
         }
       ],
       recipes: prevState.recipes
     }))
+    this.show(`${name} added to fridge`, "success", 1500)
   }
 
   removeIngr(id) {
@@ -73,14 +78,15 @@ export default class App extends React.Component {
     return (
       <div className="app">
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
+        <Notifications options={{zIndex: 500, top: 50}} />
         <Accordion defaultActiveKey="0">
           <Card>
               <Card.Header>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
                       All Ingredients
                   </Accordion.Toggle>
               </Card.Header>
-              <Accordion.Collapse eventKey="0">
+              <Accordion.Collapse eventKey="1">
                   <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
               </Accordion.Collapse>
           </Card>

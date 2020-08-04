@@ -5,8 +5,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69"; //Alex's API key
-const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
+const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69"; //Alex's API key
+//const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
 
 //URLs, paths, and query parameters
 const BASE = "https://api.spoonacular.com/";
@@ -90,6 +90,17 @@ class SpoonacularEndpoints {
     let id = parameters.id;
     let defaultCss = parameters.defaultCss; //hard coded to true
     let endpointURL = RECIPES_URL + "/" + id + "/ingredientWidget" + this.apiKey + "&" + defaultCss; 
+    return makeRequest(endpointURL);
+  }
+
+    /**
+   * Required:
+   *  @param {number} id The recipe id.
+   */
+  //example request to endpoint: https://api.spoonacular.com/data/recipe/ingredientWidget.json?id={id}
+  getRecipeIngredientsByID(parameters) {
+    let id = parameters.id;
+    let endpointURL = RECIPES_URL + "/" + id + "/ingredientWidget.json" + this.apiKey
     return makeRequest(endpointURL);
   }
 

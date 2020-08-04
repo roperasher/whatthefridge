@@ -51,4 +51,7 @@ function getRecipeNutritionID(request, response) {
         })
 }
 
-module.exports = {getRecipeNutrition, getRecipeNutritionID};
+module.exports = {
+  getRecipeNutrition, 
+  getRecipeNutritionID
+}

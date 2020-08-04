@@ -69,4 +69,32 @@ function requestProductIngredients(request, response) {
     })
 }
 
-module.exports = {requestProductData, requestProductIngredients};
+function parseFridgeIngredients(request, response) {
+  //console.log("request: ", request.query.query); //uncomment to check query parameters
+  let data = {};
+  let ingredients = request.query.ingredients;
+  let queryParameters = {ingredientList: ingredients};
+  Spoonacular.searchGroceryProducts(queryParameters)
+    .then((result) => {
+      //console.log(result);  //uncomment to see JSON returned from endpoint
+      let product = result.products[0].title;
+      let productImageURL = result.products[0].image;
+      let productID = result.products[0].id;
+      data.product = product;
+      data.imageURL = productImageURL;
+      data.id = productID;
+      response.send(data);
+    })
+    .catch((error) => {
+      console.log("In catch block of requestProductData...\n" +
+        "API call to searchGroceryProducts failed!\n" + 
+        "You tried to request data for: " + product + " which DNE\n");
+      console.log("Error message: " + error);
+    })
+}
+
+module.exports = {
+  requestProductData, 
+  requestProductIngredients,
+  parseFridgeIngredients
+}
