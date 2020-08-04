@@ -1,19 +1,25 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { v4 } from 'uuid'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../stylesheets/App.css'
-import SearchBar from './SearchBar'
-import RecipeList from './RecipeList'
-import IngrList from './IngrList'
-import DataComponent from './DataComponent'
-import { Card, Accordion, Button } from 'react-bootstrap'
+import React from "react";
+import { render } from "react-dom";
+import { v4 } from "uuid";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../stylesheets/App.css";
+import SearchBar from "./SearchBar";
+import RecipeList from "./RecipeList";
+import IngrList from "./IngrList";
+import DataComponent from "./DataComponent";
+import { Card, Accordion, Button } from "react-bootstrap";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Notifications, {notify} from 'react-notify-toast'
 
+import Header from "./Header";
+import Home from "./Home";
+import Recipes from "./Recipes";
+import { About } from "./About";
+
+
 export default class App extends React.Component {
-  
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       ingredients: [],
       recipes: []
@@ -43,10 +49,10 @@ export default class App extends React.Component {
   }
 
   removeIngr(id) {
-    this.setState(prevState => ({
-      ingredients: prevState.ingredients.filter(ingr => ingr.id !== id),
-      recipes: prevState.recipes
-    }))
+    this.setState((prevState) => ({
+      ingredients: prevState.ingredients.filter((ingr) => ingr.id !== id),
+      recipes: prevState.recipes,
+    }));
   }
 
   recipeSearch(...ingrs) {
@@ -68,15 +74,17 @@ export default class App extends React.Component {
     )
   }
 
-  addRecipe = () => {}
+  addRecipe = () => {};
 
-  removeRecipe = () => {}
+  removeRecipe = () => {};
 
   render() {
-    const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this
-    const { ingredients, recipes } = this.state
+    const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this;
+    const { ingredients, recipes } = this.state;
     return (
+    <Router>
       <div className="app">
+        <Header />
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
         <Notifications options={{zIndex: 500, top: 50}} />
         <Accordion defaultActiveKey="0">
@@ -91,8 +99,13 @@ export default class App extends React.Component {
               </Accordion.Collapse>
           </Card>
         </Accordion> 
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/about" component={About} />
+          <Route path="/recipes" render={(props) => <Recipes {...props} onNewIngr = {addIngr} onSearch = {() => recipeSearch(...ingredients)} />} />
+        </Switch>
       </div>
-    )
+    </Router>
+    );
   }
-
 }
