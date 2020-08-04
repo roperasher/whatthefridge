@@ -4,14 +4,14 @@ import PropTypes from 'prop-types'
 import DataComponent from './DataComponent.js'
 import App from './App.js'
 import { InfoCarousel, Recipe, RecipeStub } from './Recipe.js'
+import { Card, CardDeck } from 'react-bootstrap'
 import '../stylesheets/RecipeList.css'
 
 const requestString = id => "http://localhost:5000/data/recipe/searchRecipeID/?id=" + id 
 
 const RecipeList = ({ data }) => {
-    //const [recipes, setRecipes] = useState([])
     return (
-        <div className="recipe-list">
+        <CardDeck id="recipe-list">
             {data.map((recipe, i) => {
                 const RecipeInfo = 
                     DataComponent(
@@ -21,31 +21,23 @@ const RecipeList = ({ data }) => {
                         recipe.id
                     )
                 return (
-                    <div className="recipe" key={i} onClick={() => getRecipeWindow(recipe.id)}>
-                        <RecipeInfo />
-                    </div>
+                    <Card className="w-100 p-3 mb-5 text-*-center" key={i} bg={(i%2===0) ? 'info' : 'light'}
+                        text={(i%2===0) ? 'white' : 'dark'}>
+                        <Card.Header>{recipe.title}</Card.Header>
+                        <Card.Body>
+                            <Card.Text>
+                                    <p>Ingredients Used: {recipe.usedIngredientCount}</p>
+                                    <p>Ingredients Needed: {recipe.missedIngredientCount}</p>
+                            <RecipeInfo />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
                 )
             })}
-        </div>
-    )
-}
-
-const getRecipeWindow = id => {
-    const RecipeWindow = 
-        DataComponent(
-            InfoCarousel,
-            requestString(id),
-            true,
-            id
-        )
-    render (
-        <>
-            <App />
-            <RecipeWindow />
-        </>,
-        document.getElementById('root')
+        </CardDeck>
     )
 }
 
 export default RecipeList
+
     

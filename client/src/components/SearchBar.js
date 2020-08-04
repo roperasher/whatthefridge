@@ -10,7 +10,7 @@ const SearchBar = ({ onNewIngr=f=>f, onSearch=f=>f }) => {
         e.preventDefault()
         onNewIngr(ingr_name.value)
         ingr_name.value = ''
-        ingr_name.focus()
+        ingr_name.focus() 
     }
 
     return (

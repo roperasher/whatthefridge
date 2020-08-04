@@ -10,7 +10,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID) =>
                 loading: false,
                 loaded: false,
                 visible: false,
-                id: null
+                id: null,
             }
         }
 
@@ -24,7 +24,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID) =>
                     loaded: true,
                     loading: false,
                     visible: true,
-                    id: recipeID
+                    id: recipeID,
                 }))
         }
 

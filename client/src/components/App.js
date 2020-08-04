@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { render } from 'react-dom'
 import { v4 } from 'uuid'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../stylesheets/App.css'
 import SearchBar from './SearchBar'
 import RecipeList from './RecipeList'
-import IngrList from './IngrList'
+import { IngrList, NewIngrNotification } from './IngrList'
 import DataComponent from './DataComponent'
 import { Card, Accordion, Button } from 'react-bootstrap'
 
@@ -24,17 +24,33 @@ export default class App extends React.Component {
     this.removeRecipe = this.removeRecipe.bind(this)
   }
 
-  addIngr(name) {
+  addIngr(ingr) {
+    const [name, ID] = ingr.split(' ')
     this.setState(prevState => ({
       ingredients: [
         ...prevState.ingredients,
         {
           id: v4(),
-          name
+          name,
+          ID
         }
       ],
       recipes: prevState.recipes
     }))
+    render(
+      <>
+        <App />
+        <div 
+          aria-live="polite"
+          aria-atomic="true"
+          style={{ position: 'relative', minHeight: '200px',}}>
+          <div style={{ position: 'absolute', top: 0, right: 0, }}>
+            <NewIngrNotification name={name} />
+          </div>
+        </div>
+      </>,
+      document.getElementById('root')
+    )
   }
 
   removeIngr(id) {
@@ -76,11 +92,11 @@ export default class App extends React.Component {
         <Accordion defaultActiveKey="0">
           <Card>
               <Card.Header>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
                       All Ingredients
                   </Accordion.Toggle>
               </Card.Header>
-              <Accordion.Collapse eventKey="0">
+              <Accordion.Collapse eventKey="1">
                   <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
               </Accordion.Collapse>
           </Card>

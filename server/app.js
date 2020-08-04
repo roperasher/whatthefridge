@@ -25,6 +25,7 @@ app.get("/data/recipe/searchRecipesByIngredients", recipe.getRecipeDataByIngredi
 app.get("/data/recipe/visualizeRecipeByIngredientsID", recipe.getRecipeIngredientCssID);
 app.get("/data/recipe/visualizeRecipeByIngredients", recipe.getRecipeIngredientCSS);
 app.get("/data/recipe/visualizeRecipePriceBreakdownByID", recipe.getRecipePrice);
+app.get("/data/recipe/getRecipeIngredientsByID", recipe.requestRecipeIngredients)
 app.get("/data/nutrition/visualizeRecipeNutrition", nutrition.getRecipeNutrition);
 app.get("/data/nutrition/getNutritionInformation", nutrition.getRecipeNutritionID);
 
