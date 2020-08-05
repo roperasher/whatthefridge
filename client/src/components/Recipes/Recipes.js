@@ -4,7 +4,7 @@ import DataComponent from "../DataComponent";
 import { withRouter } from 'react-router-dom';
 
 // ENTRY POINT FOR RECIPES 
-const Recipes = ({ingredients = []}) => {
+const Recipes = ({ ingredients = [], onAddRecipe=f=>f }) => {
   // TODO display message saying not ingredients    
     const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingredients.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=5&ranking=1" 
     console.log(requestString)
@@ -13,7 +13,8 @@ const Recipes = ({ingredients = []}) => {
             RecipeList,
             requestString,
             true,
-            null
+            null,
+            onAddRecipe
         )
     return (
         <RecipeDash />

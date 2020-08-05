@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DataComponent = (SomeComponent, url, isJson, recipeID) =>
+const DataComponent = (SomeComponent, url, isJson, recipeID, callback) =>
     class DataComponent extends React.Component {
         constructor(props) {
             super(props)
@@ -10,6 +10,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID) =>
                 loaded: false,
                 visible: false,
                 id: null,
+                callback: null
             }
         }
 
@@ -24,6 +25,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID) =>
                     loading: false,
                     visible: true,
                     id: recipeID,
+                    callback
                 }))
         }
 
@@ -31,9 +33,11 @@ const DataComponent = (SomeComponent, url, isJson, recipeID) =>
             return (
                 <div className="data-component">
                     {(this.state.loaded) ?
-                        <SomeComponent { ...this.state } /> : 
+                        ((callback) ?
+                            <SomeComponent callback={callback} { ...this.state } /> : 
+                            <SomeComponent { ...this.state } />) :
                         "" 
-                        }
+                    }
                 </div>
             )
         }

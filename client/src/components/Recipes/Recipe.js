@@ -5,7 +5,7 @@ import '../../stylesheets/Recipe.css'
 import App from '../App.js'
 import NutritionCard from '../NutritionInfo.js'
 import IngredientCard from '../Ingredients/IngredientInfo.js'
-import { Carousel, Figure, Card, Button, Row, ListGroup } from 'react-bootstrap'
+import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup } from 'react-bootstrap'
 
 class InfoCarousel extends React.Component {
 
@@ -17,6 +17,7 @@ class InfoCarousel extends React.Component {
         }
         this.handleSelect = this.handleSelect.bind(this)
         this.onExit = this.onExit.bind(this)
+        this.onRecipeAdd = this.onRecipeAdd.bind(this)
     }
 
     handleSelect = (selectedIndex, e) => {
@@ -31,26 +32,38 @@ class InfoCarousel extends React.Component {
         }))
     }
 
+    onRecipeAdd = (e) => {
+        this.props.addRecipe(this.props.data.title, this.props.data.id)
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.carouselOpen !== nextState.carouselOpen
     }
 
     render() {
-        const { handleSelect, onExit } = this
+        const { handleSelect, onExit, onRecipeAdd } = this
         const { index, carouselOpen } = this.state
-        const data = this.props
-        console.log(carouselOpen)
+        const data = this.props.data
         return(
             carouselOpen &&
             <>
                 <Carousel id="infoCarousel" activeIndex={index} onSelect={handleSelect} interval={500000}>
-                    <Button
-                        type="button"
-                        className="close" 
-                        aria-label="Close" 
-                        onClick={onExit}>
-                        Back to Recipes
-                    </Button>
+                    <ButtonGroup>
+                        <Button
+                            type="button"
+                            variant="primary"
+                            aria-label={`Add ${data.title} to recipes`}
+                            onClick={onRecipeAdd}>
+                                Add Recipe to List
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="primary" 
+                            aria-label="Close" 
+                            onClick={onExit}>
+                                Back to Recipes
+                        </Button>
+                    </ButtonGroup>
                     <Carousel.Item className="justify-content-md-center">
                         <Row className="justify-content-md-center">
                             <h3>{data.title}</h3>
@@ -88,7 +101,7 @@ class InfoCarousel extends React.Component {
     }
 }
 
-const RecipeStub = ({ data }) => (
+const RecipeStub = (addRecipe=f=>f, { data }) => (
     <>
         <ListGroup>
             <ListGroup.Item>{data.readyInMinutes} minutes</ListGroup.Item>
@@ -96,16 +109,16 @@ const RecipeStub = ({ data }) => (
             <ListGroup.Item>Cost per serving: {data.pricePerServing}</ListGroup.Item>
         </ListGroup>
         <Card.Footer>
-            <Button variant="primary" onClick={() => getRecipeWindow(data)}>See Recipe Details</Button>
+            <Button variant="primary" onClick={() => getRecipeWindow(addRecipe, data)}>See Recipe Details</Button>
         </Card.Footer>
     </>
 )
 
-const getRecipeWindow = (data) => {
+const getRecipeWindow = (addRecipe=f=>f, data) => {
     render (
         <>
             <App />
-            <InfoCarousel {...data} />
+            <InfoCarousel addRecipe={addRecipe} data={data} />
         </>,
         document.getElementById('root')
     )
