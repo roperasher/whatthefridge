@@ -1,7 +1,7 @@
 import React from 'react'
 import DataComponent from '../DataComponent.js'
 import { RecipeStub } from './Recipe.js'
-import { Card, CardDeck } from 'react-bootstrap'
+import { Card, CardDeck, ListGroup } from 'react-bootstrap'
 import '../../stylesheets/RecipeList.css'
 
 const requestString = id => "http://localhost:5000/data/recipe/searchRecipeID/?id=" + id 
@@ -18,15 +18,15 @@ const RecipeList = ({ data }) => {
                         recipe.id
                     )
                 return (
-                    <Card className="w-100 p-3 mb-5 text-*-center" key={i} bg={(i%2===0) ? 'info' : 'light'}
+                    <Card className="w-100 p-3 mb-5 text-*-center text-nowrap" key={i} bg={(i%2===0) ? 'info' : 'light'}
                         text={(i%2===0) ? 'white' : 'dark'}>
                         <Card.Header>{recipe.title}</Card.Header>
                         <Card.Body>
-                            <Card.Text>
-                                    <p>Ingredients Used: {recipe.usedIngredientCount}</p>
-                                    <p>Ingredients Needed: {recipe.missedIngredientCount}</p>
+                            <ListGroup>
+                                <ListGroup.Item>Ingredients Used: {recipe.usedIngredientCount}</ListGroup.Item>
+                                <ListGroup.Item>Ingredients Needed: {recipe.missedIngredientCount}</ListGroup.Item>
+                            </ListGroup>
                             <RecipeInfo />
-                            </Card.Text>
                         </Card.Body>
                     </Card>
                 )

@@ -26,14 +26,14 @@ const IngredientInfo = ({ data }) => {
             </Row>
             <Row className="justify-content-md-center">
                 <Tab.Content>
-                    <Tab.Pane eventKey="list" className="d-flex justify-content-center" unmountOnExit="true">
+                    <Tab.Pane eventKey="list" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.ingredients.map((ingr, i) => 
-                                <ListGroup.Item variant={(i%2===0) ? 'info' : 'light'}>{ingr.name}</ListGroup.Item>
+                                <ListGroup.Item key={i} variant={(i%2===0) ? 'info' : 'light'}>{ingr.name}</ListGroup.Item>
                             )}
                         </ListGroup>
                     </Tab.Pane>
-                    <Tab.Pane eventKey="prices" className="d-flex justify-content-center" unmountOnExit="true">
+                    <Tab.Pane eventKey="prices" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.ingredients.map((ingr, i) => (
                                 <>
@@ -43,7 +43,7 @@ const IngredientInfo = ({ data }) => {
                             ))}
                         </ListGroup>                   
                     </Tab.Pane>
-                    <Tab.Pane eventKey="amounts" className="d-flex justify-content-center" unmountOnExit="true">
+                    <Tab.Pane eventKey="amounts" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.ingredients.map((ingr, i) => (
                                 <>

@@ -16,9 +16,7 @@ const Recipes = ({ingredients = []}) => {
             null
         )
     return (
-        <div>
-            <RecipeDash />
-        </div>
+        <RecipeDash />
     )
   }
 
