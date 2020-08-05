@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
-import '../stylesheets/Ingr.css'
+import '../../stylesheets/Ingr.css'
 
 export default class Ingr extends React.Component {
     constructor(props) {

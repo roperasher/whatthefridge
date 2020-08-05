@@ -1,10 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import ReactHtmlParser from 'react-html-parser'
-import '../stylesheets/Recipe.css'
-import App from './App.js'
-import NutritionCard from './NutritionInfo.js'
-import IngredientCard from './IngredientInfo.js'
+import '../../stylesheets/Recipe.css'
+import App from '../App.js'
+import NutritionCard from '../NutritionInfo.js'
+import IngredientCard from '../Ingredients/IngredientInfo.js'
 import { Carousel, Figure, Image, Card, Button } from 'react-bootstrap'
 
 class InfoCarousel extends React.Component {

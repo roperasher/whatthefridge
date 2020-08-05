@@ -4,8 +4,9 @@ import { v4 } from "uuid";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../stylesheets/App.css";
 import SearchBar from "./SearchBar";
-import RecipeList from "./RecipeList";
-import IngrList from "./IngrList";
+import Fridge from "./Fridge/Fridge"
+import RecipeList from "./Recipes/RecipeList";
+import IngrList from "./Ingredients/IngrList";
 import DataComponent from "./DataComponent";
 import { Card, Accordion, Button } from "react-bootstrap";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
@@ -13,7 +14,7 @@ import Notifications, {notify} from 'react-notify-toast'
 
 import Header from "./Header";
 import Home from "./Home";
-import Recipes from "./Recipes";
+import Recipes from "./Recipes/Recipes";
 import { About } from "./About";
 
 
@@ -26,7 +27,7 @@ export default class App extends React.Component {
     }
     this.addIngr = this.addIngr.bind(this)
     this.removeIngr = this.removeIngr.bind(this)
-    this.recipeSearch = this.recipeSearch.bind(this)
+    // this.recipeSearch = this.recipeSearch.bind(this)
     this.addRecipe = this.addRecipe.bind(this)
     this.removeRecipe = this.removeRecipe.bind(this)
     this.show = notify.createShowQueue()
@@ -54,24 +55,24 @@ export default class App extends React.Component {
     }));
   }
 
-  recipeSearch(...ingrs) {
-    const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=5&ranking=1" 
-    console.log(requestString)
-    const RecipeDash = 
-        DataComponent(
-            RecipeList,
-            requestString,
-            true,
-            null
-        )
-    render (
-        <>
-            <App />
-            <RecipeDash />
-        </>,
-        document.getElementById('root')
-    )
-  }
+  // recipeSearch(...ingrs) {
+  //   const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=5&ranking=1" 
+  //   console.log(requestString)
+  //   const RecipeDash = 
+  //       DataComponent(
+  //           RecipeList,
+  //           requestString,
+  //           true,
+  //           null
+  //       )
+  //   render (
+  //       <>
+  //           <App />
+  //           <RecipeDash />
+  //       </>,
+  //       document.getElementById('root')
+  //   )
+  // }
 
   addRecipe = () => {};
 
@@ -84,24 +85,13 @@ export default class App extends React.Component {
     <Router>
       <div className="app">
         <Header onNewIngr={addIngr} />
-        <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
+        {/* <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} /> */}
         <Notifications options={{zIndex: 500, top: 50}} />
-        <Accordion defaultActiveKey="0">
-          <Card>
-              <Card.Header>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                      All Ingredients
-                  </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="1">
-                  <Card.Body><IngrList ingredients={ingredients} onRemove={removeIngr} /></Card.Body>
-              </Accordion.Collapse>
-          </Card>
-        </Accordion> 
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
-          <Route path="/recipes" render={(props) => <Recipes {...props} onNewIngr = {addIngr} onSearch = {() => recipeSearch(...ingredients)} />} />
+          <Route path="/recipes" render={(props) => <Recipes {...props} ingredients={ingredients} />} />
+          <Route path="/fridge" render={(props) => <Fridge {...props} ingredients={ingredients} removeIngr={removeIngr} />} />
         </Switch>
       </div>
     </Router>

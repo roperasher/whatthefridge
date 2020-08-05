@@ -1,4 +1,4 @@
-import React, {Component} from 'react'; //Import component from react for the class to extend from.
+import React, {Component} from 'react';
 
 export class About extends Component {
 

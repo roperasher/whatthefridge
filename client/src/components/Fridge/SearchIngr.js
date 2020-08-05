@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { FormControl, Form, Button } from "react-bootstrap";
 import url from "url";
-// const url = require("url");
 
 
 function SearchIngr({ addIngr=f=>f }) {
-  // const [searchText, setText] = useState('');
   const API_KEY = process.env.REACT_APP_API_KEY;
   const spoonURL = new URL(
     `https://api.spoonacular.com/food/ingredients/autocomplete?`

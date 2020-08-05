@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../stylesheets/IngrList.css'
+import '../../stylesheets/IngrList.css'
 import Ingr from './Ingr.js'
 
 const IngrList = ({ ingredients=[], onRemove=f=>f }) => (

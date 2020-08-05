@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, FormControl, Form, Button} from "react-bootstrap";
+import { Navbar, Nav, NavDropdown} from "react-bootstrap";
 
 import SearchIngr from "./Fridge/SearchIngr";
 
@@ -8,7 +8,7 @@ function Header ({ onNewIngr=f=>f }) {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={Link} to="/">
-        What The Fridge
+        What The Fridge <img src='/fridge.png' alt='fridge icon'></img>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -19,7 +19,10 @@ function Header ({ onNewIngr=f=>f }) {
           <Nav.Link as={Link} to="/recipes">
             Recipes 
           </Nav.Link>
-          <NavDropdown title="My Fridge" id="basic-nav-dropdown">
+          <Nav.Link as={Link} to="/fridge">
+            My Fridge 
+          </Nav.Link>
+          {/* <NavDropdown title="My Fridge" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">
               Add Ingredients
             </NavDropdown.Item>
@@ -27,7 +30,7 @@ function Header ({ onNewIngr=f=>f }) {
             <NavDropdown.Item href="#action/3.1">Contents</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#action/3.2">Nutrition</NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> */}
         </Nav>
         <SearchIngr addIngr={onNewIngr} />
       </Navbar.Collapse>

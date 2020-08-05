@@ -1,8 +1,8 @@
 import React from 'react'
-import DataComponent from './DataComponent.js'
+import DataComponent from '../DataComponent.js'
 import { RecipeStub } from './Recipe.js'
 import { Card, CardDeck } from 'react-bootstrap'
-import '../stylesheets/RecipeList.css'
+import '../../stylesheets/RecipeList.css'
 
 const requestString = id => "http://localhost:5000/data/recipe/searchRecipeID/?id=" + id 
 

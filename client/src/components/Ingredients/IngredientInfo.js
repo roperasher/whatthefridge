@@ -1,5 +1,5 @@
 import React from 'react'
-import DataComponent from './DataComponent.js'
+import DataComponent from '../DataComponent.js'
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 
 const IngredientInfo = ({ data }) => {    
