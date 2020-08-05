@@ -32,8 +32,7 @@ export default class App extends React.Component {
     this.show = notify.createShowQueue()
   }
 
-  addIngr(ingr) {
-    const [name, image] = ingr.split('+')
+  addIngr({ name, image }) {
     this.setState(prevState => ({
       ingredients: [
         ...prevState.ingredients,

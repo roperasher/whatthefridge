@@ -10,8 +10,12 @@ function SearchIngr({ addIngr=f=>f }) {
   const spoonURL = new URL(
     `https://api.spoonacular.com/food/ingredients/autocomplete?`
   );
-  const numOfResults = 5;
-  let newIngr
+  const numOfResults = 1;
+  let newIngr = {
+    name: "",
+    image: "",
+    loaded: false
+  }
 
   let params = new URLSearchParams([
     ["apiKey", `${API_KEY}`],
@@ -29,7 +33,11 @@ function SearchIngr({ addIngr=f=>f }) {
       fetch(spoonURL.href)
         .then((resp) => resp.json())
         .then((data) => {
-          newIngr = data[0].name + '+' + data[0].image
+          newIngr = {
+            name: data[0].name,
+            image: data[0].image,
+            loaded: true
+          }
         })
         .catch((error) => console.log(error));
     }
@@ -39,12 +47,12 @@ function SearchIngr({ addIngr=f=>f }) {
     <Form inline>
       <FormControl
         name="searchtext"
-        onChange={handleChange}
         type="text"
+        onChange={handleChange}
         placeholder="Search Ingredients "
         className="mr-sm-2"
       />
-      <Button variant="outline-success" onClick={() => addIngr(newIngr)}>Add Ingredient</Button>
+      <Button variant="outline-success" onClick={() => (newIngr.loaded) ? addIngr(newIngr) : ""}>Add Ingredient</Button>
     </Form>
   );
 }
