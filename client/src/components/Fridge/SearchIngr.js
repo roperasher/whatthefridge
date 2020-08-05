@@ -4,13 +4,14 @@ import url from "url";
 // const url = require("url");
 
 
-function SearchIngr(props) {
+function SearchIngr({ addIngr=f=>f }) {
   // const [searchText, setText] = useState('');
   const API_KEY = process.env.REACT_APP_API_KEY;
   const spoonURL = new URL(
     `https://api.spoonacular.com/food/ingredients/autocomplete?`
   );
   const numOfResults = 5;
+  let newIngr
 
   let params = new URLSearchParams([
     ["apiKey", `${API_KEY}`],
@@ -27,7 +28,9 @@ function SearchIngr(props) {
     if (val.length >= 3) {
       fetch(spoonURL.href)
         .then((resp) => resp.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+          newIngr = data[0].name + '+' + data[0].image
+        })
         .catch((error) => console.log(error));
     }
   };
@@ -41,7 +44,7 @@ function SearchIngr(props) {
         placeholder="Search Ingredients "
         className="mr-sm-2"
       />
-      <Button variant="outline-success">Search</Button>
+      <Button variant="outline-success" onClick={() => addIngr(newIngr)}>Add Ingredient</Button>
     </Form>
   );
 }

@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown, FormControl, Form, Button} from "react-bootst
 
 import SearchIngr from "./Fridge/SearchIngr";
 
-function Header() {
+function Header ({ onNewIngr=f=>f }) {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={Link} to="/">
@@ -29,7 +29,7 @@ function Header() {
             <NavDropdown.Item href="#action/3.2">Nutrition</NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <SearchIngr />
+        <SearchIngr addIngr={onNewIngr} />
       </Navbar.Collapse>
     </Navbar>
   );

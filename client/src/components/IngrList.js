@@ -11,7 +11,7 @@ const IngrList = ({ ingredients=[], onRemove=f=>f }) => (
                 <Ingr
                     key={ingr.id} 
                     name={ingr.name}
-                    ID={ingr.ID} 
+                    image={ingr.image} 
                     onRemove={() => onRemove(ingr.id)} 
                 />
             )

@@ -15,14 +15,11 @@ export default class Ingr extends React.Component {
     componentDidMount() {
         this.setState({ loading: true })
         const imageURL = imageName => "https://spoonacular.com/cdn/ingredients_100x100/" + imageName
-        const req = "https://api.spoonacular.com/food/ingredients/" + this.props.ID + "/information?apiKey=79acef64ea6448bd9440a28073b99d69"
-        fetch(req)
-            .then(res => res.json())
-            .then(ingr => this.setState({
-                imageName: imageURL(ingr.image),
+        this.setState({
+                imageName: imageURL(this.props.image),
                 loading: false,
                 loaded: true
-            }))
+        })
     }
 
     render() {

@@ -33,14 +33,14 @@ export default class App extends React.Component {
   }
 
   addIngr(ingr) {
-    const [name, ID] = ingr.split(' ')
+    const [name, image] = ingr.split('+')
     this.setState(prevState => ({
       ingredients: [
         ...prevState.ingredients,
         {
           id: v4(),
           name,
-          ID
+          image
         }
       ],
       recipes: prevState.recipes
@@ -84,7 +84,7 @@ export default class App extends React.Component {
     return (
     <Router>
       <div className="app">
-        <Header />
+        <Header onNewIngr={addIngr} />
         <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} />
         <Notifications options={{zIndex: 500, top: 50}} />
         <Accordion defaultActiveKey="0">
