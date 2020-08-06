@@ -72,21 +72,24 @@ export default class App extends React.Component {
   //   )
   // }
 
-  addRecipe = (name, recipeID) => {
+  addRecipe = (title, id) => {
     this.setState(prevState => ({
       recipes: [
         ...prevState.recipes,
         {
-          id: v4(),
-          name,
-          recipeID
+          title,
+          id
         }
       ],
     }))
-    this.show(`${name} added to your recipes`, "success", 1500)
-  };
+    this.show(`${title} added to your recipes`, "success", 1500)
+  }
 
-  removeRecipe = () => {};
+  removeRecipe(id) {
+    this.setState((prevState) => ({
+      recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
+    }))
+  }
 
   render() {
     const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this;
@@ -100,7 +103,8 @@ export default class App extends React.Component {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
-          <Route path="/recipes" render={(props) => <Recipes {...props} ingredients={ingredients} onAddRecipe={addRecipe} />} />
+          <Route path="/recipes" render={(props) => <Recipes {...props} recipes={recipes} onRemove={removeRecipe} />} />
+          <Route path="/recipeSearch" render={(props) => <Recipes {...props} ingredients={ingredients} onAddRecipe={addRecipe} />} />
           <Route path="/fridge" render={(props) => <Fridge {...props} ingredients={ingredients} removeIngr={removeIngr} />} />
         </Switch>
       </div>
