@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Jumbotron, Button, Modal } from "react-bootstrap";
+import "../stylesheets/Home.css"
 
 function Home() {
   return (
@@ -8,7 +9,7 @@ function Home() {
     <div className="row">
       <div className="col-sm-2"></div> 
       <div className="col-sm-8">
-      <Jumbotron className="border border-secondary">
+      <Jumbotron className="border border-secondary jumbo">
         <h1 className="mb-3">Welcome to What the Fridge!!</h1>
           <p className="text-left">
             Have you ever opened your fridge in a hungry fervor and had no idea
