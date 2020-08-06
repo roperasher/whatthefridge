@@ -72,7 +72,7 @@ export default class App extends React.Component {
   //   )
   // }
 
-  addRecipe = ({ name, recipeID }) => {
+  addRecipe = (name, recipeID) => {
     this.setState(prevState => ({
       recipes: [
         ...prevState.recipes,

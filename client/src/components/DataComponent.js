@@ -33,9 +33,9 @@ const DataComponent = (SomeComponent, url, isJson, recipeID, callback) =>
             return (
                 <div className="data-component">
                     {(this.state.loaded) ?
-                        ((callback) ?
-                            <SomeComponent callback={callback} { ...this.state } /> : 
-                            <SomeComponent { ...this.state } />) :
+                        ((this.state.callback) ?
+                            <SomeComponent data={this.state.data} callback={this.state.callback} /> :
+                            <SomeComponent { ...this.state }  />) :
                         "" 
                     }
                 </div>

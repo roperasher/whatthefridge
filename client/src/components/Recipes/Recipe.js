@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import ReactHtmlParser from 'react-html-parser'
+import { v4 } from 'uuid'
 import '../../stylesheets/Recipe.css'
 import App from '../App.js'
 import NutritionCard from '../NutritionInfo.js'
@@ -33,7 +34,7 @@ class InfoCarousel extends React.Component {
     }
 
     onRecipeAdd = (e) => {
-        this.props.addRecipe(this.props.data.title, this.props.data.id)
+        this.props.callback(this.props.data.title, this.props.data.id)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -44,10 +45,11 @@ class InfoCarousel extends React.Component {
         const { handleSelect, onExit, onRecipeAdd } = this
         const { index, carouselOpen } = this.state
         const data = this.props.data
+        console.log(data)
         return(
             carouselOpen &&
             <>
-                <Carousel id="infoCarousel" activeIndex={index} onSelect={handleSelect} interval={500000}>
+                <Row className="justify-content-md-center"> 
                     <ButtonGroup>
                         <Button
                             type="button"
@@ -64,6 +66,9 @@ class InfoCarousel extends React.Component {
                                 Back to Recipes
                         </Button>
                     </ButtonGroup>
+                </Row>
+                <Carousel id="infoCarousel" activeIndex={index} onSelect={handleSelect} interval={500000}>
+                    
                     <Carousel.Item className="justify-content-md-center">
                         <Row className="justify-content-md-center">
                             <h3>{data.title}</h3>
@@ -101,7 +106,7 @@ class InfoCarousel extends React.Component {
     }
 }
 
-const RecipeStub = (addRecipe=f=>f, { data }) => (
+const RecipeStub = ({ data, callback=f=>f }) => (
     <>
         <ListGroup>
             <ListGroup.Item>{data.readyInMinutes} minutes</ListGroup.Item>
@@ -109,16 +114,16 @@ const RecipeStub = (addRecipe=f=>f, { data }) => (
             <ListGroup.Item>Cost per serving: {data.pricePerServing}</ListGroup.Item>
         </ListGroup>
         <Card.Footer>
-            <Button variant="primary" onClick={() => getRecipeWindow(addRecipe, data)}>See Recipe Details</Button>
+            <Button variant="primary" onClick={() => getRecipeWindow(data, callback)}>See Recipe Details</Button>
         </Card.Footer>
     </>
 )
 
-const getRecipeWindow = (addRecipe=f=>f, data) => {
+const getRecipeWindow = (data, callback) => {
     render (
         <>
             <App />
-            <InfoCarousel addRecipe={addRecipe} data={data} />
+            <InfoCarousel data={data} callback={callback} />
         </>,
         document.getElementById('root')
     )

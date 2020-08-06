@@ -30,29 +30,29 @@ const NutritionInfo = ({ data }) => {
                 <Tab.Content>
                     <Tab.Pane eventKey="overview" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
-                            <ListGroup.Item key={v4()} variant="info">{`Total Calories: ${data.calories}`}</ListGroup.Item>
-                            <ListGroup.Item key={v4()} variant="info">{`Carbs: ${data.carbs}`}</ListGroup.Item>
-                            <ListGroup.Item key={v4()} variant="info">{`Total Fat: ${data.fat}`}</ListGroup.Item>
-                            <ListGroup.Item key={v4()} variant="info">{`Total Protein: ${data.protein}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Total Calories: ${data.calories}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Carbs: ${data.carbs}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Total Fat: ${data.fat}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Total Protein: ${data.protein}`}</ListGroup.Item>
                         </ListGroup>
                     </Tab.Pane>
                     <Tab.Pane eventKey="good" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.good.map((item, i) => (
-                                <>
-                                <ListGroup.Item key={i} variant="info">{`${item.title}`}</ListGroup.Item>
-                                <ListGroup.Item key={i} variant="success">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
-                                </>
+                                <React.Fragment key={v4()}>
+                                    <ListGroup.Item eventKey={v4()} variant="info">{`${item.title}`}</ListGroup.Item>
+                                    <ListGroup.Item eventKey={v4()} variant="success">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
+                                </React.Fragment>
                             ))}
                         </ListGroup>                   
                     </Tab.Pane>
                     <Tab.Pane eventKey="bad" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.bad.map((item, i) => (
-                                <>
-                                <ListGroup.Item key={i} variant="info">{`${item.title}`}</ListGroup.Item>
-                                <ListGroup.Item key={i} variant="warning">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
-                                </>
+                                <React.Fragment key={v4()}>
+                                    <ListGroup.Item eventKey={v4()} variant="info">{`${item.title}`}</ListGroup.Item>
+                                    <ListGroup.Item eventKey={v4()} variant="warning">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
+                                </React.Fragment>
                             ))}
                         </ListGroup>                      
                     </Tab.Pane>
