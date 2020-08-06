@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker'
 
 window.React = React
 
+require('dotenv').config();
 render(
   <App />,
   document.getElementById('root')
