@@ -16,6 +16,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Recipes from "./Recipes/Recipes";
 import { About } from "./About";
+import { InfoCarousel } from "./Recipes/Recipe"
 
 
 export default class App extends React.Component {
@@ -85,7 +86,7 @@ export default class App extends React.Component {
     this.show(`${title} added to your recipes`, "success", 1500)
   }
 
-  removeRecipe(id) {
+  removeRecipe(title, id) {
     this.setState((prevState) => ({
       recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
     }))

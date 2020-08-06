@@ -12,7 +12,6 @@ class RecipeList extends React.Component {
         super(props)
         this.state = {
             recipes: [],
-            update: true,
             userRecipes: false
         }
     }
@@ -20,9 +19,12 @@ class RecipeList extends React.Component {
     componentDidMount() {
         this.setState({
             recipes: this.props.data,
-            update: !this.props.userRecipes,
             userRecipes: this.props.userRecipes
         })
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.recipes.length !== nextState.recipes.length
     }
 
     render() {

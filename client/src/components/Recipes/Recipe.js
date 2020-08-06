@@ -6,6 +6,7 @@ import '../../stylesheets/Recipe.css'
 import App from '../App.js'
 import NutritionCard from '../NutritionInfo.js'
 import IngredientCard from '../Ingredients/IngredientInfo.js'
+import Header from '../Header.js'
 import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup } from 'react-bootstrap'
 
 class InfoCarousel extends React.Component {
@@ -27,25 +28,20 @@ class InfoCarousel extends React.Component {
         }))
     }
 
+    onRecipeAdd = (e) => {
+        this.props.callback(this.props.data.title, this.props.data.id)
+    }
+
     onExit = (e) => {
         this.setState(prevState => ({
             carouselOpen: false
         }))
     }
 
-    onRecipeAdd = (e) => {
-        this.props.callback(this.props.data.title, this.props.data.id)
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.carouselOpen !== nextState.carouselOpen
-    }
-
     render() {
         const { handleSelect, onExit, onRecipeAdd } = this
         const { index, carouselOpen } = this.state
         const data = this.props.data
-        console.log(data)
         return(
             carouselOpen &&
             <>
@@ -60,15 +56,14 @@ class InfoCarousel extends React.Component {
                         </Button>
                         <Button
                             type="button"
-                            variant="primary" 
-                            aria-label="Close" 
+                            variant="primary"
+                            aria-label="Back to recipes"
                             onClick={onExit}>
                                 Back to Recipes
                         </Button>
                     </ButtonGroup>
                 </Row>
                 <Carousel id="infoCarousel" activeIndex={index} onSelect={handleSelect} interval={500000}>
-                    
                     <Carousel.Item className="justify-content-md-center">
                         <Row className="justify-content-md-center">
                             <h3>{data.title}</h3>
