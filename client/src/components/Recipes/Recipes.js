@@ -11,13 +11,13 @@ const Recipes = ({ ingredients = [], recipes = [], onAddRecipe=f=>f, onRemoveRec
 
   const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingredients.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=6&ranking=1"
   const RecipeDash = 
-  DataComponent(
-      RecipeList,
-      requestString,
-      true,
-      null,
-      onAddRecipe
-  )
+    DataComponent(
+        RecipeList,
+        requestString,
+        true,
+        null,
+        onAddRecipe
+    )
   return <RecipeDash />
 }
 

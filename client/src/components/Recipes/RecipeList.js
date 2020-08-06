@@ -23,6 +23,10 @@ class RecipeList extends React.Component {
         })
     }
 
+    componentWillUnmount() {
+        console.log("RecipeList unmounted")
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.recipes.length !== nextState.recipes.length
     }

@@ -34,6 +34,10 @@ export default class App extends React.Component {
     this.show = notify.createShowQueue()
   }
 
+  componentWillUnmount() {
+    console.log("App unmounted")
+  }
+
   addIngr({ name, image }) {
     this.setState(prevState => ({
       ingredients: [

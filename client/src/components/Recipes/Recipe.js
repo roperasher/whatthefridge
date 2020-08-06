@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { render } from 'react-dom'
 import ReactHtmlParser from 'react-html-parser'
 import { v4 } from 'uuid'
@@ -7,7 +7,7 @@ import App from '../App.js'
 import NutritionCard from '../NutritionInfo.js'
 import IngredientCard from '../Ingredients/IngredientInfo.js'
 import Header from '../Header.js'
-import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup } from 'react-bootstrap'
+import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup, Overlay } from 'react-bootstrap'
 
 class InfoCarousel extends React.Component {
 
@@ -20,6 +20,10 @@ class InfoCarousel extends React.Component {
         this.handleSelect = this.handleSelect.bind(this)
         this.onExit = this.onExit.bind(this)
         this.onRecipeAdd = this.onRecipeAdd.bind(this)
+    }
+
+    componentWillUnmount() {
+        console.log("InfoCarousel unmounted")
     }
 
     handleSelect = (selectedIndex, e) => {
@@ -101,23 +105,44 @@ class InfoCarousel extends React.Component {
     }
 }
 
-const RecipeStub = ({ data, callback=f=>f }) => (
-    <>
-        <ListGroup>
-            <ListGroup.Item>{data.readyInMinutes} minutes</ListGroup.Item>
-            <ListGroup.Item>Health Score: {data.healthScore}</ListGroup.Item>
-            <ListGroup.Item>Cost per serving: {data.pricePerServing}</ListGroup.Item>
-        </ListGroup>
-        <Card.Footer>
-            <Button variant="primary" onClick={() => getRecipeWindow(data, callback)}>See Recipe Details</Button>
-        </Card.Footer>
-    </>
-)
+const RecipeStub = ({ data, callback=f=>f }) => {
+    const [show, setShow] = useState(false)
+    const target = useRef(null)
+    return(
+        <>
+            <ListGroup>
+                <ListGroup.Item>{data.readyInMinutes} minutes</ListGroup.Item>
+                <ListGroup.Item>Health Score: {data.healthScore}</ListGroup.Item>
+                <ListGroup.Item>Cost per serving: {data.pricePerServing}</ListGroup.Item>
+            </ListGroup>
+            <Card.Footer>
+                <Button variant="primary" ref={target} onClick={() => setShow(true)}>See Recipe Details</Button>
+                <Overlay target={target.current} show={show} placement="top">
+                    {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                    <div
+                        {...props}
+                        style={{
+                        backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                        padding: '2px 10px',
+                        color: 'white',
+                        borderRadius: 3,
+                        top: '40%',
+                        ...props.style,
+                        }}
+                    >
+                        <InfoCarousel data={data} callback={callback} />
+                    </div>
+                    )}
+                </Overlay>
+            </Card.Footer>
+        </>
+    )
+}
 
 const getRecipeWindow = (data, callback) => {
     render (
         <>
-            <App />
+            
             <InfoCarousel data={data} callback={callback} />
         </>,
         document.getElementById('root')
