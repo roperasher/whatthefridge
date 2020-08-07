@@ -34,10 +34,6 @@ export default class App extends React.Component {
     this.show = notify.createShowQueue()
   }
 
-  componentWillUnmount() {
-    console.log("App unmounted")
-  }
-
   addIngr({ name, image }) {
     this.setState(prevState => ({
       ingredients: [
@@ -52,10 +48,11 @@ export default class App extends React.Component {
     this.show(`${name} added to fridge`, "success", 1500)
   }
 
-  removeIngr(id) {
+  removeIngr(name, id) {
     this.setState((prevState) => ({
       ingredients: prevState.ingredients.filter((ingr) => ingr.id !== id),
     }));
+    this.show(`Removed ${name} from fridge`, "warning", 1500)
   }
 
   // recipeSearch(...ingrs) {
@@ -94,6 +91,7 @@ export default class App extends React.Component {
     this.setState((prevState) => ({
       recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
     }))
+    this.show(`${title} removed from saved recipes`, "danger", 1500)
   }
 
   render() {
