@@ -16,8 +16,11 @@ function Header ({ onNewIngr=f=>f }) {
           <Nav.Link as={Link} to="/about">
             About
           </Nav.Link>
+          <Nav.Link as={Link} to="/recipeSearch">
+            Search Recipes 
+          </Nav.Link>
           <Nav.Link as={Link} to="/recipes">
-            Recipes 
+            My Recipes
           </Nav.Link>
           <Nav.Link as={Link} to="/fridge">
             My Fridge 

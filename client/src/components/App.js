@@ -16,6 +16,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Recipes from "./Recipes/Recipes";
 import { About } from "./About";
+import { InfoCarousel } from "./Recipes/Recipe"
 
 
 export default class App extends React.Component {
@@ -43,16 +44,15 @@ export default class App extends React.Component {
           image
         }
       ],
-      recipes: prevState.recipes
     }))
     this.show(`${name} added to fridge`, "success", 1500)
   }
 
-  removeIngr(id) {
+  removeIngr(name, id) {
     this.setState((prevState) => ({
       ingredients: prevState.ingredients.filter((ingr) => ingr.id !== id),
-      recipes: prevState.recipes,
     }));
+    this.show(`Removed ${name} from fridge`, "warning", 1500)
   }
 
   // recipeSearch(...ingrs) {
@@ -74,9 +74,25 @@ export default class App extends React.Component {
   //   )
   // }
 
-  addRecipe = () => {};
+  addRecipe = (title, id) => {
+    this.setState(prevState => ({
+      recipes: [
+        ...prevState.recipes,
+        {
+          title,
+          id
+        }
+      ],
+    }))
+    this.show(`${title} added to your recipes`, "success", 1500)
+  }
 
-  removeRecipe = () => {};
+  removeRecipe(title, id) {
+    this.setState((prevState) => ({
+      recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
+    }))
+    this.show(`${title} removed from saved recipes`, "danger", 1500)
+  }
 
   render() {
     const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this;
@@ -90,7 +106,8 @@ export default class App extends React.Component {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
-          <Route path="/recipes" render={(props) => <Recipes {...props} ingredients={ingredients} />} />
+          <Route path="/recipes" render={(props) => <Recipes {...props} recipes={recipes} onRemove={removeRecipe} />} />
+          <Route path="/recipeSearch" render={(props) => <Recipes {...props} ingredients={ingredients} onAddRecipe={addRecipe} />} />
           <Route path="/fridge" render={(props) => <Fridge {...props} ingredients={ingredients} removeIngr={removeIngr} />} />
         </Switch>
       </div>

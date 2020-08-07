@@ -1,4 +1,5 @@
 import React from 'react'
+import { v4 } from 'uuid'
 import DataComponent from './DataComponent.js'
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 import '../stylesheets/NutritionInfo.css'
@@ -27,31 +28,31 @@ const NutritionInfo = ({ data }) => {
             </Row>
             <Row className="justify-content-md-center">
                 <Tab.Content>
-                    <Tab.Pane eventKey="overview" className="d-flex justify-content-center" unmountOnExit="true">
+                    <Tab.Pane eventKey="overview" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
-                            <ListGroup.Item variant="info">{`Total Calories: ${data.calories}`}</ListGroup.Item>
-                            <ListGroup.Item variant="info">{`Carbs: ${data.carbs}`}</ListGroup.Item>
-                            <ListGroup.Item variant="info">{`Total Fat: ${data.fat}`}</ListGroup.Item>
-                            <ListGroup.Item variant="info">{`Total Protein: ${data.protein}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Total Calories: ${data.calories}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Carbs: ${data.carbs}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Total Fat: ${data.fat}`}</ListGroup.Item>
+                            <ListGroup.Item eventKey={v4()} variant="info">{`Total Protein: ${data.protein}`}</ListGroup.Item>
                         </ListGroup>
                     </Tab.Pane>
-                    <Tab.Pane eventKey="good" className="d-flex justify-content-center" unmountOnExit="true">
+                    <Tab.Pane eventKey="good" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.good.map((item, i) => (
-                                <>
-                                <ListGroup.Item key={i} variant="info">{`${item.title}`}</ListGroup.Item>
-                                <ListGroup.Item key={i} variant="success">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
-                                </>
+                                <React.Fragment key={v4()}>
+                                    <ListGroup.Item eventKey={v4()} variant="info">{`${item.title}`}</ListGroup.Item>
+                                    <ListGroup.Item eventKey={v4()} variant="success">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
+                                </React.Fragment>
                             ))}
                         </ListGroup>                   
                     </Tab.Pane>
-                    <Tab.Pane eventKey="bad" className="d-flex justify-content-center" unmountOnExit="true">
+                    <Tab.Pane eventKey="bad" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
                             {data.bad.map((item, i) => (
-                                <>
-                                <ListGroup.Item key={i} variant="info">{`${item.title}`}</ListGroup.Item>
-                                <ListGroup.Item key={i} variant="warning">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
-                                </>
+                                <React.Fragment key={v4()}>
+                                    <ListGroup.Item eventKey={v4()} variant="info">{`${item.title}`}</ListGroup.Item>
+                                    <ListGroup.Item eventKey={v4()} variant="warning">{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
+                                </React.Fragment>
                             ))}
                         </ListGroup>                      
                     </Tab.Pane>

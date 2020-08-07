@@ -12,7 +12,7 @@ const IngrList = ({ ingredients=[], onRemove=f=>f }) => (
                     key={ingr.id} 
                     name={ingr.name}
                     image={ingr.image} 
-                    onRemove={() => onRemove(ingr.id)} 
+                    onRemove={() => onRemove(ingr.name, ingr.id)} 
                 />
             )
         }

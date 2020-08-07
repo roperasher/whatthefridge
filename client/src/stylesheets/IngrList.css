@@ -1,5 +1,6 @@
 .ingr-list {
     display: flex;
+    flex-wrap: wrap;
     width: fit-content;
 }
 
