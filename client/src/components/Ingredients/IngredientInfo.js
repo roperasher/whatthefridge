@@ -4,6 +4,7 @@ import DataComponent from '../DataComponent.js'
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 
 const IngredientInfo = ({ data }) => {    
+    console.log(data)
     return(
         <Tab.Container defaultActiveKey="list">
             <Row className="justify-content-md-center">
@@ -59,14 +60,17 @@ const IngredientInfo = ({ data }) => {
         </Tab.Container>
     )
 }
-const IngredientCard = ({ id }) => {
+const IngredientCard = ({ id, needed }) => {
+    console.log(needed)
     var requestString = "http://localhost:5000/data/recipe/getRecipeIngredientsByID/?id=" + id
     const IngredientDash = 
         DataComponent(
             IngredientInfo,
             requestString,
             true,
-            id
+            id,
+            null,
+            needed
         )
     return <IngredientDash />
 }

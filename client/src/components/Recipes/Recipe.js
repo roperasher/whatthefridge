@@ -21,10 +21,6 @@ class InfoCarousel extends React.Component {
         this.onRecipeAdd = this.onRecipeAdd.bind(this)
     }
 
-    componentWillUnmount() {
-        console.log("InfoCarousel unmounted")
-    }
-
     handleSelect = (selectedIndex, e) => {
         this.setState(prevState => ({
             index: (prevState.index+1)%3
@@ -79,7 +75,7 @@ class InfoCarousel extends React.Component {
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item className="justify-content-md-center">
-                                <IngredientCard className="d-block w-75" id={data.id} />
+                                <IngredientCard className="d-block w-75" id={data.id} needed={data.missedIngredients} />
                                 <Carousel.Caption>
                                     <h3>Ingredients for {data.title}</h3>
                                 </Carousel.Caption>
@@ -110,7 +106,7 @@ class InfoCarousel extends React.Component {
     }
 }
 
-const RecipeStub = ({ data, callback=f=>f }) => {
+const RecipeStub = ({ data, callback=f=>f, otherData }) => {
     const [show, setShow] = useState(false)
     const target = useRef(null)
     return(

@@ -24,14 +24,6 @@ class RecipeList extends React.Component {
         })
     }
 
-    componentWillUnmount() {
-        console.log("RecipeList unmounted")
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.recipes.length !== nextProps.data.length
-    }
-
     removeRecipe = (name, id) => {
         this.setState((prevState) => ({
             recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
@@ -47,19 +39,23 @@ class RecipeList extends React.Component {
                 {userRecipes && <h3>Your Recipes</h3>}
                 <CardColumns id="recipe-list">
                     {data.map((recipe, i) => {
+                        const needed = {
+                            missedIngredients: recipe.missedIngredients
+                        }
                         const RecipeInfo = 
                             DataComponent(
                                 RecipeStub,
                                 requestString(recipe.id),
                                 true,
                                 recipe.id,
-                                callback
+                                callback,
+                                needed
                             )
                         return (
                             <Card className="w-100 p-3 mb-5 text-*-justify text-nowrap" key={i} bg={(i%1===0) ? 'info' : 'light'} text="dark">
                                 <Card.Header>{recipe.title}</Card.Header>
                                 <Card.Body>
-                                    {(userRecipes) ? <Button variant="secondary" onClick={() => removeRecipe(recipe.title, recipe.id)}>Remove from Recipes</Button> :
+                                    {(userRecipes) ? <Button variant="secondary" onClick={() => callback(recipe.title, recipe.id)}>Remove from Recipes</Button> :
                                                 <Button variant="secondary" onClick={() => callback(recipe.title, recipe.id)}>Add to Recipes</Button>}
                                     <ListGroup>
                                         <ListGroup.Item eventKey={v4()}>Ingredients Used: {recipe.usedIngredientCount}</ListGroup.Item>
