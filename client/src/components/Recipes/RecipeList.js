@@ -52,7 +52,7 @@ class RecipeList extends React.Component {
                                 needed
                             )
                         return (
-                            <Card className="w-100 p-3 mb-5 text-*-justify text-nowrap" key={i} bg={(i%1===0) ? 'info' : 'light'} text="dark">
+                            <Card className="w-100 p-3 mb-5 text-*-justify text-nowrap" key={i} bg={(i%2===0) ? 'info' : 'light'} text="dark">
                                 <Card.Header>{recipe.title}</Card.Header>
                                 <Card.Body>
                                     {(userRecipes) ? <Button variant="secondary" onClick={() => callback(recipe.title, recipe.id)}>Remove from Recipes</Button> :

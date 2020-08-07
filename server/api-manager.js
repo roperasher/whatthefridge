@@ -6,9 +6,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const API_KEY = "8966c29058mshee75833095db4cep1052bcjsn43d9790a58a9" // Alex rapidapi key
-//const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69"; //Alex's API key
-//const API_KEY = "?apiKey=dde837ff31b949bfbe0cff7f7dfca926"; //Asher's API key
-//const API_KEY = "?apiKey=541f0d6321ee4785b2d7a78d001a699e" // Jordan's API key
 
 //URLs, paths, and query parameters
 const BASE = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/" //"https://api.spoonacular.com/";

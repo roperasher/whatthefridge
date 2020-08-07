@@ -27,22 +27,22 @@ const Home = () => {
                 variant="primary"
                 onClick={() => setLearn(!Learn)}
                 aria-controls="learn-more-text"
-                aria-exapnded="open"
+                aria-expanded="open"
               >
                 Learn more
               </Button>
-              <Collapse in={Learn}>
-                <div id="learn-more-text">
-                  To add an ingredient, type in the ingredient and click Add
-                  Ingredient. Your ingredient is now saved can be viewed from
-                  the My Fridge Tab. There you may view detail information about
-                  your saved ingredients After adding ingredients you can search
-                  for recipes based on your ingredients as well as save recipes
-                  to view later. Each recipe will display detail information
-                  such as instructions, nutritional macros, and cost.
-                </div>
-              </Collapse>
             </p>
+            <Collapse in={Learn}>
+              <div id="learn-more-text">
+                To add an ingredient, type in the ingredient and click Add
+                Ingredient. Your ingredient is now saved can be viewed from the
+                My Fridge Tab. There you may view detail information about your
+                saved ingredients After adding ingredients you can search for
+                recipes based on your ingredients as well as save recipes to
+                view later. Each recipe will display detail information such as
+                instructions, nutritional macros, and cost.
+              </div>
+            </Collapse>
           </Jumbotron>
         </div>
       </div>
@@ -62,7 +62,6 @@ const RandomCard = ({ url, joke }) => {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const [text, setText] = useState("");
   let getURL = url + "?apiKey=" + API_KEY;
-  console.log(getURL);
   let type = joke ? "Joke" : "Trivia";
 
   useEffect(() => {
@@ -70,8 +69,7 @@ const RandomCard = ({ url, joke }) => {
   }, []);
 
   const getRandom = () => {
-    // console.log("MAKE GET REQUEST")
-    // console.log(call);
+    // Commented out to avoid excess API calls
     // fetch(getURL)
     //   .then((resp) => resp.json())
     //   .then((data) => {

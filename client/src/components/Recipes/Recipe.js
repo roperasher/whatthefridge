@@ -71,13 +71,13 @@ class InfoCarousel extends React.Component {
                             <Carousel.Item className="justify-content-md-center">
                                 <NutritionCard className="d-block w-75" id={data.id} />
                                 <Carousel.Caption>
-                                    <h3>Nutrition facts for {data.title}</h3>
+                                    <h3>Nutrition facts</h3>
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item className="justify-content-md-center">
                                 <IngredientCard className="d-block w-75" id={data.id} needed={data.missedIngredients} />
                                 <Carousel.Caption>
-                                    <h3>Ingredients for {data.title}</h3>
+                                    <h3>Ingredients</h3>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>
