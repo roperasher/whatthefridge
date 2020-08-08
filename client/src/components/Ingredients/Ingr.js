@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card, Modal } from 'react-bootstrap'
 import '../../stylesheets/Ingr.css'
+import IngredientNutritionDetails from './IngredientDetails.js'
 
 export default class Ingr extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class Ingr extends React.Component {
     render() {
         return( 
             (this.state.loaded) ?
-                <Card className="justify-content-md-center" onclick={this.showModal}>
+                <Card className="justify-content-md-center" onClick={this.showModal}>
                 <Modal
                     show={this.state.show}
                     onHide={this.hideModal}
@@ -48,11 +49,10 @@ export default class Ingr extends React.Component {
                         <Modal.Title>{this.props.name}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Card.Img src={this.state.imageName} />
                         <IngredientNutritionDetails name={this.props.name} />
                     </Modal.Body>
                     <Modal.Footer>
-                        <IngredientNutritionDetails name={this.props.name} />
+                        <p>test footer</p>
                     </Modal.Footer>
                 </Modal>
                     <Card.Img variant="top" src={this.state.imageName} />
