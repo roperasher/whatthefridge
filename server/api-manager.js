@@ -168,7 +168,7 @@ class SpoonacularEndpoints {
   visualizeProductNutritionByID(parameters) {
     let id = parameters.id;
     let defaultCss = parameters.defaultCss; //hard coded to true
-    let endpointURL = PRODUCTS_URL + "/" + id + "/nutritionWidget" + "?defaultCss=" + defaultCss; 
+    let endpointURL = PRODUCTS_URL + id + "/nutritionWidget" + "?defaultCss=" + defaultCss; 
     return makeRequest(endpointURL);
   }
 }

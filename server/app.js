@@ -28,6 +28,7 @@ app.get("/data/recipe/visualizeRecipePriceBreakdownByID", recipe.getRecipePrice)
 app.get("/data/recipe/getRecipeIngredientsByID", recipe.requestRecipeIngredients)
 app.get("/data/nutrition/visualizeRecipeNutrition", nutrition.getRecipeNutrition);
 app.get("/data/nutrition/getNutritionInformation", nutrition.getRecipeNutritionID);
+app.get("/data/product/visualizeProductNutritionByID", nutrition.getProductNutrition);
 
 
 //starts up server and keeps it running
