@@ -157,6 +157,20 @@ class SpoonacularEndpoints {
     let endpointURL = RECIPES_URL + id + "/nutritionWidget.json"
     return makeRequest(endpointURL);
   }
+
+  /**
+   * Required:
+   *  @param {number} id The product id.
+   * Optional:
+   *  @param {boolean} defaultCSS shows product nutrition graph. Hard coded to true in our case
+   */
+  //example request to endpoint: https://api.spoonacular.com/food/products/{id}/nutritionWidget
+  visualizeProductNutritionByID(parameters) {
+    let id = parameters.id;
+    let defaultCss = parameters.defaultCss; //hard coded to true
+    let endpointURL = PRODUCTS_URL + "/" + id + "/nutritionWidget" + "?defaultCss=" + defaultCss; 
+    return makeRequest(endpointURL);
+  }
 }
 
 const Spoonacular = new SpoonacularEndpoints();
