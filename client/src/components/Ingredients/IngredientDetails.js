@@ -42,7 +42,7 @@ const IngredientDetails = ({ data }) =>{
 }
 
 
-const IngredientNutritionDetails = ({ name }) => {
+const IngredientNutritionDetails = ({ className, name }) => {
   var requestString = "http://localhost:5000/data/product/visualizeProductNutritionByID?query=" + name 
   const IngredientNutrition = 
       DataComponent(
@@ -51,7 +51,7 @@ const IngredientNutritionDetails = ({ name }) => {
           false,
           null, 
       )
-  return <IngredientNutrition />
+  return <IngredientNutrition className={className}/>
 }
 
 export default IngredientNutritionDetails

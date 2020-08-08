@@ -171,6 +171,75 @@ class SpoonacularEndpoints {
     let endpointURL = PRODUCTS_URL + id + "/nutritionWidget" + "?defaultCss=" + defaultCss; 
     return makeRequest(endpointURL);
   }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   * Optional:
+   *  @param {number} number The number of similar recipes to request
+  */
+  //example request to endpoint: https://api.spoonacular.com/recipes/autocomplete?number=10&query=chicken
+  autocompleteRecipeSearch(parameters) {
+    let query = queryString.stringify(parameters);
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = RECIPES_URL + "/autocomplete?" + query; 
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The product id.
+   * Optional:
+   *  @param {number} number The number of results to return (between 1 and 25). 
+  */
+  //example request to endpoint: https://api.spoonacular.com/food/products/suggest?query=chicke&number=2 
+  autocompleteProductSearch(parameters) {
+    let query = queryString.stringify(parameters);
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = PRODUCTS_URL + "/suggest?" + query; 
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   * Optional:
+   *  @param {number} number The number of similar recipes to request
+   *  @param {boolean} limitLicense 	Whether the recipes should have an open license that allows display with proper attribution.
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/{id}/similar
+  getSimilarRecipes(parameters) {
+    let id = parameters.id;
+    let endpointURL = RECIPES_URL + id + "/similar"; 
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   * Optional:
+   *  @param {boolean} stepBreakdown 	Whether to break down the recipe steps even more. 
+   *    
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/324694/analyzedInstructions
+  getAnalyzedRecipeInstructions(parameters) {
+    let id = parameters.id;
+    let endpointURL = RECIPES_URL + id + "/analyzedInstructions";
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   *    
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/4632/summary
+  summarizeRecipe(parameters) {
+    let id = parameters.id;
+    let endpointURL = RECIPES_URL + id + "/analyzedInstructions";
+    return makeRequest(endpointURL);
+  }
+
 }
 
 const Spoonacular = new SpoonacularEndpoints();
