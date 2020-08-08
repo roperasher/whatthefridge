@@ -8,8 +8,11 @@ export default class Ingr extends React.Component {
         this.state = {
             imageName: "",
             loading: false,
-            loaded: false
+            loaded: false,
+            show: false,
         }
+        this.showModal = this.showModal.bind(this)
+        this.hideModal = this.hideModal.bind(this)
     }
 
     componentDidMount() {
@@ -22,10 +25,36 @@ export default class Ingr extends React.Component {
         })
     }
 
+    showModal() {
+        this.setState({ show: true })
+    }
+
+    hideModal() {
+        this.setState({ show: false })
+    }
+
     render() {
         return( 
             (this.state.loaded) ?
-                <Card className="justify-content-md-center">
+                <Card className="justify-content-md-center" onclick={this.showModal}>
+                <Modal
+                    show={this.state.show}
+                    onHide={this.hideModal}
+                    size="small"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    center
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.props.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Card.Img src={this.state.imageName} />
+                        <IngredientNutritionDetails name={this.props.name} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <IngredientNutritionDetails name={this.props.name} />
+                    </Modal.Footer>
+                </Modal>
                     <Card.Img variant="top" src={this.state.imageName} />
                     <Card.Body>
                         <Card.Title>{this.props.name}</Card.Title>
