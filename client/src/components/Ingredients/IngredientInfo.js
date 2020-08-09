@@ -4,7 +4,8 @@ import DataComponent from '../DataComponent.js'
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 
 const IngredientInfo = ({ data }) => {    
-    const missedIngr = data.filter(ingr => ingr.unit)
+    const ingredients = data[0].ingredients
+    const missedIngr = data[1][0]
     return(
         <Tab.Container defaultActiveKey="list">
             <Row className="justify-content-md-center">
@@ -30,7 +31,7 @@ const IngredientInfo = ({ data }) => {
                 <Tab.Content>
                     <Tab.Pane eventKey="list" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
-                            {data.map((ingr, i) => 
+                            {ingredients.map((ingr, i) => 
                                 <ListGroup.Item key={v4()} variant={(i%2===0) ? 'info' : 'light'}>{ingr.name}</ListGroup.Item>
                             )}
                         </ListGroup>
@@ -44,7 +45,7 @@ const IngredientInfo = ({ data }) => {
                     </Tab.Pane>
                     <Tab.Pane eventKey="amounts" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
-                            {data.ingredients.map((ingr, i) => (
+                            {ingredients.map((ingr, i) => (
                                 <React.Fragment key={v4()}>
                                     <ListGroup.Item eventKey={v4()} variant="success">{`${ingr.amount.us.value} ${ingr.amount.us.unit} ${ingr.name}`}</ListGroup.Item>
                                 </React.Fragment>

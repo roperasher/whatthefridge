@@ -29,14 +29,10 @@ export default class App extends React.Component {
     }
     this.addIngr = this.addIngr.bind(this)
     this.removeIngr = this.removeIngr.bind(this)
-    // this.recipeSearch = this.recipeSearch.bind(this)
     this.addRecipe = this.addRecipe.bind(this)
     this.removeRecipe = this.removeRecipe.bind(this)
+    this.recipeSaved = this.recipeSaved.bind(this)
     this.show = notify.createShowQueue()
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevState)
   }
 
   addIngr({ name, image }) {
@@ -60,31 +56,13 @@ export default class App extends React.Component {
     this.show(`Removed ${name} from fridge`, "warning", 1500)
   }
 
-  // recipeSearch(...ingrs) {
-  //   const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingrs.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=5&ranking=1" 
-  //   console.log(requestString)
-  //   const RecipeDash = 
-  //       DataComponent(
-  //           RecipeList,
-  //           requestString,
-  //           true,
-  //           null
-  //       )
-  //   render (
-  //       <>
-  //           <App />
-  //           <RecipeDash />
-  //       </>,
-  //       document.getElementById('root')
-  //   )
-  // }
-  recipeExists = (id) => {
+  recipeSaved = (id) => {
     return this.state.recipes.some(recipe => recipe.id === id)
   }
 
   addRecipe = (title, id, missedIngredients) => {
     console.log(`Adding ${title}`)
-    if(this.recipeExists(id)) this.removeRecipe(title, id, missedIngredients)
+    if(this.recipeSaved(id)) this.show(`${title} already saved to recipes`, "danger", 1500)
     else {
       this.setState(prevState => ({
           recipes: [
@@ -98,16 +76,15 @@ export default class App extends React.Component {
       }))
       this.show(`${title} added to your recipes`, "success", 1500)
     }
-    console.log(this.state.recipes)
   }
 
   removeRecipe(title, id, missedIngredients) {
     console.log(`Removing ${title}`)
+    if(!this.recipeSaved(id)) this.show(`${title} not in saved recipes`, "danger", 1500)
     this.setState((prevState) => ({
-      savedRecipes: prevState.recipes.filter((recipe) => recipe.id !== id),
+      recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
     }))
-    this.show(`${title} removed from saved recipes`, "danger", 1500)
-    console.log(this.state.recipes)
+    this.show(`${title} removed from saved recipes`, "warning", 1500)
   }
 
   render() {
@@ -117,13 +94,12 @@ export default class App extends React.Component {
     <Router>
       <div className="app">
         <Header onNewIngr={addIngr} />
-        {/* <SearchBar onNewIngr={addIngr} onSearch={() => recipeSearch(...ingredients)} /> */}
         <Notifications options={{zIndex: 500, top: 50}} />
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
-          <Route path="/recipes" render={(props) => <Recipes {...props} recipes={recipes} onRemoveRecipe={removeRecipe} />} />
-          <Route path="/recipeSearch" render={(props) => <Recipes {...props} ingredients={ingredients} recipes={savedRecipes} onAddRecipe={addRecipe} />} />
+          <Route path="/recipes" render={(props) => <Recipes {...props} recipes={recipes} onAddRecipe={addRecipe} onRemoveRecipe={removeRecipe} />} />
+          <Route path="/recipeSearch" render={(props) => <Recipes {...props} ingredients={ingredients} recipes={recipes} onAddRecipe={addRecipe} onRemoveRecipe={removeRecipe} />} />
           <Route path="/fridge" render={(props) => <Fridge {...props} ingredients={ingredients} removeIngr={removeIngr} />} />
         </Switch>
       </div>

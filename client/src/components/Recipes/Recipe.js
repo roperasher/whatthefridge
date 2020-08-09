@@ -19,6 +19,7 @@ class InfoCarousel extends React.Component {
         }
         this.handleSelect = this.handleSelect.bind(this)
         this.onRecipeAdd = this.onRecipeAdd.bind(this)
+        this.onRecipeRemove = this.onRecipeRemove.bind(this)
     }
 
     handleSelect = (selectedIndex, e) => {
@@ -27,12 +28,16 @@ class InfoCarousel extends React.Component {
         }))
     }
 
-    onRecipeAdd = (e) => {
+    onRecipeAdd = () => {
         this.props.callback(this.props.data.title, this.props.data.id, this.props.data.missedIngredients)
+    }
+
+    onRecipeRemove = () => {
+        this.props.callback(this.props.data.title, this.props.data.id)
     }
     
     render() {
-        const { handleSelect, onRecipeAdd } = this
+        const { handleSelect, onRecipeAdd, onRecipeRemove } = this
         const { index, carouselOpen } = this.state
         const data = this.props.data
         return(
@@ -94,6 +99,13 @@ class InfoCarousel extends React.Component {
                             <Button
                                 type="button"
                                 variant="primary"
+                                aria-label={`Remove ${data.title} from recipes`}
+                                onClick={onRecipeRemove}>
+                                    Remove Recipe from List
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="primary"
                                 aria-label="Back to recipes"
                                 onClick={this.props.onHide}>
                                     Back to Recipes
@@ -118,7 +130,7 @@ const RecipeStub = ({ data, callback=f=>f }) => {
             </ListGroup>
             <Card.Footer>
                 <Button variant="primary" ref={target} onClick={() => setShow(true)}>See Recipe Details</Button>
-                <InfoCarousel show={show} onHide={() => setShow(false)} data={data} callback={() => callback} />
+                <InfoCarousel show={show} onHide={() => setShow(false)} data={data} callback={callback} />
             </Card.Footer>
         </>
     )

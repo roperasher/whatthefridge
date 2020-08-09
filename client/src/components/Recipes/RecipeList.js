@@ -12,63 +12,57 @@ class RecipeList extends React.Component {
         super(props)
         this.state = {
             recipes: [],
-            data: [],
+            visible: [],
             userRecipes: false,
-            loading: false
         }
         this.removeRecipe = this.removeRecipe.bind(this)
         this.addRecipe = this.addRecipe.bind(this)
-        this.recipeAdded = this.recipeAdded.bind(this)
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log("Props: ", prevProps)
-        console.log("State: ", prevState)
+        this.recipeSaved = this.recipeSaved.bind(this)
     }
 
     componentDidMount() {
         var data = JSON.parse(JSON.stringify(this.props.data))
-        var savedRecipes = (this.props.userRecipes) ? data : []
+        var savedRecipes = (this.props.userRecipes) ? data : ((data[1]) ? data[1] : [])
         this.setState({
             recipes: savedRecipes,
-            data,
-            userRecipes: this.props.userRecipes
+            visible: (data.length === 1) ? data : data[0],
+            userRecipes: (this.props.userRecipes) ? true : false
         })
     }
 
-    recipeAdded = (id) => {
-        console.log(id)
-        console.log(this.state.recipes.some(recipe => recipe.id === id))
-        return this.state.recipes.some(recipe => recipe.id === id)
+    recipeSaved = (id) => {
+        return (this.state.recipes.length !== 0) ? 
+                this.state.recipes.some(recipe => recipe.id === id) :
+                false
     }
 
-    removeRecipe = (name, id) => {
-        this.setState({ loading: true })
-        this.setState(prevState => ({
-            recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
-            loading: false
-        }), () => (!this.state.loading) ? this.props.callback(name, id) : "")
+    removeRecipe = (name, id, missedIngredients) => {
+        if(this.recipeSaved(id))
+            this.setState(prevState => ({
+                recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
+            }))
+        this.props.callback[1](name, id, missedIngredients)
     }
 
     addRecipe = (title, id, missedIngredients) => {
-        this.setState({ loading: true })
-        this.setState(prevState => ({ 
-            recipes: [
-            ...prevState.recipes,
-            {
-                title,
-                id,
-                missedIngredients
-            }
-            ],
-            loading: false
-        }), () => (!this.state.loading) ? this.props.callback(title, id, missedIngredients) : "")
+        if(!this.recipeSaved(id))
+            this.setState(prevState => ({ 
+                recipes: [
+                ...prevState.recipes,
+                {
+                    title,
+                    id,
+                    missedIngredients
+                }
+                ],
+            }))
+        this.props.callback[0](title, id, missedIngredients)
     }
 
     render() {
-        const { removeRecipe, addRecipe, recipeAdded } = this
-        const { userRecipes } = this.state
-        const data = (userRecipes) ? this.state.recipes : this.state.data
+        const { removeRecipe, addRecipe, recipeSaved } = this
+        const userRecipes = this.state.userRecipes
+        const data = (userRecipes) ? this.state.recipes : this.state.visible
         return (
             <React.Fragment>
                 {userRecipes && <h3>Your Recipes</h3>}
@@ -77,21 +71,24 @@ class RecipeList extends React.Component {
                         const missedIngredients = {
                             missedIngredients: recipe.missedIngredients
                         }
+                        const recipeStubCallback = (
+                            recipeSaved(recipe.id) ? removeRecipe : addRecipe
+                        )
                         const RecipeInfo = 
                             DataComponent(
                                 RecipeStub,
                                 requestString(recipe.id),
                                 true,
                                 recipe.id,
-                                this.props.callback,
+                                recipeStubCallback,
                                 missedIngredients
                             )
                         return (
                             <Card className="w-100 p-3 mb-5 text-*-justify text-nowrap" key={i} bg={(i%2===0) ? 'info' : 'light'} text="dark">
                                 <Card.Header>{recipe.title}</Card.Header>
                                 <Card.Body>
-                                    {(userRecipes || recipeAdded(recipe.id)) ? 
-                                        <Button variant="secondary" onClick={() => removeRecipe(recipe.title, recipe.id)}>Remove from Recipes</Button> :
+                                    {(userRecipes || recipeSaved(recipe.id)) ? 
+                                        <Button variant="secondary" onClick={() => removeRecipe(recipe.title, recipe.id, recipe.missedIngredients)}>Remove from Recipes</Button> :
                                         <Button variant="secondary" onClick={() => addRecipe(recipe.title, recipe.id, recipe.missedIngredients)}>Add to Recipes</Button>
                                     }
                                     <ListGroup>
