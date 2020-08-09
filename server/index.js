@@ -31,7 +31,7 @@ if (!isDev && cluster.isMaster) {
   app.use(express.static(path.resolve(__dirname, '../client/build')));
 
   // Answer API requests.
-  app.use("/recipes", require("./routes/recipe"));
+  //app.use("/recipes", require("./routes/recipe"));
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
