@@ -49,6 +49,7 @@ if (!isDev && cluster.isMaster) {
   app.get("/data/recipe/getRecipeIngredientsByID", recipe.requestRecipeIngredients)
   app.get("/data/nutrition/visualizeRecipeNutrition", nutrition.getRecipeNutrition);
   app.get("/data/nutrition/getNutritionInformation", nutrition.getRecipeNutritionID);
+  app.get("/data/product/visualizeProductNutritionByID", nutrition.getProductNutrition);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
