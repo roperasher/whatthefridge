@@ -119,7 +119,7 @@ const NutritionInfo = ({ data }) => {
 
 const NutritionCard = ({ id }) => {
   var requestString =
-    "http://localhost:5000/data/nutrition/getNutritionInformation/?id=" + id;
+    "https://whatthefridge-psu.herokuapp.com/data/nutrition/getNutritionInformation/?id=" + id;
   const NutritionDash = DataComponent(NutritionInfo, requestString, true, id);
   return <NutritionDash />;
 };

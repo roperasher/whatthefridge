@@ -43,7 +43,7 @@ const IngredientDetails = ({ data }) =>{
 
 
 const IngredientNutritionDetails = ({ className, name }) => {
-  var requestString = "http://localhost:5000/data/product/visualizeProductNutritionByID?query=" + name 
+  var requestString = "https://whatthefridge-psu.herokuapp.com/data/product/visualizeProductNutritionByID?query=" + name 
   const IngredientNutrition = 
       DataComponent(
           IngredientDetails,
