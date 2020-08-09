@@ -19,6 +19,7 @@ app.get('/', (request, response) => response.send("In root of WhatTheFridge serv
 //endpoints for ingredient, recipe, and nutrition data
 app.get("/data/ingredient/searchGroceryProducts", ingredient.requestProductData);
 app.get("/data/ingredient/getProductInformation", ingredient.requestProductIngredients);
+app.get("/data/ingredient/getIngredientCost", ingredient.getIngredientCost)
 app.get("/data/recipe/searchRecipe", recipe.getRecipeData);
 app.get("/data/recipe/searchRecipeID", recipe.getRecipeDataID)
 app.get("/data/recipe/searchRecipesByIngredients", recipe.getRecipeDataByIngredients);

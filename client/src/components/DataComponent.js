@@ -10,7 +10,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID, callback, otherData
                 loaded: false,
                 visible: false,
                 id: null,
-                callback: null
+                callback: null            
             }
         }
 
@@ -36,7 +36,7 @@ const DataComponent = (SomeComponent, url, isJson, recipeID, callback, otherData
                     {(this.state.loaded) ?
                         ((this.state.callback) ?
                             <SomeComponent data={this.state.data} callback={this.state.callback} /> :
-                            <SomeComponent { ...this.state } { ...this.props } />) :
+                            <SomeComponent { ...this.state } otherData={this.state.otherData} />) :
                         "" 
                     }
                 </div>

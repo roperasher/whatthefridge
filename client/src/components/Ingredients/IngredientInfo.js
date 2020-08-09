@@ -4,7 +4,7 @@ import DataComponent from '../DataComponent.js'
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 
 const IngredientInfo = ({ data }) => {    
-    console.log(data)
+    const missedIngr = data.filter(ingr => ingr.unit)
     return(
         <Tab.Container defaultActiveKey="list">
             <Row className="justify-content-md-center">
@@ -16,12 +16,12 @@ const IngredientInfo = ({ data }) => {
                     </Col>
                     <Col sm={4}>  
                         <Nav.Item>
-                            <Nav.Link eventKey="prices" title="Prices">Pricing</Nav.Link>
+                            <Nav.Link eventKey="prices" title="Prices">Additional Ingredients Needed</Nav.Link>
                         </Nav.Item>
                     </Col>
                     <Col sm={4}>  
                         <Nav.Item>
-                            <Nav.Link eventKey="amounts" title="amounts">Amounts</Nav.Link>
+                            <Nav.Link eventKey="amounts" title="amounts">Ingredient Amounts</Nav.Link>
                         </Nav.Item>
                     </Col>  
                 </Nav>
@@ -30,18 +30,15 @@ const IngredientInfo = ({ data }) => {
                 <Tab.Content>
                     <Tab.Pane eventKey="list" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
-                            {data.ingredients.map((ingr, i) => 
+                            {data.map((ingr, i) => 
                                 <ListGroup.Item key={v4()} variant={(i%2===0) ? 'info' : 'light'}>{ingr.name}</ListGroup.Item>
                             )}
                         </ListGroup>
                     </Tab.Pane>
                     <Tab.Pane eventKey="prices" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
-                            {data.ingredients.map((ingr, i) => (
-                                <React.Fragment key={v4()}>
-                                    <ListGroup.Item eventKey={v4()} variant="info">{ingr.name}</ListGroup.Item>
-                                    <ListGroup.Item eventKey={v4()} variant="success">Price {ingr.amount.metric.value}</ListGroup.Item>
-                                </React.Fragment>
+                            {missedIngr.map((ingr, i) => (
+                                MissedIngredient(ingr.id, ingr.amount, ingr.unitLong)
                             ))}
                         </ListGroup>                   
                     </Tab.Pane>
@@ -49,8 +46,7 @@ const IngredientInfo = ({ data }) => {
                         <ListGroup as="span">
                             {data.ingredients.map((ingr, i) => (
                                 <React.Fragment key={v4()}>
-                                    <ListGroup.Item eventKey={v4()} variant="info">{ingr.name}</ListGroup.Item>
-                                    <ListGroup.Item eventKey={v4()} variant="success">Amount: {ingr.amount.us.value}</ListGroup.Item>
+                                    <ListGroup.Item eventKey={v4()} variant="success">{`${ingr.amount.us.value} ${ingr.amount.us.unit} ${ingr.name}`}</ListGroup.Item>
                                 </React.Fragment>
                             ))}
                         </ListGroup>                      
@@ -60,8 +56,8 @@ const IngredientInfo = ({ data }) => {
         </Tab.Container>
     )
 }
-const IngredientCard = ({ id, needed }) => {
-    console.log(needed)
+
+const IngredientCard = ({ id, missedIngredients }) => {
     var requestString = "http://localhost:5000/data/recipe/getRecipeIngredientsByID/?id=" + id
     const IngredientDash = 
         DataComponent(
@@ -70,9 +66,29 @@ const IngredientCard = ({ id, needed }) => {
             true,
             id,
             null,
-            needed
+            missedIngredients
         )
     return <IngredientDash />
+}
+
+const MissedIngredient = (id, amount, unit) => {
+    const requestString = "http://localhost:5000/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
+    const MissedIngrCost = 
+        DataComponent(
+            MissedIngr,
+            requestString,
+            true
+        )
+    return <MissedIngrCost key={v4()}/>
+}
+
+const MissedIngr = ({ data }) => {
+    return(
+        <React.Fragment key={v4()}>
+            <ListGroup.Item eventKey={v4()} variant="info">{data.name}</ListGroup.Item>
+            <ListGroup.Item eventKey={v4()} variant="success">Cost: {data.price}</ListGroup.Item>
+        </React.Fragment>
+    )
 }
 
 export default IngredientCard

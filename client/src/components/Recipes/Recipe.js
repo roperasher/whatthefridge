@@ -28,7 +28,7 @@ class InfoCarousel extends React.Component {
     }
 
     onRecipeAdd = (e) => {
-        this.props.callback(this.props.data.title, this.props.data.id)
+        this.props.callback(this.props.data.title, this.props.data.id, this.props.data.missedIngredients)
     }
     
     render() {
@@ -75,7 +75,7 @@ class InfoCarousel extends React.Component {
                                 </Carousel.Caption>
                             </Carousel.Item>
                             <Carousel.Item className="justify-content-md-center">
-                                <IngredientCard className="d-block w-75" id={data.id} needed={data.missedIngredients} />
+                                <IngredientCard className="d-block w-75" id={data.id} missedIngredients={data.missedIngredients} />
                                 <Carousel.Caption>
                                     <h3>Ingredients</h3>
                                 </Carousel.Caption>
@@ -106,7 +106,7 @@ class InfoCarousel extends React.Component {
     }
 }
 
-const RecipeStub = ({ data, callback=f=>f, otherData }) => {
+const RecipeStub = ({ data, callback=f=>f }) => {
     const [show, setShow] = useState(false)
     const target = useRef(null)
     return(
@@ -118,7 +118,7 @@ const RecipeStub = ({ data, callback=f=>f, otherData }) => {
             </ListGroup>
             <Card.Footer>
                 <Button variant="primary" ref={target} onClick={() => setShow(true)}>See Recipe Details</Button>
-                <InfoCarousel show={show} onHide={() => setShow(false)} data={data} callback={callback} />
+                <InfoCarousel show={show} onHide={() => setShow(false)} data={data} callback={() => callback} />
             </Card.Footer>
         </>
     )

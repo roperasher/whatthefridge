@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 // ENTRY POINT FOR RECIPES 
 const Recipes = ({ ingredients = [], recipes = [], onAddRecipe=f=>f, onRemoveRecipe=f=>f }) => {
   // TODO display message saying not ingredients
-  if(recipes.length !== 0)
+  if(ingredients.length === 0)
     return <RecipeList data={recipes} callback={onRemoveRecipe} userRecipes={true} />   
 
   const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingredients.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=6&ranking=1"
@@ -16,7 +16,8 @@ const Recipes = ({ ingredients = [], recipes = [], onAddRecipe=f=>f, onRemoveRec
         requestString,
         true,
         null,
-        onAddRecipe
+        onAddRecipe,
+        recipes
     )
   return <RecipeDash />
 }

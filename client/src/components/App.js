@@ -24,6 +24,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       ingredients: [],
+      savedRecipes: [],
       recipes: []
     }
     this.addIngr = this.addIngr.bind(this)
@@ -32,6 +33,10 @@ export default class App extends React.Component {
     this.addRecipe = this.addRecipe.bind(this)
     this.removeRecipe = this.removeRecipe.bind(this)
     this.show = notify.createShowQueue()
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(prevState)
   }
 
   addIngr({ name, image }) {
@@ -73,30 +78,41 @@ export default class App extends React.Component {
   //       document.getElementById('root')
   //   )
   // }
-
-  addRecipe = (title, id) => {
-    this.setState(prevState => ({
-      recipes: [
-        ...prevState.recipes,
-        {
-          title,
-          id
-        }
-      ],
-    }))
-    this.show(`${title} added to your recipes`, "success", 1500)
+  recipeExists = (id) => {
+    return this.state.recipes.some(recipe => recipe.id === id)
   }
 
-  removeRecipe(title, id) {
+  addRecipe = (title, id, missedIngredients) => {
+    console.log(`Adding ${title}`)
+    if(this.recipeExists(id)) this.removeRecipe(title, id, missedIngredients)
+    else {
+      this.setState(prevState => ({
+          recipes: [
+            ...prevState.recipes,
+            {
+              title,
+              id,
+              missedIngredients
+            }
+          ],
+      }))
+      this.show(`${title} added to your recipes`, "success", 1500)
+    }
+    console.log(this.state.recipes)
+  }
+
+  removeRecipe(title, id, missedIngredients) {
+    console.log(`Removing ${title}`)
     this.setState((prevState) => ({
-      recipes: prevState.recipes.filter((recipe) => recipe.id !== id),
+      savedRecipes: prevState.recipes.filter((recipe) => recipe.id !== id),
     }))
     this.show(`${title} removed from saved recipes`, "danger", 1500)
+    console.log(this.state.recipes)
   }
 
   render() {
     const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this;
-    const { ingredients, recipes } = this.state;
+    const { ingredients, savedRecipes, recipes } = this.state;
     return (
     <Router>
       <div className="app">
@@ -106,8 +122,8 @@ export default class App extends React.Component {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
-          <Route path="/recipes" render={(props) => <Recipes {...props} recipes={recipes} onRemove={removeRecipe} />} />
-          <Route path="/recipeSearch" render={(props) => <Recipes {...props} ingredients={ingredients} onAddRecipe={addRecipe} />} />
+          <Route path="/recipes" render={(props) => <Recipes {...props} recipes={recipes} onRemoveRecipe={removeRecipe} />} />
+          <Route path="/recipeSearch" render={(props) => <Recipes {...props} ingredients={ingredients} recipes={savedRecipes} onAddRecipe={addRecipe} />} />
           <Route path="/fridge" render={(props) => <Fridge {...props} ingredients={ingredients} removeIngr={removeIngr} />} />
         </Switch>
       </div>
