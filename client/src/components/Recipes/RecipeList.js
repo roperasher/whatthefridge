@@ -5,7 +5,7 @@ import { RecipeStub } from './Recipe.js'
 import { Card, CardColumns, ListGroup, Button } from 'react-bootstrap'
 import '../../stylesheets/RecipeList.css'
 
-const requestString = id => "http://localhost:5000/data/recipe/searchRecipeID/?id=" + id 
+const requestString = id => "https://whatthefridge-psu.herokuapp.com/data/recipe/searchRecipeID/?id=" + id 
 
 class RecipeList extends React.Component {
     constructor(props) {

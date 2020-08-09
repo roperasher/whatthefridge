@@ -114,6 +114,27 @@ function getIngredientCost(request, response) {
         "API call to getIngredientCost failed!\n" + 
         "You tried to request data for: " + id + " which DNE\n");
       console.log("Error message: " + error);
+  })
+}
+
+function autocompleteSearchForProducts(request, response) {
+  //console.log("request: ", request.query.query); //uncomment to check query parameters
+  let data = {};
+  let query = request.query.query;
+  let number = 10; //hardcoded to 10
+  let queryParameters = {query: query, number: number};
+  Spoonacular.autocompleteProductSearch(queryParameters)
+    .then((result) => {
+      //console.log(result);  //uncomment to see JSON returned from endpoint
+      data.id = result[0].id;
+      data.title = result[0].title;
+      response.send(data);
+    })
+    .catch((error) => {
+      console.log("In catch block of autocompleteProductSearch...\n" +
+        "API call to searchGroceryProducts failed!\n" + 
+        "You tried to request data for: " + product + " which DNE\n");
+      console.log("Error message: " + error);
     })
 }
 
@@ -121,5 +142,6 @@ module.exports = {
   requestProductData, 
   requestProductIngredients,
   parseFridgeIngredients,
-  getIngredientCost
+  getIngredientCost,
+  autocompleteSearchForProducts
 }
