@@ -50,7 +50,6 @@ if (!isDev && cluster.isMaster) {
   app.get("/data/nutrition/visualizeRecipeNutrition", nutrition.getRecipeNutrition);
   app.get("/data/nutrition/getNutritionInformation", nutrition.getRecipeNutritionID);
 
-
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
