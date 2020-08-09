@@ -33,7 +33,7 @@ class InfoCarousel extends React.Component {
     }
 
     onRecipeRemove = () => {
-        this.props.callback(this.props.data.title, this.props.data.id)
+        this.props.callback(this.props.data.title, this.props.data.id, this.props.data.missedIngredients)
     }
     
     render() {
