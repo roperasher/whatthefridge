@@ -7,7 +7,6 @@ const Fridge = ({ ingredients = [], removeIngr = (f) => f }) => {
   return (
     <div>
       <Contents ingredients={ingredients} removeIngr={removeIngr} />
-      <Nutrition />
     </div>
   );
 };
