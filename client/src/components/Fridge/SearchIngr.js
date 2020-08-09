@@ -4,6 +4,7 @@ import url from "url";
 
 function SearchIngr({ addIngr = (f) => f }) {
   const API_KEY = process.env.REACT_APP_API_KEY;
+  console.log(API_KEY);
   const [text, setText] = useState("");
   const spoonURL = new URL(
     `https://api.spoonacular.com/food/ingredients/autocomplete?`
