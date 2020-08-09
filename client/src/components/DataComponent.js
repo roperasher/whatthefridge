@@ -10,17 +10,16 @@ const DataComponent = (SomeComponent, url, isJson, recipeID, callback, otherData
                 loaded: false,
                 visible: false,
                 id: null,
-                callback: null
+                callback: null            
             }
         }
 
         componentDidMount() {
             this.setState({ loading: true })
-            //console.log(url) //uncomment to see API endpoint called to fetch data
             fetch(url)
                 .then(res => (isJson) ? res.json() : res.text())
                 .then(data => this.setState({
-                    data: (otherData) ? Object.assign(otherData, data) : data,
+                    data,
                     loaded: true,
                     loading: false,
                     visible: true,
@@ -30,13 +29,19 @@ const DataComponent = (SomeComponent, url, isJson, recipeID, callback, otherData
         }
 
         render() {
-            //if(this.state.loaded) console.log(this.state.data)
+            const data = otherData ? 
+                            ((otherData.length !== 0) ? 
+                                ((otherData.hasOwnProperty("missedIngredients")) ?
+                                    Object.assign(this.state.data, otherData) :
+                                [this.state.data, [otherData]]) :
+                            [this.state.data, []]) :
+                         this.state.data
             return (
                 <div className="data-component">
                     {(this.state.loaded) ?
                         ((this.state.callback) ?
-                            <SomeComponent data={this.state.data} callback={this.state.callback} /> :
-                            <SomeComponent { ...this.state } { ...this.props } />) :
+                            <SomeComponent data={data} callback={this.state.callback} /> :
+                            <SomeComponent data={data} otherData={this.state.otherData} />) :
                         "" 
                     }
                 </div>

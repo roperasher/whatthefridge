@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-dom';
 // ENTRY POINT FOR RECIPES 
 const Recipes = ({ ingredients = [], recipes = [], onAddRecipe=f=>f, onRemoveRecipe=f=>f }) => {
   // TODO display message saying not ingredients
-  if(recipes.length !== 0)
-    return <RecipeList data={recipes} callback={onRemoveRecipe} userRecipes={true} />   
+  let savedRecipes = JSON.parse(JSON.stringify(recipes))
+  if(ingredients.length === 0)
+    return <RecipeList data={savedRecipes} callback={[onAddRecipe, onRemoveRecipe]} userRecipes={true} />   
 
   const requestString = "https://whatthefridge-psu.herokuapp.com/data/recipe/searchRecipesByIngredients/?ingredients=" + ingredients.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=6&ranking=1"
   const RecipeDash = 
@@ -16,7 +17,8 @@ const Recipes = ({ ingredients = [], recipes = [], onAddRecipe=f=>f, onRemoveRec
         requestString,
         true,
         null,
-        onAddRecipe
+        [onAddRecipe, onRemoveRecipe],
+        JSON.parse(JSON.stringify(savedRecipes))
     )
   return <RecipeDash />
 }
