@@ -62,7 +62,7 @@ const IngredientInfo = ({ data }) => {
 }
 const IngredientCard = ({ id, needed }) => {
     console.log(needed)
-    var requestString = "http://localhost:5000/data/recipe/getRecipeIngredientsByID/?id=" + id
+    var requestString = "https://whatthefridge-psu.herokuapp.com/data/recipe/getRecipeIngredientsByID/?id=" + id
     const IngredientDash = 
         DataComponent(
             IngredientInfo,

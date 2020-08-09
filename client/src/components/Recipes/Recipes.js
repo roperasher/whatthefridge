@@ -9,7 +9,7 @@ const Recipes = ({ ingredients = [], recipes = [], onAddRecipe=f=>f, onRemoveRec
   if(recipes.length !== 0)
     return <RecipeList data={recipes} callback={onRemoveRecipe} userRecipes={true} />   
 
-  const requestString = "http://localhost:5000/data/recipe/searchRecipesByIngredients/?ingredients=" + ingredients.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=6&ranking=1"
+  const requestString = "https://whatthefridge-psu.herokuapp.com/data/recipe/searchRecipesByIngredients/?ingredients=" + ingredients.map(ingr => ingr.name.replace(' ', '%2C')).join(',') + "&number=6&ranking=1"
   const RecipeDash = 
     DataComponent(
         RecipeList,
