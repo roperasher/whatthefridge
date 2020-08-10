@@ -1,36 +1,33 @@
-const unirest = require('unirest');
-const cors = require('cors')
-const express = require('express');
+var express = require("express");
+var bodyParser = require("body-parser");
 const app = express();
+var path = require("path");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-const ingredient = require('./routes/ingredient.js');
-const recipe = require('./routes/recipe.js');
-const nutrition = require('./routes/nutrition.js');
+const unirest = require('unirest');
 
 const PORT = 5000;
+const server = app.listen(PORT, console.log("Server running on port " + PORT));
 
-app.use(cors());
-
-//root endpoint of WhatTheFridge server
-//access with the URL: http://localhost:5000/
-app.get('/', (request, response) => response.send("In root of WhatTheFridge server!"));
-
-//endpoints for ingredient, recipe, and nutrition data
-app.get("/data/ingredient/searchGroceryProducts", ingredient.requestProductData);
-app.get("/data/ingredient/getProductInformation", ingredient.requestProductIngredients);
-app.get("/data/ingredient/getIngredientCost", ingredient.getIngredientCost)
-app.get("/data/recipe/searchRecipe", recipe.getRecipeData);
-app.get("/data/recipe/searchRecipeID", recipe.getRecipeDataID)
-app.get("/data/recipe/searchRecipesByIngredients", recipe.getRecipeDataByIngredients);
-app.get("/data/recipe/visualizeRecipeByIngredientsID", recipe.getRecipeIngredientCssID);
-app.get("/data/recipe/visualizeRecipeByIngredients", recipe.getRecipeIngredientCSS);
-app.get("/data/recipe/visualizeRecipePriceBreakdownByID", recipe.getRecipePrice);
-app.get("/data/recipe/getRecipeIngredientsByID", recipe.requestRecipeIngredients)
-app.get("/data/nutrition/visualizeRecipeNutrition", nutrition.getRecipeNutrition);
-app.get("/data/nutrition/getNutritionInformation", nutrition.getRecipeNutritionID);
-app.get("/data/product/visualizeProductNutritionByID", nutrition.getProductNutrition);
+const API_KEY = "?apiKey=79acef64ea6448bd9440a28073b99d69";
+const INGREDIENT_LIST = ['bananas', 'apples', 'cheese', 'crackers'];
 
 
-//starts up server and keeps it running
-app.listen(PORT, () => console.log(`WhatTheFridge server listening at http://localhost:${PORT}`));
+let REQ_TYPE = "findByIngredients";
+let requestString = "https://api.spoonacular.com/recipes/" + REQ_TYPE + API_KEY;
+const ingredientsString = "&number=5&ranking=1&ingredients=" + INGREDIENT_LIST.map(ingredient =>
+   ingredient + '%2C'
+);
+
+requestString = requestString + ingredientsString;
+unirest.get(requestString)
+.end(function (result) {
+   if (result.status === 200){
+	   let REQ_TYPE = result.body[0].id + "/information";
+	   let requestString = "https://api.spoonacular.com/recipes/" + REQ_TYPE + API_KEY;
+		unirest.get(requestString + "&includeNutrition=true")
+		.end(function (result) {
+			console.log(result.body);
+		});
+   };
+});
