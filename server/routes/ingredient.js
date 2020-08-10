@@ -8,6 +8,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //returns object with the name, img (jpg), and ID of product
+//example JSON that's returned
+/* 
+  {
+    product: nameOfProduct,
+    imageURL: imageURLOfProduct,
+    productID: ID#OfProduct,
+  }
+*/
 function requestProductData(request, response) {
   //console.log("request: ", request.query.query); //uncomment to check query parameters
   let data = {};
@@ -33,6 +41,12 @@ function requestProductData(request, response) {
 }
 
 //returns object with the name and ingredient list of a product
+// example JSON that's returned
+/* 
+  {
+    ingredients: listOfProductIngredients
+  }
+*/
 function requestProductIngredients(request, response) {
   //console.log("request: ", request.query.id); //uncomment to check query parameters
   let data = {};
@@ -69,6 +83,16 @@ function requestProductIngredients(request, response) {
     })
 }
 
+
+//returns object with the name and ingredient list of a product
+//JSON that's returned
+/* 
+  {
+    product: titleOfProduct 
+    imageURL: imageURLOfProduct,
+    productID: ID#OfProduct,
+  }
+*/
 function parseFridgeIngredients(request, response) {
   //console.log("request: ", request.query.query); //uncomment to check query parameters
   let data = {};
@@ -93,6 +117,14 @@ function parseFridgeIngredients(request, response) {
     })
 }
 
+//autocompletes users entered product as it's being typed
+//example JSON that's returned
+/* 
+  {
+    id: productID#,
+    title: autocompletedTitle,
+  }
+*/
 function autocompleteSearchForProducts(request, response) {
   //console.log("request: ", request.query.query); //uncomment to check query parameters
   let data = {};
@@ -114,9 +146,41 @@ function autocompleteSearchForProducts(request, response) {
     })
 }
 
+
+// recommnnds substitute for recipe ingredients
+//example JSON that's returned
+/* 
+  {
+    ingredient: ingredientToSubstitute,
+    substitute: substituteForSomeIngredient,
+    message: informationAboutSubstitute
+  }
+*/
+function ingredientSubstitutes(request, response) {
+  //console.log("request: ", request.query.query); //uncomment to check query parameters
+  let data = {};
+  let ingredientName = request.query.ingredientName;
+  let queryParameters = {ingredientName: ingredientName};
+  Spoonacular.getIngredientSubstitutes(queryParameters)
+    .then((result) => {
+      //console.log(result);  //uncomment to see JSON returned from endpoint
+      data.ingredient= result[0].ingredient;
+      data.substitute= result[0].substitute;
+      data.message = resut[0].message;
+      response.send(data);
+    })
+    .catch((error) => {
+      console.log("In catch block of getIngredientSubstitutes...\n" +
+        "API call to searchGroceryProducts failed!\n" + 
+        "You tried to request data for: " + ingredientName + " which DNE\n");
+      console.log("Error message: " + error);
+    })
+}
+
 module.exports = {
   requestProductData, 
   requestProductIngredients,
   parseFridgeIngredients,
-  autocompleteSearchForProducts
+  autocompleteSearchForProducts,
+  ingredientSubstitutes
 }

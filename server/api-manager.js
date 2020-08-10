@@ -10,6 +10,7 @@ const API_KEY = "8966c29058mshee75833095db4cep1052bcjsn43d9790a58a9" // Alex rap
 const BASE = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/" //"https://api.spoonacular.com/";
 const RECIPES_URL = BASE  + "recipes/";
 const PRODUCTS_URL = BASE + "food/products/";
+const INGREDIENTS_URL = BASE + "food/ingredients/";
 
 //makes API call to the url
 function makeRequest(url) {
@@ -102,6 +103,17 @@ class SpoonacularEndpoints {
   getRecipeIngredientsByID(parameters) {
     let id = parameters.id;
     let endpointURL = RECIPES_URL + id + "/ingredientWidget.json"
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {number} id The recipe id.
+   */
+  //example request to endpoint: https://api.spoonacular.com/recipes/{id}/nutritionWidget.json?id={id}
+  getRecipeNutritionWidgetByID(parameters) {
+    let id = parameters.id;
+    let endpointURL = RECIPES_URL + id + "/nutritionWidget.json"
     return makeRequest(endpointURL);
   }
 
@@ -236,6 +248,19 @@ class SpoonacularEndpoints {
   summarizeRecipe(parameters) {
     let id = parameters.id;
     let endpointURL = RECIPES_URL + id + "/analyzedInstructions";
+    return makeRequest(endpointURL);
+  }
+
+  /**
+   * Required:
+   *  @param {ingredientName} String Name of the ingredient.
+   *    
+   */
+  //example request to endpoint: https://api.spoonacular.com/food/ingredients/substitutes?ingredientName=butter 
+  getIngredientSubstitutes(parameters) { 
+    let query = queryString.stringify(parameters);
+    //console.log("query: ", query); //uncomment to see query parameters as a string
+    let endpointURL = INGREDIENTS_URL + "/substitutes?" + query; 
     return makeRequest(endpointURL);
   }
 
