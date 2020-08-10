@@ -70,11 +70,11 @@ const RandomCard = ({ url, joke }) => {
 
   const getRandom = () => {
     // Commented out to avoid excess API calls
-    // fetch(getURL)
-    //   .then((resp) => resp.json())
-    //   .then((data) => {
-    //     setText(data.text);
-    //   });
+    fetch(getURL)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setText(data.text);
+    });
   };
 
   return (
