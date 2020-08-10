@@ -1,0 +1,19 @@
+.new-ingr {
+    display: flex;
+  }
+
+.new-ingr > button {
+    border: 1px solid lightgrey;
+    font-weight: bold;
+    padding: 10px 15px;
+    width: 20%;
+    height: 50%;
+    margin: 1px;
+    background-color: #0173a0;
+    color: white;
+}
+
+.new-ingr > button:hover {
+    background-color: white;
+    color: #0173a0;
+}
