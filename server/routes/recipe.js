@@ -8,6 +8,20 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+//returns JSON of recipe data
+// example JSON that's returned
+/* 
+  {
+    recipe: titleOfRecipe,
+    imageURL: imageURLOfRecipe,
+    id: recipeID#,
+    calories: numberOfCalories,
+    carbs: numberOfCarbs,
+    fat: fatData,
+    protein: proteinData
+  }
+*/
 function getRecipeData(request, response) {
   let data = {};
   let recipe = request.query.query;
@@ -34,6 +48,23 @@ function getRecipeData(request, response) {
     })
 }
 
+//returns JSON of recipe data with further details 
+// example JSON that's returned
+/* 
+  {
+    title: titleOfRecipe,
+    summary: descriptionOfRecipie
+    image: imageURLOfRecipe,
+    id: recipeID#,
+    calories: numberOfCalories,
+    carbs: numberOfCarbs,
+    fat: fatData,
+    protein: proteinData
+    readyInMinutes: numberOfMinutesToMakeRecipe,
+    healthScore: healthScoreOfRecipe (Spoonacular standards),
+    pricePerServince: priceOfRecipe
+  }
+*/
 function getRecipeDataID(request, response) {
   let data = {};
   let id = request.query.id
@@ -62,7 +93,13 @@ function getRecipeDataID(request, response) {
     })
 }
 
-//TODO: figure out how to get usedIngredients and unusedIngredients
+// recommends a recipe from a list of ingredients. Also returns recipe data
+// example JSON that's returned
+/* 
+  {
+    JSON of recipes recommended by ingredient list
+  }
+*/
 function getRecipeDataByIngredients(request, response) {
   let data = {};
   let ingredients = request.query.ingredients;
@@ -84,6 +121,13 @@ function getRecipeDataByIngredients(request, response) {
     })
 }
 
+// recommends a recipe from a list of ingredients. Also returns recipe data
+// example JSON that's returned
+/* 
+  {
+    JSON of recipes recommended by ingredient list
+  }
+*/
 function getRecipeIngredientCSS(request, response) {
   let recipe = request.query.query;
   let queryParameters = {query: recipe};
@@ -114,6 +158,14 @@ function getRecipeIngredientCSS(request, response) {
     }) 
 }
 
+
+// returns series of recipe ingredient images 
+// example of what's returned
+/* 
+  {
+    images and quantity of all ingredients for some recipe
+  }
+*/
 function getRecipeIngredientCssID(request, response) {
   let id = request.query.id;
   let defaultCss = true; //CSS endpoints always hard coded to true
@@ -131,6 +183,13 @@ function getRecipeIngredientCssID(request, response) {
     })
 }
 
+// returns JSON containing list of ingredients for some recipe
+// example JSON that's returned
+/* 
+  {
+    ingredients: listOfIngredientsForSomeRecipe
+  }
+*/
 function requestRecipeIngredients(request, response) {
   let id = request.query.id;
   let queryParameters = {id: id};
@@ -146,6 +205,14 @@ function requestRecipeIngredients(request, response) {
     })
 }
 
+// returns a graph visualizing the price of a recipe by each ingredient
+// example of what's returned
+/* 
+  {
+    graph breaking down recipe ingredients
+    A list of ingredient prices with a total
+  }
+*/
 function getRecipePrice(request, response) {
   let recipe = request.query.query;
   let queryParameters = {query: recipe};
@@ -175,6 +242,15 @@ function getRecipePrice(request, response) {
     })  
 }
 
+//returns object with the name and ingredient list of a product
+// example JSON that's returned
+/* 
+  {
+    id: recipeID#
+    title: recipeTitleUsedForAutocompletion
+    imageType: imageTypeOfRecipe
+  }
+*/
 function autocompleteRecipe(request, response) {
   let data = {};
   let recipe = request.query.query;
@@ -196,6 +272,17 @@ function autocompleteRecipe(request, response) {
     })   
 }
 
+// returns JSON containing similar recipes from some other recipe ID#
+// example JSON that's returned
+/* 
+  {
+    id: recipeID#
+    title: recipeTitleUsedForAutocompletion
+    imageType: imageTypeOfRecipe
+    readyInMinutes: numberOfMinuteToPrepareRecipe
+    sourceURL: urlForRecipeImage
+  }
+*/
 function similarRecipes(request, response) {
   let data = {};
   let recipe = request.query.query;
@@ -229,6 +316,14 @@ function similarRecipes(request, response) {
     })  
 }
 
+// returns JSON containing recipe name, and instructions 
+// example JSON that's returned
+/* 
+  {
+    name: nameOfRecipe,
+    steps: preparationInstructions
+  }
+*/
 function recipeInstructions(request, response) {
   let data = {};
   let recipe = request.query.query;
@@ -260,6 +355,14 @@ function recipeInstructions(request, response) {
     })  
 }
 
+// returns JSON containing recipe name, and instructions in further detail
+// example JSON that's returned
+/* 
+  {
+    name: nameOfRecipe,
+    steps: preparationInstructionsInFurtherDetail
+  }
+*/
 function getSummarizedRecipeInstructions(request, response) {
   let data = {};
   let recipe = request.query.query;
@@ -291,6 +394,53 @@ function getSummarizedRecipeInstructions(request, response) {
     })  
 }
 
+// returns JSON of recipe nutrition analytics. Also contains list of good and bad nutrition
+// example JSON that's returned
+/* 
+  {
+    calories: numberOfCalories,
+    carbs: numberOfCarbs,
+    fat: fatData,
+    protein: proteinData,
+    bad: listOfBadNutritionalData,
+    good; listOfGoodNutritionalData
+  }
+*/
+function getRecipeNutritionWidget(request, response) {
+  let data = {};
+  let recipe = request.query.query;
+  let queryParameters = {query: recipe};
+  SpoonacularEndpoints.searchRecipe(queryParameters)
+    .then((result) => {
+      //console.log(result); //uncomment to see JSON returned from endpoint
+      let id = result.results[0].id;
+      let queryParameters = {id: id};
+      SpoonacularEndpoints.getRecipeNutritionWidgetByID(queryParameters)
+        .then((result) => {
+          data.calories= result[0].calories;
+          data.carbs= result[0].carbs;
+          data.fat= result[0].fat;
+          data.protein = result[0].protein;
+          data.bad = result[0].bad;
+          data.good= result[0].good;
+          response.send(data);
+        })
+        .catch((error) => {
+          console.log("In catch block of summarizeRecipe...\n" +
+            "API call to visualizeRecipePriceBreakdownByID failed!\n" + 
+            "You tried to request data for: " + id + " which DNE\n");
+          console.log("Error message: " + error);
+        })
+    })
+    .catch((error) => {
+      console.log("In catch block of searchRecipe...\n" +
+        "API call to searchRecipe failed!\n" + 
+        "You tried to request data for: " + recipe + " which DNE\n");
+      console.log("Error message: " + error);
+    })  
+}
+
+
 module.exports = {
   getRecipeData, 
   getRecipeDataID, 
@@ -302,5 +452,6 @@ module.exports = {
   autocompleteRecipe,
   similarRecipes,
   recipeInstructions,
-  getSummarizedRecipeInstructions
+  getSummarizedRecipeInstructions,
+  getRecipeNutritionWidget
 }

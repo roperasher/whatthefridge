@@ -7,6 +7,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+//returns styled chart of recipe nutrition data
+//example of what's returned
+/* 
+  Chart of recipe nutrition data
+*/
 function getRecipeNutrition(request, response) {
   let recipe = request.query.query;
   let queryParameters = {query: request.query.id};
@@ -36,6 +41,7 @@ function getRecipeNutrition(request, response) {
     }) 
 }
 
+//returns JSON of recipe nutrition data
 function getRecipeNutritionID(request, response) {
       let id = request.query.id;
       let queryParameters = {id: id};
@@ -51,6 +57,11 @@ function getRecipeNutritionID(request, response) {
         })
 }
 
+//returns a styled bar chart of product nutrition
+//example of what's returned
+/*
+  bar chart containing nutrition data of some product
+*/
 function getProductNutrition(request, response) {
   let product = request.query.query;
   let queryParameters = {query: product};

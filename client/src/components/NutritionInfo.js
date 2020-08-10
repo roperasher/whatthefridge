@@ -44,6 +44,7 @@ const NutritionInfo = ({ data }) => {
           >
             <ListGroup as="span">
               <ListGroup.Item eventKey={v4()} variant="light">
+               {/* Render Chart.js doughtnut with protein, fats, carbs*/}
                 <Stats data={data} />
               </ListGroup.Item>
             </ListGroup>

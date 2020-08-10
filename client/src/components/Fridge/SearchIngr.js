@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { FormControl, Form, Button } from "react-bootstrap";
-import url from "url";
 
-// Component to search ingredients to add to fridge, fetches autocomplete data from Spoonacular
-// and returns the best match for the string searched
+// Add ingredient search bar rendered by Header.js. 
+// Requires: addIngr function from App.js
+// Provides: Search of ingredients to call addIngr function
 function SearchIngr({ addIngr = (f) => f }) {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const [text, setText] = useState("");
   const spoonURL = new URL(
-    `https://api.spoonacular.com/food/ingredients/autocomplete?`
+    // Returns list of potential ingredients from natural language input
+    `https://api.spoonacular.com/food/ingredients/autocomplete?` 
   );
   const numOfResults = 1;
   let newIngr = {
@@ -17,12 +18,14 @@ function SearchIngr({ addIngr = (f) => f }) {
     loaded: false,
   };
 
+  // Load queary parameters. Limit to first result
   let params = new URLSearchParams([
     ["apiKey", `${API_KEY}`],
     ["number", `${numOfResults}`],
     ["query", ""],
   ]);
 
+  // On submit take the first autocomplete result as the ingredient to be added
   const handleSubmit = (e) => {
     e.preventDefault();
     const val = text;
@@ -44,7 +47,9 @@ function SearchIngr({ addIngr = (f) => f }) {
         .catch((error) => console.log(error));
     }
   }
-
+  // Updated state value from input value
+  // Intial plan was to have an autocomplete combobox, set number param to 5
+  // however that was much easier said that done
   const handleChange = (e) => {
     const target = e.target;
     const val = target.value;
@@ -69,5 +74,4 @@ function SearchIngr({ addIngr = (f) => f }) {
   );
 }
 
-const handleChange = (e) => {};
 export default SearchIngr;

@@ -2,6 +2,9 @@ import React from "react";
 import { Card, Accordion, Button } from "react-bootstrap";
 import IngrList from "../Ingredients/IngrList";
 
+// Uses boostrap according and cards to render each ingredient
+// Requires: ingredient array and removeIngr from App.js
+// Provides: Collapseable display of ingredients 
 const Contents = ({ ingredients=[],  removeIngr=f=>f }) => {
   return (
     <Accordion defaultActiveKey="0">
