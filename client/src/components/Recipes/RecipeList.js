@@ -7,6 +7,7 @@ import '../../stylesheets/RecipeList.css'
 
 const requestString = id => "https://whatthefridge-psu.herokuapp.com/data/recipe/searchRecipeID/?id=" + id 
 
+// Class that displays recipe stubs for both search results and saved recipes
 class RecipeList extends React.Component {
     constructor(props) {
         super(props)
@@ -20,9 +21,10 @@ class RecipeList extends React.Component {
         this.recipeSaved = this.recipeSaved.bind(this)
     }
 
+    // On mount get the recipes saved by the user plus the search results if on recipeSearch page
     componentDidMount() {
         var data = JSON.parse(JSON.stringify(this.props.data))
-        var savedRecipes = (this.props.userRecipes) ? data : ((data[1]) ? data[1] : [])
+        var savedRecipes = (this.props.userRecipes) ? data : ((data[1]) ? data[1] : []) 
         this.setState({
             recipes: savedRecipes,
             visible: (data.length === 1) ? data : data[0],
@@ -30,12 +32,14 @@ class RecipeList extends React.Component {
         })
     }
 
+    // Checks if a recipe id is in the current sessions saved recipes
     recipeSaved = (id) => {
         return (this.state.recipes.length !== 0) ? 
                 this.state.recipes.some(recipe => recipe.id === id) :
                 false
     }
 
+    // Removes a recipe from RecipeList and calls callback to do so globally in App
     removeRecipe = (name, id, missedIngredients) => {
         if(this.recipeSaved(id))
             this.setState(prevState => ({
@@ -44,6 +48,7 @@ class RecipeList extends React.Component {
         this.props.callback[1](name, id, missedIngredients)
     }
 
+    // Adds a recipe to RecipeList and calls callback to do so globally in App
     addRecipe = (title, id, missedIngredients) => {
         if(!this.recipeSaved(id))
             this.setState(prevState => ({ 
@@ -59,6 +64,7 @@ class RecipeList extends React.Component {
         this.props.callback[0](title, id, missedIngredients)
     }
 
+    // RecipeList displays as a column of recipe cards with buttons for add/remove and to view more details
     render() {
         const { removeRecipe, addRecipe, recipeSaved } = this
         const userRecipes = this.state.userRecipes
@@ -84,17 +90,17 @@ class RecipeList extends React.Component {
                                 missedIngredients
                             )
                         return (
-                            <Card className="w-100 p-3 mb-5 text-*-justify text-nowrap" key={i} bg={(i%2===0) ? 'info' : 'light'} text="dark">
-                                <Card.Header>{recipe.title}</Card.Header>
+                            <Card className="w-100 p-3 mb-5 text-*-center" key={i} bg={(i%2===0) ? 'info' : 'light'} text="dark">
+                                <Card.Header className="text-capitalize font-weight-bolder">{recipe.title}</Card.Header>
                                 <Card.Body>
                                     {(userRecipes || recipeSaved(recipe.id)) ? 
                                         <Button variant="secondary" onClick={() => removeRecipe(recipe.title, recipe.id, recipe.missedIngredients)}>Remove from Recipes</Button> :
                                         <Button variant="secondary" onClick={() => addRecipe(recipe.title, recipe.id, recipe.missedIngredients)}>Add to Recipes</Button>
                                     }
-                                    <ListGroup>
+                                    {!userRecipes && <ListGroup>
                                         <ListGroup.Item eventKey={v4()}>Ingredients Used: {recipe.usedIngredientCount}</ListGroup.Item>
                                         <ListGroup.Item eventKey={v4()}>Ingredients Needed: {recipe.missedIngredientCount}</ListGroup.Item>
-                                    </ListGroup>
+                                    </ListGroup>}
                                     <RecipeInfo />
                                 </Card.Body>
                             </Card>

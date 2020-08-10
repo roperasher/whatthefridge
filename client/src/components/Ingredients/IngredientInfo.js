@@ -1,8 +1,11 @@
 import React from 'react'
 import { v4 } from 'uuid'
 import DataComponent from '../DataComponent.js'
+import { Doughnut } from "react-chartjs-2"
 import { Tab, Nav, Row, Col, ListGroup } from 'react-bootstrap'
 
+// Displays recipe ingredient info as three tab panes with a nav bar on top
+// Information includes pricing for missing ingredients and amount of all ingredients used
 const IngredientInfo = ({ data }) => {    
     const ingredients = data[0].ingredients
     const missedIngr = data[1][0]
@@ -41,7 +44,7 @@ const IngredientInfo = ({ data }) => {
                             {missedIngr.map((ingr, i) => (
                                 MissedIngredient(ingr.id, ingr.amount, ingr.unitLong)
                             ))}
-                        </ListGroup>                   
+                        </ListGroup>
                     </Tab.Pane>
                     <Tab.Pane eventKey="amounts" className="d-flex justify-content-center" unmountOnExit={true}>
                         <ListGroup as="span">
@@ -73,7 +76,7 @@ const IngredientCard = ({ id, missedIngredients }) => {
 }
 
 const MissedIngredient = (id, amount, unit) => {
-    const requestString = "http://localhost:5000/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
+    const requestString = "https://whatthefridge-psu.herokuapp.com/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
     const MissedIngrCost = 
         DataComponent(
             MissedIngr,
@@ -89,6 +92,61 @@ const MissedIngr = ({ data }) => {
             <ListGroup.Item eventKey={v4()} variant="info">{data.name}</ListGroup.Item>
             <ListGroup.Item eventKey={v4()} variant="success">Cost: {data.price}</ListGroup.Item>
         </React.Fragment>
+    )
+}
+
+// Not working
+const PricingInfo = (ingredients) => {
+    const requestString = (id, amount, unit) => 
+            "http://localhost:5000/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
+    let dataset = []
+    let labels = []
+    let url
+    ingredients.map(ingr => {
+        url = requestString(ingr.id, ingr.amount, ingr.unit)
+        console.log(url)
+        fetch(url)
+            .then(res => {
+                res.json()
+            })
+            .then(data => {
+            dataset.append(data.price)
+            labels.append(data.name)})
+        }) 
+    return (labels.length === ingredients.length) ? <PriceGraph data={dataset} labels={labels} /> : ""
+}
+
+const PriceGraph = ({ data, labels }) => {
+    console.log(data)
+    console.log(labels)
+    let totalCost = data.reduce(((a, b) => a + b), 0)
+    let title = `Total Recipe Cost ${totalCost}`;
+    const state = {
+        labels,
+        datasets: [
+        {
+            label: "Macros",
+            backgroundColor: ["rgba(54, 162, 235, 0.8)", "rgba(255, 159, 64, 0.8)", "rgba(199, 199, 199, 0.8)"],
+            hoverBackgroundColor: ["rgba(54, 162, 235, 1)", "rgba(255, 159, 64, 1)", "rgba(199, 199, 199, 1)"],
+            data
+        },
+        ],
+    }
+    return(
+        <Doughnut
+            data={state}
+            options={{
+                title: {
+                display: true,
+                text: `${title}`,
+                fontSize: 20,
+                },
+                legend: {
+                display: true,
+                position: "bottom",
+                },
+            }}
+            />
     )
 }
 

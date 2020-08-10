@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FormControl, Form, Button } from "react-bootstrap";
 import url from "url";
 
+// Component to search ingredients to add to fridge, fetches autocomplete data from Spoonacular
+// and returns the best match for the string searched
 function SearchIngr({ addIngr = (f) => f }) {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const [text, setText] = useState("");

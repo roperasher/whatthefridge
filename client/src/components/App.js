@@ -24,7 +24,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       ingredients: [],
-      savedRecipes: [],
       recipes: []
     }
     this.addIngr = this.addIngr.bind(this)
@@ -89,7 +88,7 @@ export default class App extends React.Component {
 
   render() {
     const { addIngr, removeIngr, recipeSearch, addRecipe, removeRecipe } = this;
-    const { ingredients, savedRecipes, recipes } = this.state;
+    const { ingredients, recipes } = this.state;
     return (
     <Router>
       <div className="app">

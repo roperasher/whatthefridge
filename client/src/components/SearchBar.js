@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import "../stylesheets/SearchBar.css"
 import Button from 'react-bootstrap/Button'
 
+// Original search bar not used in final product
 const SearchBar = ({ onNewIngr=f=>f, onSearch=f=>f }) => {
     let ingr_name
     

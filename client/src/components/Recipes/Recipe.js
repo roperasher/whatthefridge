@@ -9,6 +9,8 @@ import IngredientCard from '../Ingredients/IngredientInfo.js'
 import Header from '../Header.js'
 import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup, Modal } from 'react-bootstrap'
 
+// Carousel component that opens as a modal to display recipe details
+// Three slides: Recipe summary and image, nutrition, and ingredient information
 class InfoCarousel extends React.Component {
 
     constructor(props) {
@@ -118,6 +120,7 @@ class InfoCarousel extends React.Component {
     }
 }
 
+// Small component used for recipe stubs within RecipeList component
 const RecipeStub = ({ data, callback=f=>f }) => {
     const [show, setShow] = useState(false)
     const target = useRef(null)

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import '../../stylesheets/IngrList.css'
 import Ingr from './Ingr.js'
 
+// Displays all the fridge ingredients with images
 const IngrList = ({ ingredients=[], onRemove=f=>f }) => (
     <div className="ingr-list">
         {(ingredients.length === 0) ? 

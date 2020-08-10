@@ -5,6 +5,8 @@ import { Stats } from "./Fridge/Nutrition.js";
 import { Tab, Nav, Row, Col, ListGroup, Table } from "react-bootstrap";
 import "../stylesheets/NutritionInfo.css";
 
+// Displays recipe nutrition info as three tab panes with a nav bar on top
+// Information includes doughnut graph of nutritional macros and good/bad nutrition components
 const NutritionInfo = ({ data }) => {
   return (
     <Tab.Container defaultActiveKey="overview">
@@ -96,19 +98,6 @@ const NutritionInfo = ({ data }) => {
                   </tbody>
                 </Table>
               </ListGroup.Item>
-             
-              {/* {data.bad.map((item, i) => (
-                <React.Fragment key={v4()}>
-                  <ListGroup.Item
-                    eventKey={v4()}
-                    variant="info"
-                  >{`${item.title}`}</ListGroup.Item>
-                  <ListGroup.Item
-                    eventKey={v4()}
-                    variant="warning"
-                  >{`Percent of Daily Needs: ${item.percentOfDailyNeeds}`}</ListGroup.Item>
-                </React.Fragment>
-              ))} */}
             </ListGroup>
           </Tab.Pane>
         </Tab.Content>
