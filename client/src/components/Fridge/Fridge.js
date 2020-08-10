@@ -2,7 +2,10 @@ import React from "react";
 import Contents from "./Contents";
 import Nutrition from "./Nutrition";
 
-// ENTRY POINT FOR FRIDGE
+// Entry point for fridge components
+// Stretch goal: add nutrition for each ingredient tile
+// Requires: ingredients array and remobeIngr function from app.js
+// Provides: Root component for future Fridge components
 const Fridge = ({ ingredients = [], removeIngr = (f) => f }) => {
   return (
     <div>
