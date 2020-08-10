@@ -1,0 +1,10 @@
+.carousel-caption {
+    position: static;
+    color: #0074d9;
+}
+
+.carousel-control-prev, 
+.carousel-control-next {
+    background-color: #0074d9;
+    width: 10%;
+}
