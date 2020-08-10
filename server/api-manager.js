@@ -12,6 +12,7 @@ const RECIPES_URL = BASE  + "recipes/";
 const PRODUCTS_URL = BASE + "food/products/";
 const INGR_URL = BASE + "food/ingredients/";
 
+
 //makes API call to the url
 function makeRequest(url) {
   console.log(url)
@@ -21,7 +22,7 @@ function makeRequest(url) {
           .header("x-rapidapi-key", API_KEY)
           .end((result) => {
       if (result.status === 200) {
-        //console.log("results.body", result.body); //uncomment to see the output JSON in the console
+        console.log(result.headers); //uncomment to see the output JSON in the console
         resolve(result.body);
       } else {
         reject("ERROR! Call to endpoint failed!");
@@ -62,6 +63,21 @@ class SpoonacularEndpoints {
     //console.log("query: ", query); //uncomment to see query parameters as a string
     let endpointURL = RECIPES_URL + params.id + '/information'
     return makeRequest(endpointURL);
+  }
+
+      /**
+   * Required:
+   *  @param {number} id The ingredient id
+   * Optional:
+   *  @param {amount} number The unit amount for ingredient
+   *  @param {unit} number Unit type for ingredient amount
+   *  go to: https://spoonacular.com/food-api/docs#Get-Ingredient-Information
+   *  for list of optional parameters
+   */
+  //example request to endpoint: https://api.spoonacular.com/food/ingredients/{id}/information/?amount={amount}
+  searchIngredientByID(params) {
+    let endpointURL = INGR_URL + params.id + '/information/?amount=' + params.amount + '&unit=' + params.unit
+    return makeRequest(endpointURL)
   }
 
   /**

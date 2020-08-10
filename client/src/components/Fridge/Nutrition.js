@@ -2,6 +2,11 @@ import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import "../../stylesheets/Nutrition.css";
 
+// Unused file
+
+// Future goal to use this component to agregate ingredients to provide more graphical information about all fridge contents
+// Currently used as test bed for various components
+
 const Nutrition = () => {
   const mockData = {
     calories: "400",

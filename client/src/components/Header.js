@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown} from "react-bootstrap";
 
 import SearchIngr from "./Fridge/SearchIngr";
 
+// Collapseble navbar with search bar to add new ingredients
 function Header ({ onNewIngr=f=>f }) {
   return (
     <Navbar bg="light" expand="lg">
