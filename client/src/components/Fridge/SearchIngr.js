@@ -74,5 +74,4 @@ function SearchIngr({ addIngr = (f) => f }) {
   );
 }
 
-const handleChange = (e) => {};
 export default SearchIngr;

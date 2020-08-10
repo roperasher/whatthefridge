@@ -1,12 +1,8 @@
 import React, { useState, useRef } from 'react'
-import { render } from 'react-dom'
 import ReactHtmlParser from 'react-html-parser'
-import { v4 } from 'uuid'
 import '../../stylesheets/Recipe.css'
-import App from '../App.js'
 import NutritionCard from '../NutritionInfo.js'
 import IngredientCard from '../Ingredients/IngredientInfo.js'
-import Header from '../Header.js'
 import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup, Modal } from 'react-bootstrap'
 
 class InfoCarousel extends React.Component {

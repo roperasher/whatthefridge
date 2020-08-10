@@ -1,0 +1,10 @@
+.aboutBox {
+    background-color: white;
+    border-color: darkgrey;
+    border-style: solid; 
+    border-radius: 1em;
+}
+
+h2 {
+    padding: 1em;
+}

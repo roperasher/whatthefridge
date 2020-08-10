@@ -1,6 +1,6 @@
 import React from "react";
 import Contents from "./Contents";
-import Nutrition from "./Nutrition";
+// import Nutrition from "./Nutrition";
 
 // Entry point for fridge components
 // Stretch goal: add nutrition for each ingredient tile

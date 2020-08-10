@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { Button, Card, Figure } from 'react-bootstrap'
+import React from 'react'
 import DataComponent from '../DataComponent.js'
 import parse from 'react-html-parser'
 

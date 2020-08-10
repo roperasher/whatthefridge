@@ -1,14 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
 import { v4 } from "uuid";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../stylesheets/App.css";
-import SearchBar from "./SearchBar";
 import Fridge from "./Fridge/Fridge"
-import RecipeList from "./Recipes/RecipeList";
-import IngrList from "./Ingredients/IngrList";
-import DataComponent from "./DataComponent";
-import { Card, Accordion, Button } from "react-bootstrap";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Notifications, {notify} from 'react-notify-toast'
 
@@ -16,7 +10,6 @@ import Header from "./Header";
 import Home from "./Home";
 import Recipes from "./Recipes/Recipes";
 import { About } from "./About";
-import { InfoCarousel } from "./Recipes/Recipe"
 
 
 export default class App extends React.Component {
