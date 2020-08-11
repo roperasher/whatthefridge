@@ -76,7 +76,7 @@ const IngredientCard = ({ id, missedIngredients }) => {
 }
 
 const MissedIngredient = (id, amount, unit) => {
-    const requestString = "https://whatthefridge-psu.herokuapp.com/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
+    const requestString = "https//whatthefridge-psu.herokuapp.com/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
     console.log(requestString)
     const MissedIngrCost = 
         DataComponent(

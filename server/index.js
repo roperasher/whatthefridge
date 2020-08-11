@@ -40,9 +40,11 @@ if (!isDev && cluster.isMaster) {
   //endpoints for ingredient, recipe, and nutrition data
   app.get("/data/ingredient/searchGroceryProducts", ingredient.requestProductData);
   app.get("/data/ingredient/getProductInformation", ingredient.requestProductIngredients);
+  app.get("/data/ingredient/getIngredientCost", ingredient.getIngredientCost)
   app.get("/data/recipe/searchRecipe", recipe.getRecipeData);
   app.get("/data/recipe/searchRecipeID", recipe.getRecipeDataID)
   app.get("/data/recipe/searchRecipesByIngredients", recipe.getRecipeDataByIngredients);
+  app.get("/data/recipe/getRecipeInstructions", recipe.recipeInstructions)
   app.get("/data/recipe/visualizeRecipeByIngredientsID", recipe.getRecipeIngredientCssID);
   app.get("/data/recipe/visualizeRecipeByIngredients", recipe.getRecipeIngredientCSS);
   app.get("/data/recipe/visualizeRecipePriceBreakdownByID", recipe.getRecipePrice);
