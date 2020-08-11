@@ -3,7 +3,8 @@ import ReactHtmlParser from 'react-html-parser'
 import '../../stylesheets/Recipe.css'
 import NutritionCard from '../NutritionInfo.js'
 import IngredientCard from '../Ingredients/IngredientInfo.js'
-import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup, Modal } from 'react-bootstrap'
+import DataComponent from '../DataComponent.js'
+import { Carousel, Figure, Card, Button, ButtonGroup, Row, ListGroup, Modal, Accordion } from 'react-bootstrap'
 
 // Carousel component that opens as a modal to display recipe details
 // Three slides: Recipe summary and image, nutrition, and ingredient information
@@ -64,7 +65,9 @@ class InfoCarousel extends React.Component {
                                             src={data.image} 
                                             alt={data.title} 
                                             fluid={true} ></Figure.Image>
-                                        <Figure.Caption>{ReactHtmlParser(data.summary)}</Figure.Caption>
+                                        <Figure.Caption>
+                                            <Accordion>{ReactHtmlParser(data.summary)}</Accordion>
+                                        </Figure.Caption>
                                     </Figure>
                                 </Row>
                                 <Carousel.Caption>
@@ -120,12 +123,13 @@ class InfoCarousel extends React.Component {
 const RecipeStub = ({ data, callback=f=>f }) => {
     const [show, setShow] = useState(false)
     const target = useRef(null)
+    const cost = "$" + (data.pricePerServing / 100).toFixed(2) 
     return(
         <>
             <ListGroup>
                 <ListGroup.Item>{data.readyInMinutes} minutes</ListGroup.Item>
                 <ListGroup.Item>Health Score: {data.healthScore}</ListGroup.Item>
-                <ListGroup.Item>Cost per serving: {data.pricePerServing}</ListGroup.Item>
+                <ListGroup.Item>Cost per serving: {cost}</ListGroup.Item>
             </ListGroup>
             <Card.Footer>
                 <Button variant="primary" ref={target} onClick={() => setShow(true)}>See Recipe Details</Button>
@@ -135,7 +139,46 @@ const RecipeStub = ({ data, callback=f=>f }) => {
     )
 }
 
+const RecipeInstructions = (id) => {
+    const requestString = "https://whatthefridge-psu.herokuapp.com/data/recipe/getRecipeInstructions?id=" + id
+    const Instructions = ({ data }) => {
+        const [show, setShow] = useState(false)
+        const target = useRef(null)
+        return <>
+            <Button variant="primary" ref={target} onClick={() => setShow(true)}>Recipe Instructions</Button>
+            <Modal 
+                        show={show} 
+                        onHide={() => setShow(false)}
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        center
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        {`${data.name} Instructions`}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <ListGroup as="span">
+                        {data.steps.map((step, i) => 
+                            <ListGroup.Item key={i} action variant="info">{`Step ${step.number}: ${step.step}`}</ListGroup.Item>
+                        )}        
+                    </ListGroup>
+                </Modal.Body>
+            </Modal>
+        </>
+    }
+    const InstructionCard = 
+        DataComponent(
+            Instructions,
+            requestString,
+            true
+        )
+    return <InstructionCard />
+}
+
 export {
     InfoCarousel,
-    RecipeStub
+    RecipeStub, 
+    RecipeInstructions
 }

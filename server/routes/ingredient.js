@@ -131,6 +131,7 @@ function getIngredientCost(request, response) {
       let price = "$" + (result.estimatedCost.value / 100).toFixed(2) ;
       data.name = name;
       data.price = price;
+      console.log(data)
       response.send(data);
     })
     .catch((error) => {

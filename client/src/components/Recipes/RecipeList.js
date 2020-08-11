@@ -1,7 +1,7 @@
 import React from 'react'
 import { v4 } from 'uuid'
 import DataComponent from '../DataComponent.js'
-import { RecipeStub } from './Recipe.js'
+import { RecipeStub, RecipeInstructions } from './Recipe.js'
 import { Card, CardColumns, ListGroup, Button } from 'react-bootstrap'
 import '../../stylesheets/RecipeList.css'
 
@@ -102,6 +102,7 @@ class RecipeList extends React.Component {
                                         <ListGroup.Item eventKey={v4()}>Ingredients Needed: {recipe.missedIngredientCount}</ListGroup.Item>
                                     </ListGroup>}
                                     <RecipeInfo />
+                                    {userRecipes && RecipeInstructions(recipe.id)}
                                 </Card.Body>
                             </Card>
                         )

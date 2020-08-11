@@ -77,16 +77,18 @@ const IngredientCard = ({ id, missedIngredients }) => {
 
 const MissedIngredient = (id, amount, unit) => {
     const requestString = "https://whatthefridge-psu.herokuapp.com/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
+    console.log(requestString)
     const MissedIngrCost = 
         DataComponent(
             MissedIngr,
             requestString,
             true
         )
-    return <MissedIngrCost key={v4()}/>
+    return <MissedIngrCost key={v4()} />
 }
 
 const MissedIngr = ({ data }) => {
+    console.log(data)
     return(
         <React.Fragment key={v4()}>
             <ListGroup.Item eventKey={v4()} variant="info">{data.name}</ListGroup.Item>
@@ -98,7 +100,7 @@ const MissedIngr = ({ data }) => {
 // Not working
 const PricingInfo = (ingredients) => {
     const requestString = (id, amount, unit) => 
-            "http://localhost:5000/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
+            "https://whatthefridge-psu.herokuapp.com/data/ingredient/getIngredientCost/?id=" + id + "&amount=" + amount + "&unit=" + unit
     let dataset = []
     let labels = []
     let url

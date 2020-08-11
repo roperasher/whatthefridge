@@ -15,14 +15,13 @@ const INGR_URL = BASE + "food/ingredients/";
 
 //makes API call to the url
 function makeRequest(url) {
-  console.log(url)
   return new Promise((resolve, reject) => {
     unirest.get(url)
           .header("x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com")  
           .header("x-rapidapi-key", API_KEY)
           .end((result) => {
       if (result.status === 200) {
-        console.log(result.headers); //uncomment to see the output JSON in the console
+        //console.log(result.headers); //uncomment to see the output JSON in the console
         resolve(result.body);
       } else {
         reject("ERROR! Call to endpoint failed!");

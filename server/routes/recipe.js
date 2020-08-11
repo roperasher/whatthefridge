@@ -326,33 +326,21 @@ function similarRecipes(request, response) {
 */
 function recipeInstructions(request, response) {
   let data = {};
-  let recipe = request.query.query;
-  let queryParameters = {query: recipe};
-  SpoonacularEndpoints.searchRecipe(queryParameters)
+  let id = request.query.id;
+  let stepBreakdown = false; //hardcoded to false for now
+  let queryParameters = {id: id, stepBreakdown: stepBreakdown};
+  SpoonacularEndpoints.getAnalyzedRecipeInstructions(queryParameters)
     .then((result) => {
-      //console.log(result); //uncomment to see JSON returned from endpoint
-      let id = result.results[0].id;
-      let stepBreakdown = false; //hardcoded to false for now
-      let queryParameters = {id: id, stepBreakdown: stepBreakdown};
-      SpoonacularEndpoints.getAnalyzedRecipeInstructions(queryParameters)
-        .then((result) => {
-          data.name= result[0].name;
-          data.steps= result[0].steps;
-          response.send(data);
-        })
-        .catch((error) => {
-          console.log("In catch block of getAnalyzedRecipeInstructions...\n" +
-            "API call to visualizeRecipePriceBreakdownByID failed!\n" + 
-            "You tried to request data for: " + id + " which DNE\n");
-          console.log("Error message: " + error);
-        })
+      data.name= result[0].name;
+      data.steps= result[0].steps;
+      response.send(data);
     })
     .catch((error) => {
-      console.log("In catch block of searchRecipe...\n" +
-        "API call to searchRecipe failed!\n" + 
-        "You tried to request data for: " + recipe + " which DNE\n");
+      console.log("In catch block of getAnalyzedRecipeInstructions...\n" +
+        "API call to visualizeRecipePriceBreakdownByID failed!\n" + 
+        "You tried to request data for: " + id + " which DNE\n");
       console.log("Error message: " + error);
-    })  
+    })
 }
 
 // returns JSON containing recipe name, and instructions in further detail

@@ -22,6 +22,7 @@ app.get("/data/ingredient/getProductInformation", ingredient.requestProductIngre
 app.get("/data/ingredient/getIngredientCost", ingredient.getIngredientCost)
 app.get("/data/recipe/searchRecipe", recipe.getRecipeData);
 app.get("/data/recipe/searchRecipeID", recipe.getRecipeDataID)
+app.get("/data/recipe/getRecipeInstructions", recipe.recipeInstructions)
 app.get("/data/recipe/searchRecipesByIngredients", recipe.getRecipeDataByIngredients);
 app.get("/data/recipe/visualizeRecipeByIngredientsID", recipe.getRecipeIngredientCssID);
 app.get("/data/recipe/visualizeRecipeByIngredients", recipe.getRecipeIngredientCSS);
