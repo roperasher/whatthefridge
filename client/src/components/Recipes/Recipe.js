@@ -140,7 +140,7 @@ const RecipeStub = ({ data, callback=f=>f }) => {
 }
 
 const RecipeInstructions = (id) => {
-    const requestString = "https//whatthefridge-psu.herokuapp.com/data/recipe/getRecipeInstructions?id=" + id
+    const requestString = "https://whatthefridge-psu.herokuapp.com/data/recipe/getRecipeInstructions?id=" + id
     const Instructions = ({ data }) => {
         const [show, setShow] = useState(false)
         const target = useRef(null)
